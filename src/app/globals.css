@@ -5,6 +5,9 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 @layer base {
+  :root {
+    --cream: #fdfbf7;
+  }
   h1 {
     font-size: var(--text-2xl);
   }
@@ -18,6 +21,14 @@
     color: var(--color-blue-600);
     text-decoration-line: underline;
   }
+}
+
+.paper-texture {
+  background-image: linear-gradient(0deg,
+    rgba(79, 79, 79, 0.03) 1px,
+    transparent 1px
+  );
+  background-size: 100% 2rem;
 }
 
 :root {
