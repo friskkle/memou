@@ -3,23 +3,30 @@ import { useState, useEffect, useRef } from 'react'
 import { slashCommands } from './CommandsList'
 import { SlashMenuProps, CommandItem } from './types'
 
-export default function SlashMenu({ 
-  editor, 
-  isVisible, 
-  position, 
-  onClose, 
-  range 
+export default function SlashMenu({
+  editor,
+  isVisible,
+  position,
+  onClose,
+  range
 }: SlashMenuProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0)
   const [filteredCommands, setFilteredCommands] = useState<CommandItem[]>(slashCommands)
   const [searchQuery, setSearchQuery] = useState<string>('')
   const menuRef = useRef<HTMLDivElement>(null)
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([])
 
   useEffect(() => {
     if (isVisible && menuRef.current) {
       menuRef.current.focus()
     }
   }, [isVisible])
+
+  useEffect(() => {
+    if (isVisible && itemRefs.current[selectedIndex]) {
+      itemRefs.current[selectedIndex]?.scrollIntoView({ block: 'nearest' })
+    }
+  }, [isVisible, selectedIndex])
 
   useEffect(() => {
     if (searchQuery) {
@@ -41,17 +48,25 @@ export default function SlashMenu({
     }
   }
 
+  const handleClose = (): void => {
+    if (editor && range) {
+      editor.chain().focus().deleteRange({ from: range.from, to: range.to }).run();
+    }
+    setSearchQuery('')
+    onClose()
+  }
+
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault()
-        setSelectedIndex(prev => 
+        setSelectedIndex(prev =>
           prev < filteredCommands.length - 1 ? prev + 1 : 0
         )
         break
       case 'ArrowUp':
         e.preventDefault()
-        setSelectedIndex(prev => 
+        setSelectedIndex(prev =>
           prev > 0 ? prev - 1 : filteredCommands.length - 1
         )
         break
@@ -63,14 +78,18 @@ export default function SlashMenu({
         break
       case 'Escape':
         e.preventDefault()
-        onClose()
+        handleClose()
         break
       default:
         // Handle typing to filter commands
         if (e.key.length === 1) {
           setSearchQuery(prev => prev + e.key)
         } else if (e.key === 'Backspace') {
-          setSearchQuery(prev => prev.slice(0, -1))
+          if (searchQuery.length === 0) {
+            handleClose()
+          } else {
+            setSearchQuery(prev => prev.slice(0, -1))
+          }
         }
     }
   }
@@ -79,12 +98,10 @@ export default function SlashMenu({
     executeCommand(command)
   }
 
-  if (!isVisible) return null
-
   return (
     <div
       ref={menuRef}
-      className="fixed z-50 bg-white rounded-lg shadow-lg border border-gray-100 py-2 min-w-64 max-h-80 overflow-y-auto transition duration-100"
+      className={`fixed z-50 bg-white rounded-lg shadow-lg py-2 min-w-64 max-h-80 overflow-y-auto transition-all duration-100 focus:outline-none ${isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
       style={{
         left: position.x,
         top: position.y,
@@ -98,7 +115,7 @@ export default function SlashMenu({
           Searching: {`"${searchQuery}"`}
         </div>
       )}
-      
+
       {filteredCommands.length === 0 ? (
         <div className="px-3 py-2 text-gray-500 text-sm">
           No commands found
@@ -107,11 +124,11 @@ export default function SlashMenu({
         filteredCommands.map((command: CommandItem, index: number) => (
           <div
             key={command.title}
-            className={`px-3 py-2 cursor-pointer flex items-center space-x-3 ${
-              index === selectedIndex 
-                ? 'bg-blue-50 text-blue-700' 
+            ref={el => { itemRefs.current[index] = el }}
+            className={`px-3 py-2 cursor-pointer flex items-center space-x-3 ${index === selectedIndex
+                ? 'bg-blue-50 text-blue-700'
                 : 'hover:bg-gray-50'
-            }`}
+              }`}
             onClick={() => handleCommandClick(command)}
           >
             <div className="w-8 h-8 rounded-md bg-gray-100 flex items-center justify-center text-sm font-medium">

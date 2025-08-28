@@ -1,6 +1,14 @@
+"use client"
+
 import StarterKit from "@tiptap/starter-kit"
 import { SlashCommandsExtension } from './CommandsList'
 import { Extensions } from '@tiptap/react'
+import { useState, useEffect, useCallback } from 'react'
+import { useEditor, EditorContent } from "@tiptap/react"
+import SlashMenu from '@/src/components/editor/CommandsMenu'
+import { MenuPosition, CommandRange } from '@/src/components/editor/types'
+
+const initialContent: string = '<p>Hello!</p>'
 
 export const editorExtensions: Extensions = [
   StarterKit,
@@ -13,4 +21,101 @@ export const editorProps = {
   }
 } as const
 
-export const initialContent: string = '<p>Hello World! 🌎️</p>'
+export const Editor = () => {
+  const [showSlashMenu, setShowSlashMenu] = useState<boolean>(false)
+  const [menuPosition, setMenuPosition] = useState<MenuPosition>({ x: 0, y: 0 })
+  const [slashRange, setSlashRange] = useState<CommandRange | null>(null)
+
+  const editor = useEditor({
+    extensions: editorExtensions,
+    content: initialContent,
+    editorProps: {
+      ...editorProps,
+      handleKeyDown: (view, event): boolean => {
+        // Handle slash command trigger
+        if (event.key === '/' && view.state.selection.empty) {
+          const { from } = view.state.selection
+          const coords = view.coordsAtPos(from)
+
+          setMenuPosition({
+            x: coords.left,
+            y: coords.bottom + 5
+          })
+          setSlashRange({ from, to: from + 1 })
+
+          // Small delay to ensure the '/' character is inserted first
+          setTimeout(() => {
+            setShowSlashMenu(true)
+          }, 10)
+
+          return false // Allow the '/' to be typed
+        }
+
+        // Hide menu on other keystrokes
+        if (showSlashMenu && event.key !== 'ArrowDown' && event.key !== 'ArrowUp' && event.key !== 'Enter') {
+          if (event.key === 'Escape') {
+            setShowSlashMenu(false)
+            return true
+          }
+        }
+
+        return false
+      }
+    },
+    immediatelyRender: false,
+    onUpdate: ({ editor }) => {
+      // Hide slash menu if selection changes or content changes significantly
+      const { selection } = editor.state
+      if (slashRange && (selection.from < slashRange.from || selection.from > slashRange.to + 10)) {
+        setShowSlashMenu(false)
+      }
+    }
+  })
+
+  const focusEditor = () => {
+    if (editor && !editor.isFocused) {
+      const endPos = editor.state.doc.content.size
+      editor.commands.focus(endPos)
+    }
+  }
+
+  // Handle clicks outside the slash menu
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent): void => {
+      const target = event.target as Element
+      if (showSlashMenu && !target.closest('[data-slash-menu]')) {
+        setShowSlashMenu(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [showSlashMenu])
+
+  const closeSlashMenu = useCallback((): void => {
+    setShowSlashMenu(false)
+    setSlashRange(null)
+    // Return focus to editor
+    if (editor) {
+      editor.commands.focus()
+    }
+  }, [editor])
+
+  return (
+    <div
+    className="bg-cream-100 border-gray-100 border-2
+    rounded-lg p-8 min-h-[400px] shadow-xl relative hover:cursor-text"
+    onClick={focusEditor}
+    >
+      <EditorContent editor={editor} />
+
+      <SlashMenu
+        editor={editor}
+        isVisible={showSlashMenu}
+        position={menuPosition}
+        range={slashRange}
+        onClose={closeSlashMenu}
+      />
+    </div>
+  )
+}
