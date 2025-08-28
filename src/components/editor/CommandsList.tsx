@@ -1,5 +1,5 @@
 import { Extension } from '@tiptap/core'
-import { PluginKey } from '@tiptap/pm/state'
+import { EditorState, PluginKey } from '@tiptap/pm/state'
 import { Plugin } from '@tiptap/pm/state'
 import { EditorView } from '@tiptap/pm/view'
 import { CommandItem } from './types'
@@ -124,7 +124,8 @@ export const SlashCommandsExtension = Extension.create({
       new Plugin({
         key: new PluginKey('slashCommands'),
         view: () => ({
-          update: (view: EditorView, prevState: any) => {
+          update: (view: EditorView, prevState: EditorState) => {
+            console.log(prevState)
             const { state } = view
             const { selection } = state
             const { from } = selection

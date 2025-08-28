@@ -17,7 +17,6 @@
     "@tiptap/starter-kit": "^3.0.7",
     "@tiptap/suggestion": "^3.3.0",
     "next": "15.4.4",
-    "prisma": "^6.12.0",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
