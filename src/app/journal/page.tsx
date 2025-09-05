@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { TextEditor } from '@/src/components/editor/editor'
 import { updateEntry } from '@/src/lib/actions'
 import { fetchEntry } from '@/src/lib/data'
