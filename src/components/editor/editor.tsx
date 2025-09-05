@@ -3,13 +3,11 @@
 import StarterKit from "@tiptap/starter-kit"
 import { SlashCommandsExtension } from './CommandsList'
 import { Editor, Extensions, useEditorState, useEditor, EditorContent } from '@tiptap/react'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import SlashMenu from '@/src/components/editor/CommandsMenu'
 import { MenuPosition, CommandRange } from '@/src/components/editor/types'
 import { EditorButton, EditorButtonGroup } from './EditorButton'
 import styles from './EditorStyles.module.css'
-
-const initialContent: string = '<p>Hello!</p>'
 
 export const editorExtensions: Extensions = [
   StarterKit.configure({
@@ -188,18 +186,17 @@ function MenuBar({ editor }: { editor: Editor }) {
   )
 }
 
-export const TextEditor = () => {
+export const TextEditor = ({ initialContent, updateEntry }: { initialContent: string, updateEntry: (newContent: string) => Promise<void> }) => {
+  const saveTimeout = useRef<NodeJS.Timeout | null>(null)
+
   const [showSlashMenu, setShowSlashMenu] = useState<boolean>(false)
   const [menuPosition, setMenuPosition] = useState<MenuPosition>({ x: 0, y: 0 })
   const [slashRange, setSlashRange] = useState<CommandRange | null>(null)
+  const [saved, setSaved] = useState<string>('Saved')
 
   const editor = useEditor({
     extensions: editorExtensions,
-    content: `
-    <ul>
-          <li>A list item</li>
-          <li>And another one</li>
-        </ul>`,
+    content: initialContent,
     editorProps: {
       ...editorProps,
       handleKeyDown: (view, event): boolean => {
@@ -240,6 +237,27 @@ export const TextEditor = () => {
       if (slashRange && (selection.from < slashRange.from || selection.from > slashRange.to + 10)) {
         setShowSlashMenu(false)
       }
+
+      // Clear any timeouts and set a new one to save content after 3 seconds of inactivity
+      setSaved('Saving...')
+      if (saveTimeout.current) {
+        clearTimeout(saveTimeout.current)
+      }
+
+      saveTimeout.current = setTimeout(() => {
+        const html = editor.getHTML()
+        updateEntry(html)
+        setSaved('Saved')
+      }, 3000)
+    },
+    onBlur: ({ editor }) => {
+      // On blur, save content and clear any timeout saves
+      if (saveTimeout.current) {
+        clearTimeout(saveTimeout.current)
+      }
+      const html = editor.getHTML()
+      updateEntry(html)
+      setSaved('Saved')
     }
   })
 
@@ -289,6 +307,7 @@ export const TextEditor = () => {
           range={slashRange}
           onClose={closeSlashMenu}
         />
+        <div className="absolute bottom-2 right-4 text-sm text-gray-400 select-none">{saved}</div>
       </div>
     </div>
   )

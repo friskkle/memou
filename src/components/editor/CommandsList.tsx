@@ -125,7 +125,7 @@ export const SlashCommandsExtension = Extension.create({
         key: new PluginKey('slashCommands'),
         view: () => ({
           update: (view: EditorView, prevState: EditorState) => {
-            console.log(prevState)
+            // console.log(prevState)
             const { state } = view
             const { selection } = state
             const { from } = selection
