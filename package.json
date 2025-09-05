@@ -13,6 +13,8 @@
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/supabase-js": "^2.52.1",
     "@tiptap/core": "^3.3.0",
+    "@tiptap/extension-list": "^3.3.0",
+    "@tiptap/extension-text-style": "^3.3.0",
     "@tiptap/react": "^3.0.7",
     "@tiptap/starter-kit": "^3.0.7",
     "@tiptap/suggestion": "^3.3.0",

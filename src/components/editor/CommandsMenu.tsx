@@ -44,6 +44,7 @@ export default function SlashMenu({
   const executeCommand = (command: CommandItem): void => {
     if (command && editor && range) {
       command.command({ editor, range })
+      setSearchQuery('')
       onClose()
     }
   }

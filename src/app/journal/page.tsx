@@ -1,11 +1,11 @@
-import { Editor } from '@/src/components/editor/editor'
+import { TextEditor } from '@/src/components/editor/editor'
 import React from 'react'
 
 export default function Journal(): React.ReactElement {
   return (
     <div className="max-w-4xl mx-auto p-4 relative">
       <h1 className="font-serif text-3xl mb-6">Journal</h1>
-      <Editor />
+      <TextEditor />
       
       {/* Helper text */}
       <p className="text-sm text-gray-600 mt-4">

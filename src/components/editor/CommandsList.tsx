@@ -48,7 +48,7 @@ export const slashCommands: CommandItem[] = [
         .chain()
         .focus()
         .deleteRange(range)
-        .insertContent('**bold text**')
+        .toggleBold()
         .run()
     },
     icon: 'B'
@@ -60,7 +60,7 @@ export const slashCommands: CommandItem[] = [
         .chain()
         .focus()
         .deleteRange(range)
-        .insertContent('*italic text*')
+        .toggleItalic()
         .run()
     },
     icon: 'I'
