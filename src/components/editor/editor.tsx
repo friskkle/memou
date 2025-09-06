@@ -186,7 +186,7 @@ function MenuBar({ editor }: { editor: Editor }) {
   )
 }
 
-export const TextEditor = ({ initialContent, updateEntry }: { initialContent: string, updateEntry: (newContent: string) => Promise<void> }) => {
+export const TextEditor = ({ title, initialContent, updateEntry }: { title: string, initialContent: string, updateEntry: (newContent: string) => Promise<void> }) => {
   const saveTimeout = useRef<NodeJS.Timeout | null>(null)
 
   const [showSlashMenu, setShowSlashMenu] = useState<boolean>(false)
@@ -249,15 +249,6 @@ export const TextEditor = ({ initialContent, updateEntry }: { initialContent: st
         updateEntry(html)
         setSaved('Saved')
       }, 3000)
-    },
-    onBlur: ({ editor }) => {
-      // On blur, save content and clear any timeout saves
-      if (saveTimeout.current) {
-        clearTimeout(saveTimeout.current)
-      }
-      const html = editor.getHTML()
-      updateEntry(html)
-      setSaved('Saved')
     }
   })
 
@@ -292,7 +283,10 @@ export const TextEditor = ({ initialContent, updateEntry }: { initialContent: st
 
   return (
     <div>
-      <div className="mb-2 bg-gray-500">
+      <span className="font-serif font-bold text-3xl bg-blend-multiply hover:bg-gray-200 focus:border-2 border-[#9A654B] border-solid p-1 rounded transition-all duration-200">
+        {title}
+      </span>
+      <div className="mt-2 mb-2 bg-gray-500">
         {editor && <MenuBar editor={editor} />}
       </div>
       <div 

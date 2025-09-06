@@ -3,7 +3,7 @@ import { PrimaryButton } from "../components/elements/PrimaryButton";
 
 export default function Home() {
   return (
-    <div className="font-sans bg-cream grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+    <div className="flex-1 font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center">
         <h1 className="font-serif text-5xl sm:text-6xl font-medium text-center">
           Welcome to <span className="italic">Memou</span>
