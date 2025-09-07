@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { PrimaryButton } from "../components/elements/PrimaryButton";
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="flex-1 font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20">
       <main className="flex flex-col gap-[32px] row-start-2 items-center">
@@ -9,7 +9,7 @@ export default function Home() {
           Welcome to <span className="italic">Memou</span>
         </h1>
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center">
-          <PrimaryButton link={"/journal"}>Start Memou</PrimaryButton>
+          <PrimaryButton link={"/journal/1/1"}>Start Memou</PrimaryButton>
         </ol>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
@@ -18,3 +18,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Home;

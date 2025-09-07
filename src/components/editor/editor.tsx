@@ -186,13 +186,14 @@ function MenuBar({ editor }: { editor: Editor }) {
   )
 }
 
-export const TextEditor = ({ title, initialContent, updateEntry }: { title: string, initialContent: string, updateEntry: (newContent: string) => Promise<void> }) => {
+export const TextEditor = ({ title, initialContent, saveEntry }: { title: string, initialContent: string, saveEntry: (newTitle: string, newContent: string) => Promise<void> }) => {
   const saveTimeout = useRef<NodeJS.Timeout | null>(null)
 
   const [showSlashMenu, setShowSlashMenu] = useState<boolean>(false)
   const [menuPosition, setMenuPosition] = useState<MenuPosition>({ x: 0, y: 0 })
   const [slashRange, setSlashRange] = useState<CommandRange | null>(null)
   const [saved, setSaved] = useState<string>('Saved')
+  const [curTitle, setCurTitle] = useState<string>(title)
 
   const editor = useEditor({
     extensions: editorExtensions,
@@ -246,7 +247,7 @@ export const TextEditor = ({ title, initialContent, updateEntry }: { title: stri
 
       saveTimeout.current = setTimeout(() => {
         const html = editor.getHTML()
-        updateEntry(html)
+        saveEntry(curTitle, html)
         setSaved('Saved')
       }, 3000)
     }
@@ -257,6 +258,14 @@ export const TextEditor = ({ title, initialContent, updateEntry }: { title: stri
       const endPos = editor.state.doc.content.size
       editor.commands.focus(endPos)
     }
+  }
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setCurTitle(e.target.value)
+  }
+
+  const handleUpdate = (): void => {
+    saveEntry(curTitle, editor ? editor.getHTML() : '')
   }
 
   // Handle clicks outside the slash menu
@@ -283,9 +292,14 @@ export const TextEditor = ({ title, initialContent, updateEntry }: { title: stri
 
   return (
     <div>
-      <span className="font-serif font-bold text-3xl bg-blend-multiply hover:bg-gray-200 focus:border-2 border-[#9A654B] border-solid p-1 rounded transition-all duration-200">
-        {title}
-      </span>
+      <input
+        type="text"
+        size={Math.max(curTitle.length - 1, 1)}
+        value={curTitle}
+        onChange={handleChangeInput}
+        onBlur={handleUpdate}
+        className="font-serif font-bold text-3xl w-auto rounded hover:border-gray-400 border-transparent border-solid border-2 p-1 transition-all duration-200"
+      />
       <div className="mt-2 mb-2 bg-gray-500">
         {editor && <MenuBar editor={editor} />}
       </div>
