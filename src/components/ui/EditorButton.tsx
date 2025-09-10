@@ -1,4 +1,4 @@
-interface EditorButtonProps {
+interface ButtonProps {
   onClick: () => void
   disabled?: boolean
   isActive?: boolean
@@ -6,13 +6,13 @@ interface EditorButtonProps {
   className?: string
 }
 
-export const EditorButton = ({ 
+export const OptionButton = ({ 
   onClick, 
   disabled = false, 
   isActive = false,
   children,
   className = ''
-}: EditorButtonProps) => {
+}: ButtonProps) => {
   return (
     <button
       onClick={onClick}
@@ -36,7 +36,7 @@ export const EditorButton = ({
   )
 }
 
-export const EditorButtonGroup = ({ children }: { children: React.ReactNode }) => {
+export const ButtonGroup = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex flex-wrap gap-1 p-2">
       {children}

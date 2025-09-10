@@ -4,7 +4,7 @@ import {
     Entry
 } from './definitions'
 
-export async function fetchEntry(entry_id: string): Promise<Entry> {
+export async function fetchEntryId(entry_id: string): Promise<Entry> {
     try {
         const data = await sql<Entry>`
             SELECT * FROM journal_entries
@@ -29,6 +29,22 @@ export async function fetchEntry(entry_id: string): Promise<Entry> {
         }
     } catch (error) {
         console.error("Error fetching entry:", error)
+        throw error
+    }
+}
+
+export async function fetchEntries(journal_id: string): Promise<Entry[]> {
+    try {
+        const data = await sql<Entry>`
+            SELECT * FROM journal_entries
+            WHERE journal_id = ${journal_id}
+            ORDER BY created_date DESC
+        `
+        
+        return data.rows
+    }
+    catch (error) {
+        console.error("Error fetching entries:", error)
         throw error
     }
 }

@@ -4,9 +4,9 @@ import StarterKit from "@tiptap/starter-kit"
 import { SlashCommandsExtension } from './CommandsList'
 import { Editor, Extensions, useEditorState, useEditor, EditorContent } from '@tiptap/react'
 import { useState, useEffect, useCallback, useRef } from 'react'
-import SlashMenu from '@/src/components/editor/CommandsMenu'
-import { MenuPosition, CommandRange } from '@/src/components/editor/types'
-import { EditorButton, EditorButtonGroup } from './EditorButton'
+import SlashMenu from '@/src/components/features/editor/CommandsMenu'
+import { MenuPosition, CommandRange } from '@/src/components/features/editor/types'
+import { OptionButton, ButtonGroup } from '@/src/components/ui/EditorButton'
 import styles from './EditorStyles.module.css'
 
 export const editorExtensions: Extensions = [
@@ -65,123 +65,123 @@ function MenuBar({ editor }: { editor: Editor }) {
 
   return (
     <div className="bg-white border-b border-gray-200">
-      <EditorButtonGroup>
-        <EditorButton
+      <ButtonGroup>
+        <OptionButton
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={!editorState.canBold}
           isActive={editorState.isBold}
         >
           Bold
-        </EditorButton>
-        <EditorButton
+        </OptionButton>
+        <OptionButton
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={!editorState.canItalic}
           isActive={editorState.isItalic}
         >
           Italic
-        </EditorButton>
-        <EditorButton
+        </OptionButton>
+        <OptionButton
           onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={!editorState.canStrike}
           isActive={editorState.isStrike}
         >
           Strike
-        </EditorButton>
-        <EditorButton
+        </OptionButton>
+        <OptionButton
           onClick={() => editor.chain().focus().toggleCode().run()}
           disabled={!editorState.canCode}
           isActive={editorState.isCode}
         >
           Code
-        </EditorButton>
+        </OptionButton>
 
         <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
 
-        <EditorButton onClick={() => editor.chain().focus().unsetAllMarks().run()}>
+        <OptionButton onClick={() => editor.chain().focus().unsetAllMarks().run()}>
           Clear marks
-        </EditorButton>
-        <EditorButton onClick={() => editor.chain().focus().clearNodes().run()}>
+        </OptionButton>
+        <OptionButton onClick={() => editor.chain().focus().clearNodes().run()}>
           Clear nodes
-        </EditorButton>
+        </OptionButton>
 
         <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
 
-        <EditorButton
+        <OptionButton
           onClick={() => editor.chain().focus().setParagraph().run()}
           isActive={editorState.isParagraph}
         >
           Paragraph
-        </EditorButton>
-        <EditorButton
+        </OptionButton>
+        <OptionButton
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           isActive={editorState.isHeading1}
         >
           H1
-        </EditorButton>
-        <EditorButton
+        </OptionButton>
+        <OptionButton
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           isActive={editorState.isHeading2}
         >
           H2
-        </EditorButton>
-        <EditorButton
+        </OptionButton>
+        <OptionButton
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           isActive={editorState.isHeading3}
         >
           H3
-        </EditorButton>
+        </OptionButton>
 
         <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
 
-        <EditorButton
+        <OptionButton
           onClick={() => editor.chain().focus().toggleBulletList().run()}
           isActive={editorState.isBulletList}
         >
           Bullet list
-        </EditorButton>
-        <EditorButton
+        </OptionButton>
+        <OptionButton
           onClick={() => editor.chain().focus().toggleOrderedList().run()}
           isActive={editorState.isOrderedList}
         >
           Ordered list
-        </EditorButton>
+        </OptionButton>
 
         <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
 
-        <EditorButton
+        <OptionButton
           onClick={() => editor.chain().focus().toggleCodeBlock().run()}
           isActive={editorState.isCodeBlock}
         >
           Code block
-        </EditorButton>
-        <EditorButton
+        </OptionButton>
+        <OptionButton
           onClick={() => editor.chain().focus().toggleBlockquote().run()}
           isActive={editorState.isBlockquote}
         >
           Blockquote
-        </EditorButton>
-        <EditorButton onClick={() => editor.chain().focus().setHorizontalRule().run()}>
+        </OptionButton>
+        <OptionButton onClick={() => editor.chain().focus().setHorizontalRule().run()}>
           Horizontal rule
-        </EditorButton>
-        <EditorButton onClick={() => editor.chain().focus().setHardBreak().run()}>
+        </OptionButton>
+        <OptionButton onClick={() => editor.chain().focus().setHardBreak().run()}>
           Hard break
-        </EditorButton>
+        </OptionButton>
 
         <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
 
-        <EditorButton
+        <OptionButton
           onClick={() => editor.chain().focus().undo().run()}
           disabled={!editorState.canUndo}
         >
           Undo
-        </EditorButton>
-        <EditorButton
+        </OptionButton>
+        <OptionButton
           onClick={() => editor.chain().focus().redo().run()}
           disabled={!editorState.canRedo}
         >
           Redo
-        </EditorButton>
-      </EditorButtonGroup>
+        </OptionButton>
+      </ButtonGroup>
     </div>
   )
 }
@@ -304,7 +304,7 @@ export const TextEditor = ({ title, initialContent, saveEntry }: { title: string
         {editor && <MenuBar editor={editor} />}
       </div>
       <div 
-      className="bg-white rounded-lg p-8 min-h-[400px] shadow-xl relative hover:cursor-text"
+      className="bg-white rounded-lg p-8 min-h-[300px] shadow-xl relative hover:cursor-text"
       onClick={focusEditor}
       >
         <EditorContent editor={editor} />

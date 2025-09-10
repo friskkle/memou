@@ -1,8 +1,8 @@
 export const dynamic = "force-dynamic"
 
-import { TextEditor } from '@/src/components/editor/editor'
+import { TextEditor } from '@/src/components/features/editor/editor'
 import { updateEntry } from '@/src/lib/actions'
-import { fetchEntry } from '@/src/lib/data'
+import { fetchEntryId } from '@/src/lib/data'
 import React from 'react'
 
 const Journal = async (props: { params: Promise<{ entry_id: string }> }): Promise<React.ReactElement> => {
@@ -10,7 +10,7 @@ const Journal = async (props: { params: Promise<{ entry_id: string }> }): Promis
     id,
     title,
     content
-  } = await fetchEntry((await props.params).entry_id)
+  } = await fetchEntryId((await props.params).entry_id)
 
   const saveEntry = async (newTitle: string = title, newContent: string): Promise<void> => {
     'use server'
