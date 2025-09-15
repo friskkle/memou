@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { slashCommands } from './CommandsList'
+import { slashCommands } from './commands-list'
 import { SlashMenuProps, CommandItem } from './types'
 
 export default function SlashMenu({

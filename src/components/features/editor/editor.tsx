@@ -1,10 +1,10 @@
 "use client"
 
 import StarterKit from "@tiptap/starter-kit"
-import { SlashCommandsExtension } from './CommandsList'
+import { SlashCommandsExtension } from './commands-list'
 import { Editor, Extensions, useEditorState, useEditor, EditorContent } from '@tiptap/react'
 import { useState, useEffect, useCallback, useRef } from 'react'
-import SlashMenu from '@/src/components/features/editor/CommandsMenu'
+import SlashMenu from '@/src/components/features/editor/commands-menu'
 import { MenuPosition, CommandRange } from '@/src/components/features/editor/types'
 import { OptionButton, ButtonGroup } from '@/src/components/ui/EditorButton'
 import styles from './EditorStyles.module.css'

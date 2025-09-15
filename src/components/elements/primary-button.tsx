@@ -6,14 +6,28 @@ interface PrimaryButtonProps {
   link?: string
   disabled?: boolean
   type?: 'button' | 'submit' | 'reset'
+  size?: 'small' | 'medium' | 'large'
   children: React.ReactNode
   className?: string
+}
+
+const sizeClasses = {
+  small: 'p-[4px] text-md rounded-[8px]',
+  medium: 'p-[4px] text-xl rounded-[16px]',
+  large: 'p-[4px] rounded-[18px]',
+}
+
+const innerSizeClasses = {
+  small: 'px-4 py-2 rounded-[5px]',
+  medium: 'px-6 py-3 rounded-[13px]',
+  large: 'px-8 py-4 rounded-[14px]',
 }
 
 export const PrimaryButton = ({
   link,
   disabled = false,
   type = 'button',
+  size = 'medium',
   children,
   className = '',
 }: PrimaryButtonProps) => {
@@ -24,10 +38,8 @@ export const PrimaryButton = ({
       disabled={disabled}
       type={type}
       className={`
-        rounded-[16px]
-        p-[4px]
+        ${sizeClasses[size]}
         font-medium
-        text-2xl
         bg-gradient-to-b
         from-[#D49273] to-[#9A654B]
         text-white
@@ -44,10 +56,11 @@ export const PrimaryButton = ({
         focus:ring-2
         focus:ring-[#D49273]
         focus:ring-offset-2
+        select-none
         ${className}
       `}
     >
-        <div className="border-dashed border-2 order-white hover:border-transparent hover:scale-[1.02] rounded-[13px] px-8 py-5 transition-all duration-200 transform">
+        <div className={`${innerSizeClasses[size]} border-dashed border-2 order-white hover:border-transparent hover:scale-[1.02] transition-all duration-200 transform`}>
             {children}
         </div>
     </button>
