@@ -5,6 +5,7 @@ import {
 } from './definitions'
 
 export async function fetchEntryId(entry_id: string): Promise<Entry> {
+    await new Promise(resolve => setTimeout(resolve, 3000))
     try {
         const data = await sql<Entry>`
             SELECT * FROM journal_entries
@@ -38,7 +39,7 @@ export async function fetchEntries(journal_id: string): Promise<Entry[]> {
         const data = await sql<Entry>`
             SELECT * FROM journal_entries
             WHERE journal_id = ${journal_id}
-            ORDER BY created_date DESC
+            ORDER BY last_modified DESC
         `
         
         return data.rows

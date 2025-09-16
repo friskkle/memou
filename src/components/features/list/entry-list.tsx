@@ -10,9 +10,9 @@ export const EntryList = ({ list }: { list: listType }) => {
     const currentPath = usePathname();
   return (
     (list &&
-    <ul>
+    <ul className="mt-2 bg-white shadow-sm rounded-lg">
       {list.map((entry) => (
-        <li key={entry.id} className="mt-2 p-1 bg-white shadow-sm rounded-lg">
+        <li key={entry.id} className="p-1 last:mb-0 border-b border-gray-200 last:border-0">
           <Link href={`${currentPath}/${entry.id}`} className="flex flex-row items-center py-1 px-3 font-bold no-underline text-black w-full rounded hover:bg-[#e0e0e06a]">
             <span className="flex-2">
               {entry.title}

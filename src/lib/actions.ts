@@ -19,12 +19,16 @@ export async function updateEntry(entry_id: number, title: string, content: stri
     }
 }
 
-export async function createEntry(journal_id: number, title: string): Promise<void> {
+export async function createEntry(journal_id: number, title: string): Promise<number> {
     try {
-        await sql<Entry>`
-            INSERT INTO journal_entries (journal_id, title, content, created_at, last_modified)
+        const result = await sql<Entry>`
+            INSERT INTO journal_entries (journal_id, title, content, created_date, last_modified)
             VALUES (${journal_id}, ${title}, '', NOW(), NOW())
+            RETURNING id
         `
+        const returning_id = result.rows[0]?.id || 0
+        console.log(returning_id)
+        return result.rows[0].id
     } catch (error) {
         console.error("Error creating entry:", error)
         throw error
