@@ -1,9 +1,8 @@
 export const dynamic = "force-dynamic"
 
 import React from 'react'
-import Link from 'next/link'
 import { fetchEntries } from '@/src/lib/data'
-import { List } from '@/src/components/features/list/list'
+import { EntryList } from '@/src/components/features/list/entry-list'
 import { PrimaryButton } from '@/src/components/elements/primary-button'
 
 const Entries = async (props: { params: Promise<{ journal_id: string }> }): Promise<React.ReactElement> => {
@@ -12,13 +11,11 @@ const Entries = async (props: { params: Promise<{ journal_id: string }> }): Prom
   const entries = await fetchEntries(journal_id)
   return (
     <div className="max-w-4xl mx-auto p-4 relative">
-      Entries of the journal go here, journal ID: {journal_id}
-      <List list={entries} />
-      <div>
-        <Link href={`/journal/${journal_id}/new`}>
-          <PrimaryButton size='small'>New Entry</PrimaryButton>
-        </Link>
-      </div>
+      <span className='flex flex-row justify-between items-center mb-4'>
+        <p className="text-3xl font-bold">Entries</p>
+        <PrimaryButton size='small'>New Entry</PrimaryButton>
+      </span>
+      <EntryList list={entries} />
     </div>
   )
 }

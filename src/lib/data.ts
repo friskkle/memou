@@ -48,3 +48,17 @@ export async function fetchEntries(journal_id: string): Promise<Entry[]> {
         throw error
     }
 }
+
+export async function fetchJournals(uuid: string): Promise<Journal[]> {
+    try {
+        const data = await sql<Journal>`
+            SELECT * FROM journals
+            WHERE uuid = ${uuid}
+            ORDER BY id DESC
+        `
+        return data.rows
+    } catch (error) {
+        console.error("Error fetching journals:", error)
+        throw error
+    }
+}

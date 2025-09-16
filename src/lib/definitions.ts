@@ -1,7 +1,7 @@
 type nullable<T> = T | null;
 
 export type Journal = {
-    journal_id: string;
+    id: string;
     uuid: number;
     title: string;
     shared_with: number[];

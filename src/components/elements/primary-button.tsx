@@ -18,7 +18,7 @@ const sizeClasses = {
 }
 
 const innerSizeClasses = {
-  small: 'px-4 py-2 rounded-[5px]',
+  small: 'px-3 py-1 rounded-[5px]',
   medium: 'px-6 py-3 rounded-[13px]',
   large: 'px-8 py-4 rounded-[14px]',
 }

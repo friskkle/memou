@@ -9,7 +9,7 @@ const Home = () => {
           Welcome to <span className="italic">Memou</span>
         </h1>
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center">
-          <PrimaryButton link={"/journal/1/1"}>Start Memou</PrimaryButton>
+          <PrimaryButton link={`/journal`}>Start Memou</PrimaryButton>
         </ol>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">

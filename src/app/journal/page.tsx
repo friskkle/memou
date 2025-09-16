@@ -1,11 +1,21 @@
-import React from 'react'
+export const dynamic = "force-dynamic"
 
-const Journal = async (): Promise<React.ReactElement> => {
+import React from 'react'
+import { fetchJournals } from '@/src/lib/data'
+import { PrimaryButton } from '@/src/components/elements/primary-button'
+import { JournalList } from '@/src/components/features/list/journal-list'
+
+const Journals = async (): Promise<React.ReactElement> => {
+  const journals =  await fetchJournals("1")
   return (
     <div className="max-w-4xl mx-auto p-4 relative">
-        Journal Page
+      <span className='flex flex-row justify-between items-center mb-4'>
+        <p className="text-3xl font-bold">Journals</p>
+        <PrimaryButton size='small'>New Journal</PrimaryButton>
+      </span>
+      <JournalList list={journals} />
     </div>
   )
 }
 
-export default Journal;
+export default Journals;
