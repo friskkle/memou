@@ -1,4 +1,3 @@
-import { redirect } from "next/navigation";
 import { PrimaryButton } from "../components/elements/primary-button";
 
 const Home = () => {

@@ -1,4 +1,4 @@
-type nullable<T> = T | null;
+// type nullable<T> = T | null;
 
 export type Journal = {
     id: string;

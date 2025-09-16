@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 interface PrimaryButtonProps {
   link?: string;
   apiLink?: string;
-  apiBody?: Record<string, any>;
+  apiBody?: Record<string, unknown>;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
   size?: 'small' | 'medium' | 'large';

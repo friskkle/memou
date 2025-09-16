@@ -1,7 +1,6 @@
 'use server'
 
 import { createEntry } from '@/src/lib/actions'
-import { redirect } from 'next/navigation'
 
 export async function POST(request: Request) {
     const data = await request.json()
@@ -15,7 +14,7 @@ export async function POST(request: Request) {
             headers: { 'Content-Type': 'application/json' }
         })
         } catch (error) {
-        return new Response(JSON.stringify({ error: 'Failed to create entry' }), {
+        return new Response(JSON.stringify({ error: error }), {
             status: 500,
             headers: {
                 'Content-Type': 'application/json',
