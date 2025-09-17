@@ -10,7 +10,7 @@ Welcome to **memou**! The home of you and your loved ones notes and thoughts.
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/memou.git
+    git clone https://github.com/friskkle/memou.git
     ```
 2. Install dependencies:
     ```bash
