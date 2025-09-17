@@ -8,10 +8,10 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
     const currentPath = usePathname();
   return (
     (list &&
-    <ul>
+    <ul className="mt-2 bg-white shadow-sm rounded-lg">
       {list.map((journal) => (
-        <li key={journal.id} className="mt-2 p-1 bg-white shadow-sm rounded-lg">
-          <Link href={`${currentPath}/${journal.id}`} className="flex flex-row items-center py-1 px-3 font-bold no-underline text-black w-full rounded hover:bg-[#e0e0e06a]">
+        <li key={journal.id} className="p-1 flex last:mb-0 border-b border-gray-200 last:border-0">
+          <Link href={`${currentPath}/${journal.id}`} className="flex flex-row items-center py-2 px-3 font-bold no-underline text-black w-full rounded hover:bg-[#e0e0e06a] transition-all duration-75">
             <span className="flex-2">
               {journal.title}
             </span>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { PrimaryButton } from "../components/elements/primary-button";
 
 const Home = () => {
@@ -8,7 +9,9 @@ const Home = () => {
           Welcome to <span className="italic">Memou</span>
         </h1>
         <ol className="font-mono list-inside list-decimal text-sm/6 text-center">
-          <PrimaryButton link={`/journal`}>Start Memou</PrimaryButton>
+          <Link href="/journal">
+            <PrimaryButton>Start Memou</PrimaryButton>
+          </Link>
         </ol>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">

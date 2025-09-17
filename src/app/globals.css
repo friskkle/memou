@@ -6,7 +6,9 @@
 
 @layer base {
   :root {
-    --cream: #fdfbf7;
+    --cream-100: #fdfbf7;
+    --cream-200: #fef7e9;
+    --cream-300: #fff3db;
   }
   h1 {
     font-size: var(--text-2xl);
