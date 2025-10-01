@@ -28,10 +28,15 @@ export const EntryList = ({ list }: { list: listType }) => {
           <button
             type="button"
             className="ml-2 px-2 text-xs text-red-600 font-bold rounded bg-transparent hover:bg-[#e0e0e06a] transition-all duration-75"
-            onClick={() => {
+            onClick={async () => {
                 if (!window.confirm(`Are you sure you want to delete entry: ${entry.title}?`)) return;
-              onDelete(entry.id);
-              window.location.reload();
+              try {
+                await onDelete(entry.id);
+                window.location.reload(); // or use redirect/revalidate if you want a smoother UX
+              } catch (err) {
+                console.error("Failed to delete:", err);
+                alert("Something went wrong deleting the entry.");
+              }
             }}
           >
             Delete

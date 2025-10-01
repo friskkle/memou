@@ -5,6 +5,7 @@ import {
 } from './definitions'
 
 export async function fetchEntryId(entry_id: string): Promise<Entry> {
+    
     try {
         const data = await sql<Entry>`
             SELECT * FROM journal_entries

@@ -4,6 +4,7 @@ import React from 'react'
 import { fetchEntries } from '@/src/lib/data'
 import { EntryList } from '@/src/components/features/list/entry-list'
 import { PrimaryButton } from '@/src/components/elements/primary-button'
+import { createEntry } from '@/src/lib/actions'
 
 const Entries = async (props: { params: Promise<{ journal_id: string }> }): Promise<React.ReactElement> => {
   const params = await props.params
@@ -15,8 +16,7 @@ const Entries = async (props: { params: Promise<{ journal_id: string }> }): Prom
         <p className="text-3xl font-bold">Entries</p>
         <PrimaryButton
           size='small'
-          apiLink="/api/entries/new"
-          apiBody={{ journal_id: journal_id }}>
+          action={createEntry.bind(null, Number(journal_id), 'New Entry')}>
             New Entry
         </PrimaryButton>
       </span>

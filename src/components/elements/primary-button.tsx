@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 interface PrimaryButtonProps {
   link?: string;
   apiLink?: string;
+  action?: () => Promise<void>;
   apiBody?: Record<string, unknown>;
   disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
@@ -28,6 +29,7 @@ const innerSizeClasses = {
 export const PrimaryButton = ({
   link,
   apiLink,
+  action,
   apiBody,
   disabled = false,
   type = 'button',
@@ -59,6 +61,11 @@ export const PrimaryButton = ({
         console.error('Error in PrimaryButton API call:', error);
       }
     }
+    else if (action) {
+      console.log('Executing action');
+      await action();
+      console.log('Action executed')
+    }
     else {
       console.log('Button clicked');
     }
@@ -84,10 +91,10 @@ export const PrimaryButton = ({
         disabled:opacity-50
         disabled:cursor-not-allowed
         disabled:hover:scale-100
-        focus:outline-none
-        focus:ring-2
-        focus:ring-[#D49273]
-        focus:ring-offset-2
+        active:outline-none
+        active:ring-2
+        active:ring-[#D49273]
+        active:ring-offset-2
         select-none
         ${className}
       `}
