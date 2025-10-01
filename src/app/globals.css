@@ -25,6 +25,15 @@
   }
 }
 
+@layer utilities {
+  .shimmer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-size: 200% 100%;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
