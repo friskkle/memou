@@ -22,7 +22,7 @@ export async function updateEntry(entry_id: number, title: string, content: stri
 }
 
 export async function createEntry(journal_id: number, title: string) {
-    var returning_id = 0
+    let returning_id = 0
     try {
         const result = await sql<Entry>`
             INSERT INTO journal_entries (journal_id, title, content, created_date, last_modified)
