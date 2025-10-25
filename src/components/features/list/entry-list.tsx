@@ -1,4 +1,3 @@
-import { headers } from "next/headers";
 import { Entry } from "@/src/lib/definitions";
 import Link from "next/link";
 import { DeleteEntryButton } from "./list-buttons";
@@ -6,8 +5,6 @@ import { DeleteEntryButton } from "./list-buttons";
 type listType = Entry[] | null;
 
 export const EntryList = async ({ list }: { list: listType }) => {
-    const headersList = await headers();
-    const currentPath = (headersList).get('x-url') || '';
   return (
     (list &&
     <ul className="mt-2 bg-white shadow-sm rounded-lg">
