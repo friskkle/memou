@@ -1,21 +1,9 @@
 'use client';
 
 import React, { useActionState } from 'react'
-import { createJournal, State } from '@/src/lib/actions'
+import { createJournal, State } from '@/src/lib/actions/journals'
 
-type JournalData = {
-    title: string
-    description?: string
-    coverUrl?: string
-    tags?: string
-}
-
-type JournalFormProps = {
-    initialData?: JournalData
-    mode?: 'create' | 'edit'
-}
-
-export function JournalForm({ initialData, mode = 'create' }: JournalFormProps) {
+export function CreateJournalForm() {
     const initialState: State = { message: null, errors: {} };
     const [state, formAction] = useActionState(createJournal, initialState);
     return (
@@ -33,7 +21,7 @@ export function JournalForm({ initialData, mode = 'create' }: JournalFormProps) 
                         className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                     />
                 </div>
-                <div id="title-error" aria-live="polite" aria-atomic="true" className="min-h-[1.25rem]">
+                <div id="title-error" aria-live="polite" aria-atomic="true" className="min-h-5">
                     {state.errors?.title && (
                         <p className="mt-1 text-sm text-red-600">{state.errors.title}</p>
                     )}

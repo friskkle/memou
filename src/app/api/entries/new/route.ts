@@ -1,6 +1,6 @@
 'use server'
 
-import { createEntry } from '@/src/lib/actions'
+import { createEntry } from '@/src/lib/actions/journals'
 
 export async function POST(request: Request) {
     const data = await request.json()

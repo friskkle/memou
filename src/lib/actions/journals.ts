@@ -4,7 +4,7 @@ import { sql } from '@vercel/postgres'
 import {
     Journal,
     Entry
-} from './definitions'
+} from '../definitions'
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
@@ -71,7 +71,6 @@ export async function deleteEntry(entry_id: number): Promise<void> {
 }
 
 export async function createJournal(prevState: State, formData: FormData) {
-    console.log("Creating journal with form data:", formData);
     const validatedFields = FormSchema.safeParse({ 
         title: formData.get('title'),
         uuid: formData.get('uuid')
@@ -85,7 +84,6 @@ export async function createJournal(prevState: State, formData: FormData) {
     const { title, uuid } = validatedFields.data
     let returning_id = 0
     try {
-        console.log("Inserting journal with title:", title, "and uuid:", uuid);
         const result = await sql<Journal>`
             INSERT INTO journals (uuid, title)
             VALUES (${uuid}, ${title})
@@ -94,6 +92,7 @@ export async function createJournal(prevState: State, formData: FormData) {
         returning_id = result.rows[0]?.id || 0
         revalidatePath(`/journal`)
     } catch (error) {
+        console.error("Error creating journal:", error)
         return {
             message: "Database error, failed to create journal."
         }

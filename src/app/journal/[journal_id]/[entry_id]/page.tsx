@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic"
 
 import { TextEditor } from '@/src/components/features/editor/editor'
-import { updateEntry } from '@/src/lib/actions'
+import { updateEntry } from '@/src/lib/actions/journals'
 import { fetchEntryId } from '@/src/lib/data'
 import React from 'react'
 

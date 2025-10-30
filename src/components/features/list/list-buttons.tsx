@@ -1,6 +1,6 @@
 'use client';
 
-import { deleteEntry, deleteJournal } from '@/src/lib/actions';
+import { deleteEntry, deleteJournal } from '@/src/lib/actions/journals';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { useState } from "react";
 import React, { useRef } from "react";

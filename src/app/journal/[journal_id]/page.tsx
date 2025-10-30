@@ -4,7 +4,7 @@ import React from 'react'
 import { fetchEntries } from '@/src/lib/data'
 import { EntryList } from '@/src/components/features/list/entry-list'
 import { PrimaryButton } from '@/src/components/elements/primary-button'
-import { createEntry } from '@/src/lib/actions'
+import { createEntry } from '@/src/lib/actions/journals'
 
 const Entries = async (props: { params: Promise<{ journal_id: string }> }): Promise<React.ReactElement> => {
   const params = await props.params

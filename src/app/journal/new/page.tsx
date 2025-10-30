@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState } from 'react'
-import { JournalForm } from '@/src/components/features/forms/journal-form'
+import React from 'react'
+import { CreateJournalForm } from '@/src/components/features/forms/journal-form'
 
 export default function NewJournalPage() {
     return (
@@ -11,7 +11,7 @@ export default function NewJournalPage() {
                 <p style={{ marginTop: 6, color: '#555' }}>Fill in the information below to create a new journal.</p>
             </header>
 
-            <JournalForm mode="create" />
+            <CreateJournalForm />
         </main>
     )
 }
