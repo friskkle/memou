@@ -11,7 +11,7 @@ import {
 export function AuthForm() {
   const [isSignIn, setIsSignIn] = useState(true);
   return (
-    <div className="flex flex-col rounded-2xl bg-white py-10 px-10 md:px-16 md:min-w-lg">
+    <div className="flex flex-col rounded-2xl bg-white py-10 px-10 md:px-16 md:min-w-lg shadow-md">
       <div className="flex rounded-md">
         <h1 className="text-2xl font-semibold mb-6 rounded-md">{isSignIn ? `Sign In` : `Sign Up`}</h1>
       </div>
@@ -46,7 +46,7 @@ export function SignInForm() {
     <form action={formAction} className="flex flex-col gap-1 w-full">
       <div className="w-full">
         <label
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-gray-700 mb-1 px-1"
           htmlFor="email"
         >
           Email
@@ -57,13 +57,13 @@ export function SignInForm() {
           name="email"
           placeholder="Email"
           aria-describedby="email-error"
-          className="peer block w-full rounded-lg border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
+          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
         />
         <div
           id="email-error"
           aria-live="polite"
           aria-atomic="true"
-          className="min-h-5"
+          className="min-h-3"
         >
           {state.errors?.email && (
             <p className="mt-1 text-sm text-red-600">{state.errors.email}</p>
@@ -72,7 +72,7 @@ export function SignInForm() {
       </div>
       <div className="w-full">
         <label
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-gray-700 mb-1 px-1"
           htmlFor="password"
         >
           Password
@@ -83,13 +83,13 @@ export function SignInForm() {
           name="password"
           placeholder="Enter Password"
           aria-describedby="password-error"
-          className="peer block w-full rounded-lg border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
+          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
         />
         <div
           id="password-error"
           aria-live="polite"
           aria-atomic="true"
-          className="min-h-5"
+          className="min-h-3"
         >
           {state.errors?.password && (
             <p className="mt-1 text-sm text-red-600">{state.errors.password}</p>
@@ -127,7 +127,7 @@ export function SignUpForm() {
     <form action={formAction} className="flex flex-col w-full">
       <div className="w-full">
         <label
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-gray-700 mb-1 px-1"
           htmlFor="name"
         >
           Name
@@ -138,13 +138,13 @@ export function SignUpForm() {
           name="name"
           placeholder="Enter your name"
           aria-describedby="name-error"
-          className="peer block w-full rounded-lg border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
+          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
         />
         <div
           id="name-error"
           aria-live="polite"
           aria-atomic="true"
-          className="min-h-5"
+          className="min-h-3"
         >
           {state.errors?.name && (
             <p className="mt-1 text-sm text-red-600">{state.errors.name}</p>
@@ -153,7 +153,7 @@ export function SignUpForm() {
       </div>
       <div className="w-full">
         <label
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-gray-700 mb-1 px-1"
           htmlFor="email"
         >
           Email
@@ -164,13 +164,13 @@ export function SignUpForm() {
           name="email"
           placeholder="Email"
           aria-describedby="email-error"
-          className="peer block w-full rounded-lg border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
+          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
         />
         <div
           id="email-error"
           aria-live="polite"
           aria-atomic="true"
-          className="min-h-5"
+          className="min-h-3"
         >
           {state.errors?.email && (
             <p className="mt-1 text-sm text-red-600">{state.errors.email}</p>
@@ -179,7 +179,7 @@ export function SignUpForm() {
       </div>
       <div className="w-full">
         <label
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-gray-700 mb-1 px-1"
           htmlFor="password"
         >
           Password
@@ -190,13 +190,13 @@ export function SignUpForm() {
           name="password"
           placeholder="Enter Password"
           aria-describedby="password-error"
-          className="peer block w-full rounded-lg border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
+          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
         />
         <div
           id="password-error"
           aria-live="polite"
           aria-atomic="true"
-          className="min-h-5"
+          className="min-h-3"
         >
           {state.errors?.password && (
             <p className="mt-1 text-sm text-red-600">{state.errors.password}</p>
@@ -205,7 +205,7 @@ export function SignUpForm() {
       </div>
       <div className="w-full">
         <label
-          className="block text-sm font-medium text-gray-700 mb-1"
+          className="block text-sm font-medium text-gray-700 mb-1 px-1"
           htmlFor="confirm-password"
         >
           Confirm Password
@@ -216,13 +216,13 @@ export function SignUpForm() {
           name="confirmPassword"
           placeholder="Confirm Password"
           aria-describedby="confirm-password-error"
-          className="peer block w-full rounded-lg border border-gray-200 py-2 px-3 text-sm outline-2 placeholder:text-gray-500"
+          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
         />
         <div
           id="confirm-password-error"
           aria-live="polite"
           aria-atomic="true"
-          className="min-h-5"
+          className="min-h-3"
         >
           {state.errors?.confirmPassword && (
             <p className="mt-1 text-sm text-red-600">

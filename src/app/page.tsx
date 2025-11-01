@@ -3,7 +3,7 @@ import { PrimaryButton } from "../components/elements/primary-button";
 
 const Home = async () => {
   return (
-    <div className="flex-1 font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-8 pb-20 gap-16 sm:p-20">
+    <div className="flex-1 font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center p-20 gap-16">
       <main className="flex flex-col gap-8 row-start-2 items-center">
         <h1 className="font-serif text-5xl sm:text-6xl font-medium text-center">
           Welcome to <span className="italic">Memou</span>

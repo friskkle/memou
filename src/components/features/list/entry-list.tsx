@@ -10,7 +10,7 @@ export const EntryList = async ({ list }: { list: listType }) => {
     <ul className="mt-2 bg-white shadow-sm rounded-lg">
       <li className="py-3 px-4 flex border-b border-gray-200 select-none font-semibold">
         <span className="flex-2 text-gray-500">Name</span>
-        <span className="flex-1 text-sm text-gray-500 text-right">Last Modified</span>
+        <span className="flex-1 border-l border-gray-200 text-sm text-gray-500 text-right">Last Modified</span>
       </li>
       {list.map((entry) => (
         <li key={entry.id} className="p-1 flex last:mb-0 border-b border-gray-200 last:border-0">
@@ -18,7 +18,7 @@ export const EntryList = async ({ list }: { list: listType }) => {
             <span className="flex-2">
               {entry.title}
             </span>
-            <span className="flex-1 border-l text-sm text-gray-500 text-right">
+            <span className="flex-1 text-sm text-gray-500 text-right">
               {new Date(entry.last_modified).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
             </span>
           </Link>

@@ -13,9 +13,11 @@ export default async function Layout({ children }: { children: React.ReactNode }
   }
   return (
     <div className="flex h-screen flex-col md:flex-row md:overflow-hidden bg-cream">
-      <div className="p-4 flex flex-col">
+      <div className="p-4 flex flex-col gap-1">
         <BackButton />
-        <div onClick={signOutAction} className="mt-auto p-3 text-sm font-bold rounded-lg bg-slate-100 hover:bg-slate-200 text-red-600">
+        <div onClick={signOutAction} className="mt-auto w-fit p-3 text-sm font-bold rounded-lg
+        shadow-md hover:bg-[#dadada9f] hover:-translate-y-0.5 hover:shadow-lg active:bg-[#dadada9f] active:translate-0
+        transition duration-200 ease-in-out text-red-600">
           Sign Out
         </div>
       </div>

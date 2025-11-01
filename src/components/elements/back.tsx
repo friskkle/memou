@@ -20,7 +20,7 @@ export default function BackButton() {
   return (
     <button
       type="button"
-      className="flex items-center justify-center font-bold text-center px-4 py-2 rounded-lg
+      className="flex w-fit items-center justify-center font-bold text-center px-4 py-2 rounded-lg
         shadow-md hover:bg-[#dadada9f] hover:-translate-y-0.5 hover:shadow-lg active:bg-[#dadada9f] active:translate-0
         transition duration-200 ease-in-out"
       onClick={handleBack}
