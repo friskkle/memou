@@ -1,8 +1,12 @@
+"use server";
+
 import { sql } from "@vercel/postgres"
 import {
     Journal,
     Entry
 } from './definitions'
+import { auth } from "./auth";
+import { headers } from "next/headers";
 
 export async function fetchEntryId(entry_id: string): Promise<Entry> {
     
@@ -50,11 +54,19 @@ export async function fetchEntries(journal_id: string): Promise<Entry[]> {
     }
 }
 
-export async function fetchJournals(uuid: string): Promise<Journal[]> {
+export async function fetchJournals(): Promise<Journal[]> {
+    const session = await auth.api.getSession({
+        headers: await headers()
+    })
+    if(!session) {
+        throw new Error("Unauthorized")
+    }
+
+    const uid = session.user.id
     try {
         const data = await sql<Journal>`
             SELECT * FROM journals
-            WHERE uuid = ${uuid}
+            WHERE uuid = ${uid} OR ${uid} = ANY(shared_with)
             ORDER BY id DESC
         `
         return data.rows

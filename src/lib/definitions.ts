@@ -2,9 +2,9 @@
 
 export type Journal = {
     id: number;
-    uuid: number;
+    uuid: string;
     title: string;
-    shared_with: number[];
+    shared_with: string[];
 }
 
 export type Entry = {
