@@ -1,10 +1,10 @@
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-import React from 'react';
-import { fetchEntries } from '@/src/lib/data';
-import { EntryList } from '@/src/components/features/list/entry-list';
-import { PrimaryButton } from '@/src/components/elements/primary-button';
-import { createEntry } from '@/src/lib/actions/journals';
+import React from "react";
+import { fetchEntries } from "@/src/lib/data";
+import { EntryList } from "@/src/components/features/list/entry-list";
+import { PrimaryButton } from "@/src/components/elements/primary-button";
+import { createEntry } from "@/src/lib/actions/journals";
 
 const Entries = async (props: {
   params: Promise<{ journal_id: string }>;
@@ -18,7 +18,11 @@ const Entries = async (props: {
         <p className="text-3xl font-bold">Entries</p>
         <PrimaryButton
           size="small"
-          action={createEntry.bind(null, Number(journal_id), 'New Entry')}
+          onClick={createEntry.bind(
+            null,
+            Number(journal_id),
+            "New Entry",
+          )}
         >
           New Entry
         </PrimaryButton>
