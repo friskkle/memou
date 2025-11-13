@@ -21,7 +21,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
           Sign Out
         </div>
       </div>
-      <div className="grow px-6 md:overflow-y-auto md:p-12">
+      <div className="grow md:px-6 md:overflow-y-auto md:p-12">
         {children}
       </div>
     </div>
