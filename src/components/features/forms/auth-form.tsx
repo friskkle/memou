@@ -1,19 +1,22 @@
-'use client';
+"use client";
 
-import React, { useActionState, useState } from 'react';
+import React, { useActionState, useState } from "react";
 import {
   signInAction,
   SignInState,
   signUpAction,
   SignUpState,
-} from '@/src/lib/actions/auth';
+} from "@/src/lib/actions/auth";
+import { PrimaryButton } from "../../elements/primary-button";
 
 export function AuthForm() {
   const [isSignIn, setIsSignIn] = useState(true);
   return (
     <div className="flex flex-col rounded-2xl bg-white py-10 px-10 md:px-16 md:min-w-lg shadow-md">
       <div className="flex rounded-md">
-        <h1 className="text-2xl font-semibold mb-6 rounded-md">{isSignIn ? `Sign In` : `Sign Up`}</h1>
+        <h1 className="text-2xl font-semibold mb-6 rounded-md">
+          {isSignIn ? `Sign In` : `Sign Up`}
+        </h1>
       </div>
       {isSignIn ? <SignInForm /> : <SignUpForm />}
       <div
@@ -109,12 +112,9 @@ export function SignInForm() {
         </label>
       </div>
 
-      <button
-        type="submit"
-        className="mt-4 w-full rounded-lg bg-[#D49273] py-2 px-4 text-white hover:bg-[#9A654B] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      >
+      <PrimaryButton size="small" type="submit" className="mt-4 w-full">
         Sign In
-      </button>
+      </PrimaryButton>
     </form>
   );
 }
@@ -232,12 +232,9 @@ export function SignUpForm() {
         </div>
       </div>
 
-      <button
-        type="submit"
-        className="mt-4 w-full rounded-lg bg-[#D49273] py-2 px-4 text-white hover:bg-[#9A654B] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      >
+      <PrimaryButton size="small" type="submit" className="mt-4 w-full">
         Sign Up
-      </button>
+      </PrimaryButton>
     </form>
   );
 }

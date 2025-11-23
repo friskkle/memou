@@ -1,7 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-
 interface PrimaryButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: "small" | "medium" | "large";
@@ -32,23 +30,13 @@ export const PrimaryButton: React.FC<PrimaryButtonProps> = ({
       {...props}
       className={`
           ${sizeClasses[size]}
-          font-medium
-          bg-linear-to-b
-          from-[#D49273] to-[#9A654B]
-          text-white
-          shadow-lg
-          transition-all
-          duration-200
-          transform
+          font-medium text-white
+          bg-linear-to-b from-[#D49273] to-[#9A654B] shadow-lg
+          transition-all duration-200 transform
           hover:scale-[1.02]
           active:scale-[0.98]
-          disabled:opacity-50
-          disabled:cursor-not-allowed
-          disabled:hover:scale-100
-          active:outline-none
-          active:ring-2
-          active:ring-[#D49273]
-          active:ring-offset-2
+          disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100
+          active:outline-none active:ring-2 active:ring-[#D49273] active:ring-offset-2
           select-none
           ${className}
         `}
