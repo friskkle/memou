@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useActionState } from 'react'
-import { createJournal, State } from '@/src/lib/actions/journals'
+import React, { useActionState } from 'react';
+import { createJournal, State } from '@/src/lib/actions/journals';
+import { PrimaryButton } from '../../elements/primary-button';
 
 export function CreateJournalForm() {
     const initialState: State = { message: null, errors: {} };
@@ -26,10 +27,9 @@ export function CreateJournalForm() {
                         <p className="mt-1 text-sm text-red-600">{state.errors.title}</p>
                     )}
                 </div>
-                <button type="submit" className="mt-4 w-full bg-[#D49273] text-white py-2 px-4 rounded-lg
-                hover:bg-[#9A654B] transition duration-150 ease-in-out font-medium">
+                <PrimaryButton size='small' type="submit" className="mt-4 w-full">
                     Create Journal
-                </button>
+                </PrimaryButton>
             </div>
         </form>
     )
