@@ -36,7 +36,7 @@ export function AuthForm() {
       
       {view === 'signin' && <SignInForm onForgotPassword={() => setView('forgot-password')} />}
       {view === 'signup' && <SignUpForm />}
-      {view === 'forgot-password' && <ForgotPasswordForm onBack={() => setView('signin')} />}
+      {view === 'forgot-password' && <ForgotPasswordForm />}
 
       <div className="mt-4 text-center text-sm text-gray-600">
         {view === 'signin' && (
@@ -268,7 +268,7 @@ export function SignUpForm() {
   );
 }
 
-export function ForgotPasswordForm({ onBack }: { onBack: () => void }) {
+export function ForgotPasswordForm() {
   const initialState: ForgotPasswordState = { message: null, errors: {} };
   const [state, formAction] = useActionState(forgotPasswordAction, initialState);
 

@@ -108,12 +108,21 @@ export async function signInAction(prevState: SignInState, formData: FormData) {
     }
     const { email, password } = validatedFields.data
     
-    await auth.api.signInEmail({
+    try {
+        await auth.api.signInEmail({
         body: {
             email,
             password,
         }
     });
+    } catch (error) {
+        return {
+            errors: {
+                password: ["Invalid email or password"],
+            },
+            message: "Invalid email or password"
+        }
+    }
 
     redirect('/journal');
 }
@@ -186,7 +195,7 @@ export async function resetPasswordAction(prevState: ResetPasswordState, formDat
         });
     } catch (error) {
          return {
-            message: "Failed to reset password. The token may be invalid or expired."
+            message: "Failed to reset password. The token may be invalid or expired: " + error
         }
     }
 
