@@ -1,9 +1,16 @@
-'use client';
-
 import React from 'react';
 import { CreateJournalForm } from '@/src/components/features/forms/journal-form';
+import { auth } from '@/src/lib/auth';
+import { headers } from 'next/headers';
+import { redirect } from 'next/navigation';
 
-export default function NewJournalPage() {
+export default async function NewJournalPage() {
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
+  if (!session) {
+    redirect('/signin');
+  }
   return (
     <main style={{ padding: 24 }}>
       <header style={{ maxWidth: 720, margin: '0 auto 24px' }}>
@@ -12,7 +19,7 @@ export default function NewJournalPage() {
         </h1>
       </header>
 
-      <CreateJournalForm />
+      <CreateJournalForm uuid={session.user.id} />
     </main>
   );
 }

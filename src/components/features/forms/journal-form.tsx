@@ -4,14 +4,14 @@ import React, { useActionState } from 'react';
 import { createJournal, State } from '@/src/lib/actions/journals';
 import { PrimaryButton } from '../../elements/primary-button';
 
-export function CreateJournalForm() {
+export function CreateJournalForm({ uuid }: { uuid: string }) {
     const initialState: State = { message: null, errors: {} };
     const [state, formAction] = useActionState(createJournal, initialState);
     return (
         <form action={formAction} style={{ maxWidth: 720, margin: '0 auto' }}>
             <div className="rounded-lg bg-white p-4 md:p-6 shadow-md">
                 <div className="mb-4">
-                    <input type='hidden' name="uuid" value={1}/>
+                    <input type='hidden' name="uuid" value={uuid}/>
                     <label className="block text-sm font-medium text-gray-700 mb-1 px-1" htmlFor="title">Title</label>
                     <input
                         type="text"

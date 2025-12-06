@@ -6,11 +6,15 @@ import { fetchEntryId } from '@/src/lib/data'
 import React from 'react'
 
 const Journal = async (props: { params: Promise<{ entry_id: string }> }): Promise<React.ReactElement> => {
+  const entry = await fetchEntryId((await props.params).entry_id)
   const {
     id,
-    title,
-    content
-  } = await fetchEntryId((await props.params).entry_id)
+    title: entryTitle,
+    content: entryContent
+  } = entry
+
+  const title = entryTitle ?? "Untitled"
+  const content = entryContent ?? ""
 
   const saveEntry = async (newTitle: string = title, newContent: string): Promise<void> => {
     'use server'

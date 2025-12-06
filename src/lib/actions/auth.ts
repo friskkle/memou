@@ -38,6 +38,7 @@ export type ResetPasswordState = {
     }
 }
 
+
 const SignUpFormSchema = z.object({
     email: z.email({message: "Invalid email address"}),
     password: z.string().min(6, {message: "Password must be at least 6 characters"}).max(100, {message: "Password must be less than 100 characters"}),
@@ -120,7 +121,7 @@ export async function signInAction(prevState: SignInState, formData: FormData) {
             errors: {
                 password: ["Invalid email or password"],
             },
-            message: "Invalid email or password"
+            message: `Invalid email or password: ${error}`
         }
     }
 
