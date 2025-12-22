@@ -40,8 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/app/generated/prisma
+/src/generated/prisma
 /better-auth_migrations/
-/generated/prisma
-
-/generated/prisma

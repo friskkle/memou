@@ -15,6 +15,8 @@ import { PrimaryButton } from "../../elements/primary-button";
 
 type AuthView = 'signin' | 'signup' | 'forgot-password';
 
+const inputStyle = "peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-base placeholder:text-gray-500 transition-all duration-75"
+
 export function AuthForm() {
   const [view, setView] = useState<AuthView>('signin');
 
@@ -80,7 +82,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword: () => void 
           name="email"
           placeholder="Email"
           aria-describedby="email-error"
-          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+          className={inputStyle}
         />
         <div
           id="email-error"
@@ -106,7 +108,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword: () => void 
           name="password"
           placeholder="Enter Password"
           aria-describedby="password-error"
-          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+          className={inputStyle}
         />
         <div
           id="password-error"
@@ -167,7 +169,7 @@ export function SignUpForm() {
           name="name"
           placeholder="Enter your name"
           aria-describedby="name-error"
-          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+          className={inputStyle}
         />
         <div
           id="name-error"
@@ -193,7 +195,7 @@ export function SignUpForm() {
           name="email"
           placeholder="Email"
           aria-describedby="email-error"
-          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+          className={inputStyle}
         />
         <div
           id="email-error"
@@ -219,7 +221,7 @@ export function SignUpForm() {
           name="password"
           placeholder="Enter Password"
           aria-describedby="password-error"
-          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+          className={inputStyle}
         />
         <div
           id="password-error"
@@ -245,7 +247,7 @@ export function SignUpForm() {
           name="confirmPassword"
           placeholder="Confirm Password"
           aria-describedby="confirm-password-error"
-          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+          className={inputStyle}
         />
         <div
           id="confirm-password-error"
@@ -287,7 +289,7 @@ export function ForgotPasswordForm() {
           name="email"
           placeholder="Email"
           aria-describedby="email-error"
-          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+          className={inputStyle}
         />
         <div
           id="email-error"
@@ -334,7 +336,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
           name="password"
           placeholder="Enter New Password"
           aria-describedby="password-error"
-          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+          className={inputStyle}
         />
         <div
           id="password-error"
@@ -360,7 +362,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
           name="confirmPassword"
           placeholder="Confirm New Password"
           aria-describedby="confirm-password-error"
-          className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+          className={inputStyle}
         />
         <div
           id="confirm-password-error"

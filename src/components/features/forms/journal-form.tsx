@@ -19,7 +19,7 @@ export function CreateJournalForm({ uuid }: { uuid: string }) {
                         name="title"
                         defaultValue="New Journal"
                         aria-describedby="title-error"
-                        className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-sm placeholder:text-gray-500 transition-all duration-75"
+                        className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-base placeholder:text-gray-500 transition-all duration-75"
                     />
                 </div>
                 <div id="title-error" aria-live="polite" aria-atomic="true" className="min-h-5">
