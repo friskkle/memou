@@ -10,15 +10,19 @@
     --cream-200: #fef7e9;
     --cream-300: #fff3db;
   }
+
   h1 {
     font-size: var(--text-2xl);
   }
+
   h2 {
     font-size: var(--text-xl);
   }
+
   h3 {
     font-size: var(--text-lg);
   }
+
   a {
     color: var(--color-blue-600);
     text-decoration-line: underline;
@@ -31,7 +35,9 @@
   @keyframes shimmer {
     0% {
       background-position: 200% 0;
-    },
+    }
+
+    ,
     100% {
       background-position: -200% 0;
     }
@@ -53,7 +59,8 @@
   }
 }
 
-html, body {
+html,
+body {
   @apply bg-cream;
   height: 100%;
   margin: 0;
@@ -62,4 +69,30 @@ html, body {
 body {
   display: flex;
   flex-direction: column;
+}
+
+/* Collaboration Cursor Styles */
+.collaboration-cursor__caret {
+  border-left: 1px solid #0d0d0d;
+  border-right: 1px solid #0d0d0d;
+  margin-left: -1px;
+  margin-right: -1px;
+  pointer-events: none;
+  position: relative;
+  word-break: normal;
+}
+
+.collaboration-cursor__label {
+  border-radius: 3px 3px 3px 0;
+  color: #0d0d0d;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  left: -1px;
+  line-height: normal;
+  padding: 0.1rem 0.3rem;
+  position: absolute;
+  top: -1.4em;
+  user-select: none;
+  white-space: nowrap;
 }
