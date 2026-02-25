@@ -199,6 +199,8 @@ export type userWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"user"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"user"> | Date | string
   account?: Prisma.AccountListRelationFilter
+  journal_entries?: Prisma.Journal_entriesListRelationFilter
+  journals?: Prisma.JournalsListRelationFilter
   session?: Prisma.SessionListRelationFilter
 }
 
@@ -211,6 +213,8 @@ export type userOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   account?: Prisma.accountOrderByRelationAggregateInput
+  journal_entries?: Prisma.journal_entriesOrderByRelationAggregateInput
+  journals?: Prisma.journalsOrderByRelationAggregateInput
   session?: Prisma.sessionOrderByRelationAggregateInput
 }
 
@@ -226,6 +230,8 @@ export type userWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"user"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"user"> | Date | string
   account?: Prisma.AccountListRelationFilter
+  journal_entries?: Prisma.Journal_entriesListRelationFilter
+  journals?: Prisma.JournalsListRelationFilter
   session?: Prisma.SessionListRelationFilter
 }, "id" | "email">
 
@@ -264,6 +270,8 @@ export type userCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   account?: Prisma.accountCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsCreateNestedManyWithoutUserInput
   session?: Prisma.sessionCreateNestedManyWithoutUserInput
 }
 
@@ -276,6 +284,8 @@ export type userUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   account?: Prisma.accountUncheckedCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -288,6 +298,8 @@ export type userUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   account?: Prisma.accountUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUpdateManyWithoutUserNestedInput
 }
 
@@ -300,6 +312,8 @@ export type userUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   account?: Prisma.accountUncheckedUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -382,6 +396,34 @@ export type userUpdateOneRequiredWithoutAccountNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutAccountInput, Prisma.userUpdateWithoutAccountInput>, Prisma.userUncheckedUpdateWithoutAccountInput>
 }
 
+export type userCreateNestedOneWithoutJournal_entriesInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutJournal_entriesInput, Prisma.userUncheckedCreateWithoutJournal_entriesInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutJournal_entriesInput
+  connect?: Prisma.userWhereUniqueInput
+}
+
+export type userUpdateOneRequiredWithoutJournal_entriesNestedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutJournal_entriesInput, Prisma.userUncheckedCreateWithoutJournal_entriesInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutJournal_entriesInput
+  upsert?: Prisma.userUpsertWithoutJournal_entriesInput
+  connect?: Prisma.userWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutJournal_entriesInput, Prisma.userUpdateWithoutJournal_entriesInput>, Prisma.userUncheckedUpdateWithoutJournal_entriesInput>
+}
+
+export type userCreateNestedOneWithoutJournalsInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutJournalsInput, Prisma.userUncheckedCreateWithoutJournalsInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutJournalsInput
+  connect?: Prisma.userWhereUniqueInput
+}
+
+export type userUpdateOneRequiredWithoutJournalsNestedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutJournalsInput, Prisma.userUncheckedCreateWithoutJournalsInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutJournalsInput
+  upsert?: Prisma.userUpsertWithoutJournalsInput
+  connect?: Prisma.userWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutJournalsInput, Prisma.userUpdateWithoutJournalsInput>, Prisma.userUncheckedUpdateWithoutJournalsInput>
+}
+
 export type userCreateNestedOneWithoutSessionInput = {
   create?: Prisma.XOR<Prisma.userCreateWithoutSessionInput, Prisma.userUncheckedCreateWithoutSessionInput>
   connectOrCreate?: Prisma.userCreateOrConnectWithoutSessionInput
@@ -408,6 +450,8 @@ export type userCreateWithoutAccountInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsCreateNestedManyWithoutUserInput
   session?: Prisma.sessionCreateNestedManyWithoutUserInput
 }
 
@@ -419,6 +463,8 @@ export type userUncheckedCreateWithoutAccountInput = {
   image?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -446,6 +492,8 @@ export type userUpdateWithoutAccountInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUpdateManyWithoutUserNestedInput
 }
 
@@ -457,6 +505,144 @@ export type userUncheckedUpdateWithoutAccountInput = {
   image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
+  session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type userCreateWithoutJournal_entriesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  account?: Prisma.accountCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsCreateNestedManyWithoutUserInput
+  session?: Prisma.sessionCreateNestedManyWithoutUserInput
+}
+
+export type userUncheckedCreateWithoutJournal_entriesInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  account?: Prisma.accountUncheckedCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
+  session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type userCreateOrConnectWithoutJournal_entriesInput = {
+  where: Prisma.userWhereUniqueInput
+  create: Prisma.XOR<Prisma.userCreateWithoutJournal_entriesInput, Prisma.userUncheckedCreateWithoutJournal_entriesInput>
+}
+
+export type userUpsertWithoutJournal_entriesInput = {
+  update: Prisma.XOR<Prisma.userUpdateWithoutJournal_entriesInput, Prisma.userUncheckedUpdateWithoutJournal_entriesInput>
+  create: Prisma.XOR<Prisma.userCreateWithoutJournal_entriesInput, Prisma.userUncheckedCreateWithoutJournal_entriesInput>
+  where?: Prisma.userWhereInput
+}
+
+export type userUpdateToOneWithWhereWithoutJournal_entriesInput = {
+  where?: Prisma.userWhereInput
+  data: Prisma.XOR<Prisma.userUpdateWithoutJournal_entriesInput, Prisma.userUncheckedUpdateWithoutJournal_entriesInput>
+}
+
+export type userUpdateWithoutJournal_entriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account?: Prisma.accountUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
+  session?: Prisma.sessionUpdateManyWithoutUserNestedInput
+}
+
+export type userUncheckedUpdateWithoutJournal_entriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account?: Prisma.accountUncheckedUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
+  session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type userCreateWithoutJournalsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  account?: Prisma.accountCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
+  session?: Prisma.sessionCreateNestedManyWithoutUserInput
+}
+
+export type userUncheckedCreateWithoutJournalsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  account?: Prisma.accountUncheckedCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
+  session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type userCreateOrConnectWithoutJournalsInput = {
+  where: Prisma.userWhereUniqueInput
+  create: Prisma.XOR<Prisma.userCreateWithoutJournalsInput, Prisma.userUncheckedCreateWithoutJournalsInput>
+}
+
+export type userUpsertWithoutJournalsInput = {
+  update: Prisma.XOR<Prisma.userUpdateWithoutJournalsInput, Prisma.userUncheckedUpdateWithoutJournalsInput>
+  create: Prisma.XOR<Prisma.userCreateWithoutJournalsInput, Prisma.userUncheckedCreateWithoutJournalsInput>
+  where?: Prisma.userWhereInput
+}
+
+export type userUpdateToOneWithWhereWithoutJournalsInput = {
+  where?: Prisma.userWhereInput
+  data: Prisma.XOR<Prisma.userUpdateWithoutJournalsInput, Prisma.userUncheckedUpdateWithoutJournalsInput>
+}
+
+export type userUpdateWithoutJournalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account?: Prisma.accountUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
+  session?: Prisma.sessionUpdateManyWithoutUserNestedInput
+}
+
+export type userUncheckedUpdateWithoutJournalsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account?: Prisma.accountUncheckedUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -469,6 +655,8 @@ export type userCreateWithoutSessionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   account?: Prisma.accountCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsCreateNestedManyWithoutUserInput
 }
 
 export type userUncheckedCreateWithoutSessionInput = {
@@ -480,6 +668,8 @@ export type userUncheckedCreateWithoutSessionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   account?: Prisma.accountUncheckedCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type userCreateOrConnectWithoutSessionInput = {
@@ -507,6 +697,8 @@ export type userUpdateWithoutSessionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   account?: Prisma.accountUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
 }
 
 export type userUncheckedUpdateWithoutSessionInput = {
@@ -518,6 +710,8 @@ export type userUncheckedUpdateWithoutSessionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   account?: Prisma.accountUncheckedUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -527,11 +721,15 @@ export type userUncheckedUpdateWithoutSessionInput = {
 
 export type UserCountOutputType = {
   account: number
+  journal_entries: number
+  journals: number
   session: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   account?: boolean | UserCountOutputTypeCountAccountArgs
+  journal_entries?: boolean | UserCountOutputTypeCountJournal_entriesArgs
+  journals?: boolean | UserCountOutputTypeCountJournalsArgs
   session?: boolean | UserCountOutputTypeCountSessionArgs
 }
 
@@ -555,6 +753,20 @@ export type UserCountOutputTypeCountAccountArgs<ExtArgs extends runtime.Types.Ex
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountJournal_entriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.journal_entriesWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountJournalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.journalsWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountSessionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.sessionWhereInput
 }
@@ -569,6 +781,8 @@ export type userSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   createdAt?: boolean
   updatedAt?: boolean
   account?: boolean | Prisma.user$accountArgs<ExtArgs>
+  journal_entries?: boolean | Prisma.user$journal_entriesArgs<ExtArgs>
+  journals?: boolean | Prisma.user$journalsArgs<ExtArgs>
   session?: boolean | Prisma.user$sessionArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -606,6 +820,8 @@ export type userSelectScalar = {
 export type userOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type userInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   account?: boolean | Prisma.user$accountArgs<ExtArgs>
+  journal_entries?: boolean | Prisma.user$journal_entriesArgs<ExtArgs>
+  journals?: boolean | Prisma.user$journalsArgs<ExtArgs>
   session?: boolean | Prisma.user$sessionArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -616,6 +832,8 @@ export type $userPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "user"
   objects: {
     account: Prisma.$accountPayload<ExtArgs>[]
+    journal_entries: Prisma.$journal_entriesPayload<ExtArgs>[]
+    journals: Prisma.$journalsPayload<ExtArgs>[]
     session: Prisma.$sessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1021,6 +1239,8 @@ readonly fields: userFieldRefs;
 export interface Prisma__userClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   account<T extends Prisma.user$accountArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$accountArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$accountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  journal_entries<T extends Prisma.user$journal_entriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$journal_entriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$journal_entriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  journals<T extends Prisma.user$journalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$journalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$journalsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   session<T extends Prisma.user$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$sessionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$sessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1467,6 +1687,54 @@ export type user$accountArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * user.journal_entries
+ */
+export type user$journal_entriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the journal_entries
+   */
+  select?: Prisma.journal_entriesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the journal_entries
+   */
+  omit?: Prisma.journal_entriesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.journal_entriesInclude<ExtArgs> | null
+  where?: Prisma.journal_entriesWhereInput
+  orderBy?: Prisma.journal_entriesOrderByWithRelationInput | Prisma.journal_entriesOrderByWithRelationInput[]
+  cursor?: Prisma.journal_entriesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Journal_entriesScalarFieldEnum | Prisma.Journal_entriesScalarFieldEnum[]
+}
+
+/**
+ * user.journals
+ */
+export type user$journalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the journals
+   */
+  select?: Prisma.journalsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the journals
+   */
+  omit?: Prisma.journalsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.journalsInclude<ExtArgs> | null
+  where?: Prisma.journalsWhereInput
+  orderBy?: Prisma.journalsOrderByWithRelationInput | Prisma.journalsOrderByWithRelationInput[]
+  cursor?: Prisma.journalsWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.JournalsScalarFieldEnum | Prisma.JournalsScalarFieldEnum[]
 }
 
 /**

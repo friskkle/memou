@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import React from "react";
-import { fetchEntries } from "@/src/lib/data";
+import { fetchEntries } from "@/src/lib/journals";
 import { EntryList } from "@/src/components/features/list/entry-list";
 import { PrimaryButton } from "@/src/components/elements/primary-button";
 import { createEntry } from "@/src/lib/actions/journals";

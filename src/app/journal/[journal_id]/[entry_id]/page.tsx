@@ -1,29 +1,32 @@
 export const dynamic = "force-dynamic"
 
-import { TextEditor } from '@/src/components/features/editor/editor'
-import { updateEntry } from '@/src/lib/actions/journals'
-import { fetchEntryId } from '@/src/lib/data'
+import { CollaborativeEditor } from '@/src/components/features/editor/editor'
+import { auth } from '@/src/lib/auth'
+import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 const Journal = async (props: { params: Promise<{ entry_id: string }> }): Promise<React.ReactElement> => {
-  const entry = await fetchEntryId((await props.params).entry_id)
-  const {
-    id,
-    title: entryTitle,
-    content: entryContent
-  } = entry
+  const session = await auth.api.getSession({
+    headers: await headers()
+  })
 
-  const title = entryTitle ?? "Untitled"
-  const content = entryContent ?? ""
-
-  const saveEntry = async (newTitle: string = title, newContent: string): Promise<void> => {
-    'use server'
-    updateEntry(id, newTitle, newContent)
+  if (!session) {
+    redirect('/signin')
   }
+
+  const { entry_id } = await props.params
+
+/*   // Fetch with user authorization check
+  const entry = await fetchEntryId(entry_id, session.user.id)
+
+  if (entry.id === 0) {
+    redirect('/journal')
+  } */
 
   return (
     <div className="max-w-4xl mx-auto md:p-4 relative">
-      <TextEditor title={title} initialContent={content} saveEntry={saveEntry}/>
+      <CollaborativeEditor entryId={entry_id} userName={session.user.name || session.user.email} />
       
       {/* Helper text */}
       <div className='hidden width-full md:flex justify-between'>

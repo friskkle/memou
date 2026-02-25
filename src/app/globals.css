@@ -64,35 +64,18 @@ body {
   @apply bg-cream;
   height: 100%;
   margin: 0;
-}
-
-body {
   display: flex;
   flex-direction: column;
-}
 
-/* Collaboration Cursor Styles */
-.collaboration-cursor__caret {
-  border-left: 1px solid #0d0d0d;
-  border-right: 1px solid #0d0d0d;
-  margin-left: -1px;
-  margin-right: -1px;
-  pointer-events: none;
-  position: relative;
-  word-break: normal;
-}
+  @layer components {
 
-.collaboration-cursor__label {
-  border-radius: 3px 3px 3px 0;
-  color: #0d0d0d;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 600;
-  left: -1px;
-  line-height: normal;
-  padding: 0.1rem 0.3rem;
-  position: absolute;
-  top: -1.4em;
-  user-select: none;
-  white-space: nowrap;
+    /* Collaboration Cursor Styles */
+    .collaboration-carets__caret {
+      @apply border-l border-r border-black -ml-px -mr-px relative pointer-events-none break-normal;
+    }
+
+    .collaboration-carets__label {
+      @apply rounded-tl rounded-tr rounded-br-none text-black text-xs font-semibold not-italic absolute left-[-1px] top-[-1.4em] px-1 py-0.5 select-none whitespace-nowrap leading-none;
+    }
+  }
 }

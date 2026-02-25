@@ -205,6 +205,7 @@ export type journalsWhereInput = {
   title?: Prisma.StringNullableFilter<"journals"> | string | null
   shared_with?: Prisma.StringNullableListFilter<"journals">
   journal_entries?: Prisma.Journal_entriesListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
 }
 
 export type journalsOrderByWithRelationInput = {
@@ -213,6 +214,7 @@ export type journalsOrderByWithRelationInput = {
   title?: Prisma.SortOrderInput | Prisma.SortOrder
   shared_with?: Prisma.SortOrder
   journal_entries?: Prisma.journal_entriesOrderByRelationAggregateInput
+  user?: Prisma.userOrderByWithRelationInput
 }
 
 export type journalsWhereUniqueInput = Prisma.AtLeast<{
@@ -224,6 +226,7 @@ export type journalsWhereUniqueInput = Prisma.AtLeast<{
   title?: Prisma.StringNullableFilter<"journals"> | string | null
   shared_with?: Prisma.StringNullableListFilter<"journals">
   journal_entries?: Prisma.Journal_entriesListRelationFilter
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
 }, "id">
 
 export type journalsOrderByWithAggregationInput = {
@@ -249,10 +252,10 @@ export type journalsScalarWhereWithAggregatesInput = {
 }
 
 export type journalsCreateInput = {
-  uuid: string
   title?: string | null
   shared_with?: Prisma.journalsCreateshared_withInput | string[]
   journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutJournalsInput
+  user: Prisma.userCreateNestedOneWithoutJournalsInput
 }
 
 export type journalsUncheckedCreateInput = {
@@ -264,10 +267,10 @@ export type journalsUncheckedCreateInput = {
 }
 
 export type journalsUpdateInput = {
-  uuid?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shared_with?: Prisma.journalsUpdateshared_withInput | string[]
   journal_entries?: Prisma.journal_entriesUpdateManyWithoutJournalsNestedInput
+  user?: Prisma.userUpdateOneRequiredWithoutJournalsNestedInput
 }
 
 export type journalsUncheckedUpdateInput = {
@@ -286,7 +289,6 @@ export type journalsCreateManyInput = {
 }
 
 export type journalsUpdateManyMutationInput = {
-  uuid?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shared_with?: Prisma.journalsUpdateshared_withInput | string[]
 }
@@ -301,14 +303,6 @@ export type journalsUncheckedUpdateManyInput = {
 export type JournalsScalarRelationFilter = {
   is?: Prisma.journalsWhereInput
   isNot?: Prisma.journalsWhereInput
-}
-
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
 }
 
 export type journalsCountOrderByAggregateInput = {
@@ -338,6 +332,16 @@ export type journalsSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
 }
 
+export type JournalsListRelationFilter = {
+  every?: Prisma.journalsWhereInput
+  some?: Prisma.journalsWhereInput
+  none?: Prisma.journalsWhereInput
+}
+
+export type journalsOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
+}
+
 export type journalsCreateNestedOneWithoutJournal_entriesInput = {
   create?: Prisma.XOR<Prisma.journalsCreateWithoutJournal_entriesInput, Prisma.journalsUncheckedCreateWithoutJournal_entriesInput>
   connectOrCreate?: Prisma.journalsCreateOrConnectWithoutJournal_entriesInput
@@ -361,10 +365,52 @@ export type journalsUpdateshared_withInput = {
   push?: string | string[]
 }
 
+export type journalsCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.journalsCreateWithoutUserInput, Prisma.journalsUncheckedCreateWithoutUserInput> | Prisma.journalsCreateWithoutUserInput[] | Prisma.journalsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.journalsCreateOrConnectWithoutUserInput | Prisma.journalsCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.journalsCreateManyUserInputEnvelope
+  connect?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+}
+
+export type journalsUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.journalsCreateWithoutUserInput, Prisma.journalsUncheckedCreateWithoutUserInput> | Prisma.journalsCreateWithoutUserInput[] | Prisma.journalsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.journalsCreateOrConnectWithoutUserInput | Prisma.journalsCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.journalsCreateManyUserInputEnvelope
+  connect?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+}
+
+export type journalsUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.journalsCreateWithoutUserInput, Prisma.journalsUncheckedCreateWithoutUserInput> | Prisma.journalsCreateWithoutUserInput[] | Prisma.journalsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.journalsCreateOrConnectWithoutUserInput | Prisma.journalsCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.journalsUpsertWithWhereUniqueWithoutUserInput | Prisma.journalsUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.journalsCreateManyUserInputEnvelope
+  set?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+  disconnect?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+  delete?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+  connect?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+  update?: Prisma.journalsUpdateWithWhereUniqueWithoutUserInput | Prisma.journalsUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.journalsUpdateManyWithWhereWithoutUserInput | Prisma.journalsUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.journalsScalarWhereInput | Prisma.journalsScalarWhereInput[]
+}
+
+export type journalsUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.journalsCreateWithoutUserInput, Prisma.journalsUncheckedCreateWithoutUserInput> | Prisma.journalsCreateWithoutUserInput[] | Prisma.journalsUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.journalsCreateOrConnectWithoutUserInput | Prisma.journalsCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.journalsUpsertWithWhereUniqueWithoutUserInput | Prisma.journalsUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.journalsCreateManyUserInputEnvelope
+  set?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+  disconnect?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+  delete?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+  connect?: Prisma.journalsWhereUniqueInput | Prisma.journalsWhereUniqueInput[]
+  update?: Prisma.journalsUpdateWithWhereUniqueWithoutUserInput | Prisma.journalsUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.journalsUpdateManyWithWhereWithoutUserInput | Prisma.journalsUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.journalsScalarWhereInput | Prisma.journalsScalarWhereInput[]
+}
+
 export type journalsCreateWithoutJournal_entriesInput = {
-  uuid: string
   title?: string | null
   shared_with?: Prisma.journalsCreateshared_withInput | string[]
+  user: Prisma.userCreateNestedOneWithoutJournalsInput
 }
 
 export type journalsUncheckedCreateWithoutJournal_entriesInput = {
@@ -391,14 +437,88 @@ export type journalsUpdateToOneWithWhereWithoutJournal_entriesInput = {
 }
 
 export type journalsUpdateWithoutJournal_entriesInput = {
-  uuid?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shared_with?: Prisma.journalsUpdateshared_withInput | string[]
+  user?: Prisma.userUpdateOneRequiredWithoutJournalsNestedInput
 }
 
 export type journalsUncheckedUpdateWithoutJournal_entriesInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   uuid?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shared_with?: Prisma.journalsUpdateshared_withInput | string[]
+}
+
+export type journalsCreateWithoutUserInput = {
+  title?: string | null
+  shared_with?: Prisma.journalsCreateshared_withInput | string[]
+  journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutJournalsInput
+}
+
+export type journalsUncheckedCreateWithoutUserInput = {
+  id?: number
+  title?: string | null
+  shared_with?: Prisma.journalsCreateshared_withInput | string[]
+  journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutJournalsInput
+}
+
+export type journalsCreateOrConnectWithoutUserInput = {
+  where: Prisma.journalsWhereUniqueInput
+  create: Prisma.XOR<Prisma.journalsCreateWithoutUserInput, Prisma.journalsUncheckedCreateWithoutUserInput>
+}
+
+export type journalsCreateManyUserInputEnvelope = {
+  data: Prisma.journalsCreateManyUserInput | Prisma.journalsCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type journalsUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.journalsWhereUniqueInput
+  update: Prisma.XOR<Prisma.journalsUpdateWithoutUserInput, Prisma.journalsUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.journalsCreateWithoutUserInput, Prisma.journalsUncheckedCreateWithoutUserInput>
+}
+
+export type journalsUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.journalsWhereUniqueInput
+  data: Prisma.XOR<Prisma.journalsUpdateWithoutUserInput, Prisma.journalsUncheckedUpdateWithoutUserInput>
+}
+
+export type journalsUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.journalsScalarWhereInput
+  data: Prisma.XOR<Prisma.journalsUpdateManyMutationInput, Prisma.journalsUncheckedUpdateManyWithoutUserInput>
+}
+
+export type journalsScalarWhereInput = {
+  AND?: Prisma.journalsScalarWhereInput | Prisma.journalsScalarWhereInput[]
+  OR?: Prisma.journalsScalarWhereInput[]
+  NOT?: Prisma.journalsScalarWhereInput | Prisma.journalsScalarWhereInput[]
+  id?: Prisma.IntFilter<"journals"> | number
+  uuid?: Prisma.StringFilter<"journals"> | string
+  title?: Prisma.StringNullableFilter<"journals"> | string | null
+  shared_with?: Prisma.StringNullableListFilter<"journals">
+}
+
+export type journalsCreateManyUserInput = {
+  id?: number
+  title?: string | null
+  shared_with?: Prisma.journalsCreateshared_withInput | string[]
+}
+
+export type journalsUpdateWithoutUserInput = {
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shared_with?: Prisma.journalsUpdateshared_withInput | string[]
+  journal_entries?: Prisma.journal_entriesUpdateManyWithoutJournalsNestedInput
+}
+
+export type journalsUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  shared_with?: Prisma.journalsUpdateshared_withInput | string[]
+  journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutJournalsNestedInput
+}
+
+export type journalsUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   shared_with?: Prisma.journalsUpdateshared_withInput | string[]
 }
@@ -440,6 +560,7 @@ export type journalsSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   title?: boolean
   shared_with?: boolean
   journal_entries?: boolean | Prisma.journals$journal_entriesArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.JournalsCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["journals"]>
 
@@ -448,6 +569,7 @@ export type journalsSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   uuid?: boolean
   title?: boolean
   shared_with?: boolean
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["journals"]>
 
 export type journalsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -455,6 +577,7 @@ export type journalsSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   uuid?: boolean
   title?: boolean
   shared_with?: boolean
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["journals"]>
 
 export type journalsSelectScalar = {
@@ -467,15 +590,21 @@ export type journalsSelectScalar = {
 export type journalsOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "uuid" | "title" | "shared_with", ExtArgs["result"]["journals"]>
 export type journalsInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   journal_entries?: boolean | Prisma.journals$journal_entriesArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.JournalsCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type journalsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
-export type journalsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type journalsIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+}
+export type journalsIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
+}
 
 export type $journalsPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "journals"
   objects: {
     journal_entries: Prisma.$journal_entriesPayload<ExtArgs>[]
+    user: Prisma.$userPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -877,6 +1006,7 @@ readonly fields: journalsFieldRefs;
 export interface Prisma__journalsClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   journal_entries<T extends Prisma.journals$journal_entriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.journals$journal_entriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$journal_entriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  user<T extends Prisma.userDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.userDefaultArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1159,6 +1289,10 @@ export type journalsCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    */
   data: Prisma.journalsCreateManyInput | Prisma.journalsCreateManyInput[]
   skipDuplicates?: boolean
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.journalsIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1229,6 +1363,10 @@ export type journalsUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many journals to update.
    */
   limit?: number
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.journalsIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**

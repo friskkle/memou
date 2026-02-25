@@ -1,24 +1,64 @@
 "use client";
-
+import React, { useState, useEffect } from "react";
 import { usePartyKitProvider } from "@/src/hooks/usePartyKitProvider";
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Collaboration from '@tiptap/extension-collaboration';
-import { useEffect, useState } from "react";
+import CollaborationCaret from '@tiptap/extension-collaboration-caret'
+import YPartyKitProvider from "y-partykit/provider";
+import * as Y from "yjs";
 
-const roomId = "simple-room";
+const roomId = "47";
 
-export default function Simple() {
-    const { ydoc, provider } = usePartyKitProvider(roomId);
-    
+const CollaborativeTitle = ({ ydoc }: { ydoc: Y.Doc }) => {
+    const [title, setTitle] = useState("");
+    const yText = ydoc.getText("title");
+
+    useEffect(() => {
+        setTitle(yText.toString());
+        const observer = () => {
+            setTitle(yText.toString());
+        };
+        yText.observe(observer);
+        return () => yText.unobserve(observer);
+    }, [yText]);
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newTitle = e.target.value;
+        setTitle(newTitle);
+        ydoc.transact(() => {
+            yText.delete(0, yText.length);
+            yText.insert(0, newTitle);
+        });
+    };
+
+    return (
+        <input
+            type="text"
+            value={title}
+            onChange={handleChange}
+            placeholder="Untitled"
+            className="w-full text-4xl font-bold border-none focus:outline-none mb-4 placeholder-gray-300"
+        />
+    );
+};
+
+const TiptapEditor = ({ provider, ydoc }: { provider: YPartyKitProvider, ydoc: Y.Doc }) => {
     const editor = useEditor({
         extensions: [
             StarterKit.configure({
-                // @ts-ignore
+                // @ts-expect-error tiptap types are not updated yet
                 history: false // Key for collaboration!
             }),
             Collaboration.configure({
                 document: ydoc,
+            }),
+            CollaborationCaret.configure({
+                provider,
+                user: {
+                    name: 'Cyndi Lauper',
+                    color: '#f783ac',
+                },
             }),
         ],
         editorProps: {
@@ -29,11 +69,11 @@ export default function Simple() {
         immediatelyRender: false,
     });
 
-    // Handle provider connection status if needed, but Tiptap works reactively with the Y.Doc
-    
-    if (!editor) {
-        return null; // or a loading spinner
-    }
+    return <EditorContent editor={editor} />;
+};
+
+export default function Simple() {
+    const { ydoc, provider, status } = usePartyKitProvider(roomId);
 
     return (
         <div className="min-h-screen flex flex-col items-center py-12 px-4 sm:px-6 lg:px-8">
@@ -50,14 +90,23 @@ export default function Simple() {
                 <div className="bg-white rounded-lg shadow-xl overflow-hidden border border-gray-200">
                     <div className="bg-gray-50 px-4 py-2 border-b border-gray-200 flex justify-between items-center">
                         <span className="text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status: {provider ? "Connected" : "Connecting..."}
+                            Status: {status === 'connected' ? "Connected" : status === 'error' ? "Error (Unauthorized)" : "Connecting..."}
                         </span>
                         <div className="flex items-center space-x-2">
-                             <div className={`h-2.5 w-2.5 rounded-full ${provider ? 'bg-green-500' : 'bg-yellow-500'}`}></div>
+                             <div className={`h-2.5 w-2.5 rounded-full ${status === 'connected' ? 'bg-green-500' : status === 'error' ? 'bg-red-500' : 'bg-yellow-500'}`}></div>
                         </div>
                     </div>
                     <div className="p-6">
-                        <EditorContent editor={editor} />
+                        {provider ? (
+                            <>
+                                <CollaborativeTitle ydoc={ydoc} />
+                                <TiptapEditor provider={provider} ydoc={ydoc} />
+                            </>
+                        ) : (
+                            <div className="h-[300px] flex items-center justify-center text-gray-400">
+                                Connecting to room...
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
