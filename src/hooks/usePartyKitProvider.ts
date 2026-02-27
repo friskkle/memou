@@ -4,13 +4,15 @@ import { useState, useEffect } from "react";
 import YPartyKitProvider from "y-partykit/provider";
 import * as Y from "yjs";
 
+const url = process.env.NEXT_PUBLIC_PARTYKIT_URL || "localhost:1999";
+
 export function usePartyKitProvider(roomId: string) {
     const [provider, setProvider] = useState<YPartyKitProvider | null>(null);
     const [ydoc] = useState(() => new Y.Doc());
     const [status, setStatus] = useState<'loading' | 'connected' | 'error' | 'disconnected'>('loading');
 
     useEffect(() => {
-        const url = process.env.PARTYKIT_URL || 'localhost:1999';
+        console.log("Connecting to PartyKit, url: " + url)
         let mounted = true;
         let providerInstance: YPartyKitProvider | null = null;
         setStatus('loading');
