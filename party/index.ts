@@ -6,6 +6,8 @@ import { getSchema } from "@tiptap/core";
 import StarterKit from "@tiptap/starter-kit";
 
 const BETTER_AUTH_SECRET = process.env.BETTER_AUTH_SECRET;
+const INTERNAL_API_SECRET = process.env.INTERNAL_API_SECRET;
+const APP_API_BASE_URL = process.env.APP_API_BASE_URL;
 
 export default class JournalServer implements Party.Server {
   constructor(public party: Party.Room) {}
@@ -52,9 +54,9 @@ export default class JournalServer implements Party.Server {
     return onConnect(conn, this.party, {
       async load() {
         console.log("Loading document for room...")
-        const entry = await fetch(process.env.APP_API_BASE_URL +"/entries/fetch?entry=" + docId + "&userId=" + userId, {
+        const entry = await fetch(APP_API_BASE_URL +"/entries/fetch?entry=" + docId + "&userId=" + userId, {
           headers: {
-            "Authorization": "Bearer " + process.env.INTERNAL_API_SECRET
+            "Authorization": "Bearer " + INTERNAL_API_SECRET
           }
         })
         if(!entry.ok) {
@@ -88,10 +90,10 @@ export default class JournalServer implements Party.Server {
           console.log("Updated content (JSON summary):", JSON.stringify(json).substring(0, 100) + "...")
           console.log("Updated title:", title)
 
-          const entry = await fetch(process.env.APP_API_BASE_URL + "/entries/update", {
+          const entry = await fetch(APP_API_BASE_URL + "/entries/update", {
             method: "POST",
             headers: {
-              "Authorization": "Bearer " + process.env.INTERNAL_API_SECRET,
+              "Authorization": "Bearer " + INTERNAL_API_SECRET,
               "Content-Type": "application/json"
             },
             body: JSON.stringify({
