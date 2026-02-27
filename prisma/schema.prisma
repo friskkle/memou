@@ -31,7 +31,10 @@ model journal_entries {
   content       String?
   created_date  DateTime @db.Date
   last_modified DateTime @db.Timestamp(6)
+  editors       String[]
+  creator       String
   journals      journals @relation(fields: [journal_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "journal_ref")
+  user          user     @relation(fields: [creator], references: [id], onDelete: NoAction, map: "user_id")
 }
 
 model journals {
@@ -40,6 +43,7 @@ model journals {
   title           String?           @db.VarChar(64)
   shared_with     String[]
   journal_entries journal_entries[]
+  user            user              @relation(fields: [uuid], references: [id], onDelete: NoAction, map: "user_id")
 }
 
 model session {
@@ -55,15 +59,17 @@ model session {
 }
 
 model user {
-  id            String    @id
-  name          String
-  email         String    @unique
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime  @default(now()) @db.Timestamptz(6)
-  updatedAt     DateTime  @default(now()) @db.Timestamptz(6)
-  account       account[]
-  session       session[]
+  id              String            @id
+  name            String
+  email           String            @unique
+  emailVerified   Boolean
+  image           String?
+  createdAt       DateTime          @default(now()) @db.Timestamptz(6)
+  updatedAt       DateTime          @default(now()) @db.Timestamptz(6)
+  account         account[]
+  journal_entries journal_entries[]
+  journals        journals[]
+  session         session[]
 }
 
 model users {

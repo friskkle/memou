@@ -43,6 +43,7 @@ export type Journal_entriesMinAggregateOutputType = {
   content: string | null
   created_date: Date | null
   last_modified: Date | null
+  creator: string | null
 }
 
 export type Journal_entriesMaxAggregateOutputType = {
@@ -52,6 +53,7 @@ export type Journal_entriesMaxAggregateOutputType = {
   content: string | null
   created_date: Date | null
   last_modified: Date | null
+  creator: string | null
 }
 
 export type Journal_entriesCountAggregateOutputType = {
@@ -61,6 +63,8 @@ export type Journal_entriesCountAggregateOutputType = {
   content: number
   created_date: number
   last_modified: number
+  editors: number
+  creator: number
   _all: number
 }
 
@@ -82,6 +86,7 @@ export type Journal_entriesMinAggregateInputType = {
   content?: true
   created_date?: true
   last_modified?: true
+  creator?: true
 }
 
 export type Journal_entriesMaxAggregateInputType = {
@@ -91,6 +96,7 @@ export type Journal_entriesMaxAggregateInputType = {
   content?: true
   created_date?: true
   last_modified?: true
+  creator?: true
 }
 
 export type Journal_entriesCountAggregateInputType = {
@@ -100,6 +106,8 @@ export type Journal_entriesCountAggregateInputType = {
   content?: true
   created_date?: true
   last_modified?: true
+  editors?: true
+  creator?: true
   _all?: true
 }
 
@@ -196,6 +204,8 @@ export type Journal_entriesGroupByOutputType = {
   content: string | null
   created_date: Date
   last_modified: Date
+  editors: string[]
+  creator: string
   _count: Journal_entriesCountAggregateOutputType | null
   _avg: Journal_entriesAvgAggregateOutputType | null
   _sum: Journal_entriesSumAggregateOutputType | null
@@ -228,7 +238,10 @@ export type journal_entriesWhereInput = {
   content?: Prisma.StringNullableFilter<"journal_entries"> | string | null
   created_date?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
   last_modified?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
+  editors?: Prisma.StringNullableListFilter<"journal_entries">
+  creator?: Prisma.StringFilter<"journal_entries"> | string
   journals?: Prisma.XOR<Prisma.JournalsScalarRelationFilter, Prisma.journalsWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
 }
 
 export type journal_entriesOrderByWithRelationInput = {
@@ -238,7 +251,10 @@ export type journal_entriesOrderByWithRelationInput = {
   content?: Prisma.SortOrderInput | Prisma.SortOrder
   created_date?: Prisma.SortOrder
   last_modified?: Prisma.SortOrder
+  editors?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
   journals?: Prisma.journalsOrderByWithRelationInput
+  user?: Prisma.userOrderByWithRelationInput
 }
 
 export type journal_entriesWhereUniqueInput = Prisma.AtLeast<{
@@ -251,7 +267,10 @@ export type journal_entriesWhereUniqueInput = Prisma.AtLeast<{
   content?: Prisma.StringNullableFilter<"journal_entries"> | string | null
   created_date?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
   last_modified?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
+  editors?: Prisma.StringNullableListFilter<"journal_entries">
+  creator?: Prisma.StringFilter<"journal_entries"> | string
   journals?: Prisma.XOR<Prisma.JournalsScalarRelationFilter, Prisma.journalsWhereInput>
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
 }, "id">
 
 export type journal_entriesOrderByWithAggregationInput = {
@@ -261,6 +280,8 @@ export type journal_entriesOrderByWithAggregationInput = {
   content?: Prisma.SortOrderInput | Prisma.SortOrder
   created_date?: Prisma.SortOrder
   last_modified?: Prisma.SortOrder
+  editors?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
   _count?: Prisma.journal_entriesCountOrderByAggregateInput
   _avg?: Prisma.journal_entriesAvgOrderByAggregateInput
   _max?: Prisma.journal_entriesMaxOrderByAggregateInput
@@ -278,6 +299,8 @@ export type journal_entriesScalarWhereWithAggregatesInput = {
   content?: Prisma.StringNullableWithAggregatesFilter<"journal_entries"> | string | null
   created_date?: Prisma.DateTimeWithAggregatesFilter<"journal_entries"> | Date | string
   last_modified?: Prisma.DateTimeWithAggregatesFilter<"journal_entries"> | Date | string
+  editors?: Prisma.StringNullableListFilter<"journal_entries">
+  creator?: Prisma.StringWithAggregatesFilter<"journal_entries"> | string
 }
 
 export type journal_entriesCreateInput = {
@@ -285,7 +308,9 @@ export type journal_entriesCreateInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
+  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
   journals: Prisma.journalsCreateNestedOneWithoutJournal_entriesInput
+  user: Prisma.userCreateNestedOneWithoutJournal_entriesInput
 }
 
 export type journal_entriesUncheckedCreateInput = {
@@ -295,6 +320,8 @@ export type journal_entriesUncheckedCreateInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
+  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
+  creator: string
 }
 
 export type journal_entriesUpdateInput = {
@@ -302,7 +329,9 @@ export type journal_entriesUpdateInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
   journals?: Prisma.journalsUpdateOneRequiredWithoutJournal_entriesNestedInput
+  user?: Prisma.userUpdateOneRequiredWithoutJournal_entriesNestedInput
 }
 
 export type journal_entriesUncheckedUpdateInput = {
@@ -312,6 +341,8 @@ export type journal_entriesUncheckedUpdateInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type journal_entriesCreateManyInput = {
@@ -321,6 +352,8 @@ export type journal_entriesCreateManyInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
+  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
+  creator: string
 }
 
 export type journal_entriesUpdateManyMutationInput = {
@@ -328,6 +361,7 @@ export type journal_entriesUpdateManyMutationInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
 }
 
 export type journal_entriesUncheckedUpdateManyInput = {
@@ -337,6 +371,16 @@ export type journal_entriesUncheckedUpdateManyInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type journal_entriesCountOrderByAggregateInput = {
@@ -346,6 +390,8 @@ export type journal_entriesCountOrderByAggregateInput = {
   content?: Prisma.SortOrder
   created_date?: Prisma.SortOrder
   last_modified?: Prisma.SortOrder
+  editors?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
 }
 
 export type journal_entriesAvgOrderByAggregateInput = {
@@ -360,6 +406,7 @@ export type journal_entriesMaxOrderByAggregateInput = {
   content?: Prisma.SortOrder
   created_date?: Prisma.SortOrder
   last_modified?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
 }
 
 export type journal_entriesMinOrderByAggregateInput = {
@@ -369,6 +416,7 @@ export type journal_entriesMinOrderByAggregateInput = {
   content?: Prisma.SortOrder
   created_date?: Prisma.SortOrder
   last_modified?: Prisma.SortOrder
+  creator?: Prisma.SortOrder
 }
 
 export type journal_entriesSumOrderByAggregateInput = {
@@ -384,6 +432,15 @@ export type Journal_entriesListRelationFilter = {
 
 export type journal_entriesOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type journal_entriesCreateeditorsInput = {
+  set: string[]
+}
+
+export type journal_entriesUpdateeditorsInput = {
+  set?: string[]
+  push?: string | string[]
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -436,11 +493,55 @@ export type journal_entriesUncheckedUpdateManyWithoutJournalsNestedInput = {
   deleteMany?: Prisma.journal_entriesScalarWhereInput | Prisma.journal_entriesScalarWhereInput[]
 }
 
+export type journal_entriesCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.journal_entriesCreateWithoutUserInput, Prisma.journal_entriesUncheckedCreateWithoutUserInput> | Prisma.journal_entriesCreateWithoutUserInput[] | Prisma.journal_entriesUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.journal_entriesCreateOrConnectWithoutUserInput | Prisma.journal_entriesCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.journal_entriesCreateManyUserInputEnvelope
+  connect?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+}
+
+export type journal_entriesUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.journal_entriesCreateWithoutUserInput, Prisma.journal_entriesUncheckedCreateWithoutUserInput> | Prisma.journal_entriesCreateWithoutUserInput[] | Prisma.journal_entriesUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.journal_entriesCreateOrConnectWithoutUserInput | Prisma.journal_entriesCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.journal_entriesCreateManyUserInputEnvelope
+  connect?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+}
+
+export type journal_entriesUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.journal_entriesCreateWithoutUserInput, Prisma.journal_entriesUncheckedCreateWithoutUserInput> | Prisma.journal_entriesCreateWithoutUserInput[] | Prisma.journal_entriesUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.journal_entriesCreateOrConnectWithoutUserInput | Prisma.journal_entriesCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.journal_entriesUpsertWithWhereUniqueWithoutUserInput | Prisma.journal_entriesUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.journal_entriesCreateManyUserInputEnvelope
+  set?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+  disconnect?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+  delete?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+  connect?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+  update?: Prisma.journal_entriesUpdateWithWhereUniqueWithoutUserInput | Prisma.journal_entriesUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.journal_entriesUpdateManyWithWhereWithoutUserInput | Prisma.journal_entriesUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.journal_entriesScalarWhereInput | Prisma.journal_entriesScalarWhereInput[]
+}
+
+export type journal_entriesUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.journal_entriesCreateWithoutUserInput, Prisma.journal_entriesUncheckedCreateWithoutUserInput> | Prisma.journal_entriesCreateWithoutUserInput[] | Prisma.journal_entriesUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.journal_entriesCreateOrConnectWithoutUserInput | Prisma.journal_entriesCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.journal_entriesUpsertWithWhereUniqueWithoutUserInput | Prisma.journal_entriesUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.journal_entriesCreateManyUserInputEnvelope
+  set?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+  disconnect?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+  delete?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+  connect?: Prisma.journal_entriesWhereUniqueInput | Prisma.journal_entriesWhereUniqueInput[]
+  update?: Prisma.journal_entriesUpdateWithWhereUniqueWithoutUserInput | Prisma.journal_entriesUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.journal_entriesUpdateManyWithWhereWithoutUserInput | Prisma.journal_entriesUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.journal_entriesScalarWhereInput | Prisma.journal_entriesScalarWhereInput[]
+}
+
 export type journal_entriesCreateWithoutJournalsInput = {
   title?: string | null
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
+  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
+  user: Prisma.userCreateNestedOneWithoutJournal_entriesInput
 }
 
 export type journal_entriesUncheckedCreateWithoutJournalsInput = {
@@ -449,6 +550,8 @@ export type journal_entriesUncheckedCreateWithoutJournalsInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
+  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
+  creator: string
 }
 
 export type journal_entriesCreateOrConnectWithoutJournalsInput = {
@@ -487,6 +590,53 @@ export type journal_entriesScalarWhereInput = {
   content?: Prisma.StringNullableFilter<"journal_entries"> | string | null
   created_date?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
   last_modified?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
+  editors?: Prisma.StringNullableListFilter<"journal_entries">
+  creator?: Prisma.StringFilter<"journal_entries"> | string
+}
+
+export type journal_entriesCreateWithoutUserInput = {
+  title?: string | null
+  content?: string | null
+  created_date: Date | string
+  last_modified: Date | string
+  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
+  journals: Prisma.journalsCreateNestedOneWithoutJournal_entriesInput
+}
+
+export type journal_entriesUncheckedCreateWithoutUserInput = {
+  id?: number
+  journal_id: number
+  title?: string | null
+  content?: string | null
+  created_date: Date | string
+  last_modified: Date | string
+  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
+}
+
+export type journal_entriesCreateOrConnectWithoutUserInput = {
+  where: Prisma.journal_entriesWhereUniqueInput
+  create: Prisma.XOR<Prisma.journal_entriesCreateWithoutUserInput, Prisma.journal_entriesUncheckedCreateWithoutUserInput>
+}
+
+export type journal_entriesCreateManyUserInputEnvelope = {
+  data: Prisma.journal_entriesCreateManyUserInput | Prisma.journal_entriesCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type journal_entriesUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.journal_entriesWhereUniqueInput
+  update: Prisma.XOR<Prisma.journal_entriesUpdateWithoutUserInput, Prisma.journal_entriesUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.journal_entriesCreateWithoutUserInput, Prisma.journal_entriesUncheckedCreateWithoutUserInput>
+}
+
+export type journal_entriesUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.journal_entriesWhereUniqueInput
+  data: Prisma.XOR<Prisma.journal_entriesUpdateWithoutUserInput, Prisma.journal_entriesUncheckedUpdateWithoutUserInput>
+}
+
+export type journal_entriesUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.journal_entriesScalarWhereInput
+  data: Prisma.XOR<Prisma.journal_entriesUpdateManyMutationInput, Prisma.journal_entriesUncheckedUpdateManyWithoutUserInput>
 }
 
 export type journal_entriesCreateManyJournalsInput = {
@@ -495,6 +645,8 @@ export type journal_entriesCreateManyJournalsInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
+  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
+  creator: string
 }
 
 export type journal_entriesUpdateWithoutJournalsInput = {
@@ -502,6 +654,8 @@ export type journal_entriesUpdateWithoutJournalsInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
+  user?: Prisma.userUpdateOneRequiredWithoutJournal_entriesNestedInput
 }
 
 export type journal_entriesUncheckedUpdateWithoutJournalsInput = {
@@ -510,6 +664,8 @@ export type journal_entriesUncheckedUpdateWithoutJournalsInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type journal_entriesUncheckedUpdateManyWithoutJournalsInput = {
@@ -518,6 +674,47 @@ export type journal_entriesUncheckedUpdateManyWithoutJournalsInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
+  creator?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type journal_entriesCreateManyUserInput = {
+  id?: number
+  journal_id: number
+  title?: string | null
+  content?: string | null
+  created_date: Date | string
+  last_modified: Date | string
+  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
+}
+
+export type journal_entriesUpdateWithoutUserInput = {
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
+  journals?: Prisma.journalsUpdateOneRequiredWithoutJournal_entriesNestedInput
+}
+
+export type journal_entriesUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  journal_id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
+}
+
+export type journal_entriesUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  journal_id?: Prisma.IntFieldUpdateOperationsInput | number
+  title?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
 }
 
 
@@ -529,7 +726,10 @@ export type journal_entriesSelect<ExtArgs extends runtime.Types.Extensions.Inter
   content?: boolean
   created_date?: boolean
   last_modified?: boolean
+  editors?: boolean
+  creator?: boolean
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["journal_entries"]>
 
 export type journal_entriesSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -539,7 +739,10 @@ export type journal_entriesSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   content?: boolean
   created_date?: boolean
   last_modified?: boolean
+  editors?: boolean
+  creator?: boolean
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["journal_entries"]>
 
 export type journal_entriesSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -549,7 +752,10 @@ export type journal_entriesSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   content?: boolean
   created_date?: boolean
   last_modified?: boolean
+  editors?: boolean
+  creator?: boolean
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["journal_entries"]>
 
 export type journal_entriesSelectScalar = {
@@ -559,23 +765,29 @@ export type journal_entriesSelectScalar = {
   content?: boolean
   created_date?: boolean
   last_modified?: boolean
+  editors?: boolean
+  creator?: boolean
 }
 
-export type journal_entriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "journal_id" | "title" | "content" | "created_date" | "last_modified", ExtArgs["result"]["journal_entries"]>
+export type journal_entriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "journal_id" | "title" | "content" | "created_date" | "last_modified" | "editors" | "creator", ExtArgs["result"]["journal_entries"]>
 export type journal_entriesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }
 export type journal_entriesIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }
 export type journal_entriesIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
+  user?: boolean | Prisma.userDefaultArgs<ExtArgs>
 }
 
 export type $journal_entriesPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "journal_entries"
   objects: {
     journals: Prisma.$journalsPayload<ExtArgs>
+    user: Prisma.$userPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -584,6 +796,8 @@ export type $journal_entriesPayload<ExtArgs extends runtime.Types.Extensions.Int
     content: string | null
     created_date: Date
     last_modified: Date
+    editors: string[]
+    creator: string
   }, ExtArgs["result"]["journal_entries"]>
   composites: {}
 }
@@ -979,6 +1193,7 @@ readonly fields: journal_entriesFieldRefs;
 export interface Prisma__journal_entriesClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   journals<T extends Prisma.journalsDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.journalsDefaultArgs<ExtArgs>>): Prisma.Prisma__journalsClient<runtime.Types.Result.GetResult<Prisma.$journalsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  user<T extends Prisma.userDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.userDefaultArgs<ExtArgs>>): Prisma.Prisma__userClient<runtime.Types.Result.GetResult<Prisma.$userPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1014,6 +1229,8 @@ export interface journal_entriesFieldRefs {
   readonly content: Prisma.FieldRef<"journal_entries", 'String'>
   readonly created_date: Prisma.FieldRef<"journal_entries", 'DateTime'>
   readonly last_modified: Prisma.FieldRef<"journal_entries", 'DateTime'>
+  readonly editors: Prisma.FieldRef<"journal_entries", 'String[]'>
+  readonly creator: Prisma.FieldRef<"journal_entries", 'String'>
 }
     
 

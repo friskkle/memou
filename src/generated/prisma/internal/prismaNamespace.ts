@@ -992,7 +992,9 @@ export const Journal_entriesScalarFieldEnum = {
   title: 'title',
   content: 'content',
   created_date: 'created_date',
-  last_modified: 'last_modified'
+  last_modified: 'last_modified',
+  editors: 'editors',
+  creator: 'creator'
 } as const
 
 export type Journal_entriesScalarFieldEnum = (typeof Journal_entriesScalarFieldEnum)[keyof typeof Journal_entriesScalarFieldEnum]
