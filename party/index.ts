@@ -125,6 +125,7 @@ export default class JournalServer implements Party.Server {
                 entry_id: docId,
                 title: title,
                 content: JSON.stringify(json),
+                userId: userId,
               }),
             },
           );
