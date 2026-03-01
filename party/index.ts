@@ -7,6 +7,7 @@ import StarterKit from '@tiptap/starter-kit';
 
 export default class JournalServer implements Party.Server {
   appUrl: any;
+  connectionCount: number = 0;
   constructor(public party: Party.Room) {
     this.appUrl = this.party.env.APP_API_BASE_URL;
   }
@@ -50,30 +51,16 @@ export default class JournalServer implements Party.Server {
       url: ${new URL(ctx.request.url).pathname}`,
     );
 
+    // Save user and document info for room
     const userId = ctx.request.headers.get('x-user-id');
     const docId = this.party.id;
     console.log(`User ID: ${userId}`);
 
     return onConnect(conn, this.party, {
       async load() {
-        console.log(
-          'Loading document for room: ' + docId + ' for user: ' + userId,
-        );
-        console.log(
-          'fetching in: ',
-          process.env.APP_API_BASE_URL +
-            '/entries/fetch?entry=' +
-            docId +
-            '&userId=' +
-            userId,
-        );
-        const entry = await fetch(
-          process.env.APP_API_BASE_URL +
-            '/entries/fetch?entry=' +
-            docId +
-            '&userId=' +
-            userId,
-          {
+        console.log(`Loading document for room: ${docId} for user: ${userId}`);
+        console.log(`fetching in: ${process.env.APP_API_BASE_URL}/entries/fetch?entry=${docId}&userId=${userId}`);
+        const entry = await fetch(`${process.env.APP_API_BASE_URL}/entries/fetch?entry=${docId}&userId=${userId}`, {
             headers: {
               Authorization: 'Bearer ' + process.env.INTERNAL_API_SECRET,
             },
@@ -87,6 +74,7 @@ export default class JournalServer implements Party.Server {
           return null;
         }
 
+        // Set up document from database
         const schema = getSchema([StarterKit]);
         const json = JSON.parse(data.content);
         const ydoc = prosemirrorJSONToYDoc(schema, json, 'default');
@@ -99,6 +87,7 @@ export default class JournalServer implements Party.Server {
         return ydoc;
       },
       callback: {
+        // Handle changes to the document made by users
         handler: async (ydoc) => {
           console.log(`Document updated in room: ${this.party.id}`);
 
@@ -113,6 +102,7 @@ export default class JournalServer implements Party.Server {
           );
           console.log('Updated title:', title);
 
+          // Push changes to database
           const entry = await fetch(
             process.env.APP_API_BASE_URL + '/entries/update',
             {
@@ -133,7 +123,9 @@ export default class JournalServer implements Party.Server {
             console.error('Failed to update entry');
           }
         },
+        // Wait for 2 seconds of inactivity before pushing
         debounceWait: 2000,
+        // Wait 10 seconds at most, then push anyway
         debounceMaxWait: 10000,
       },
     });

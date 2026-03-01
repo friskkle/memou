@@ -4,6 +4,7 @@ interface ButtonProps {
   isActive?: boolean
   children: React.ReactNode
   className?: string
+  title?: string
 }
 
 export const OptionButton = ({ 
@@ -11,12 +12,14 @@ export const OptionButton = ({
   disabled = false, 
   isActive = false,
   children,
-  className = ''
+  className = '',
+  title
 }: ButtonProps) => {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
+      title={title}
       className={`
         px-2 py-1 text-sm rounded-md
         transition-colors duration-200

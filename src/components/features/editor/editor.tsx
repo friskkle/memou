@@ -6,13 +6,14 @@ import { Editor, Extensions, useEditorState, useEditor, EditorContent } from '@t
 import { useState, useEffect, useCallback } from 'react'
 import SlashMenu from '@/src/components/features/editor/commands-menu'
 import { MenuPosition, CommandRange } from '@/src/components/features/editor/types'
-import { OptionButton, ButtonGroup } from '@/src/components/ui/EditorButton'
+import { MenuBar } from './menu-bar'
 import styles from './EditorStyles.module.css'
 import Collaboration from '@tiptap/extension-collaboration'
 import CollaborationCaret from '@tiptap/extension-collaboration-caret'
 import { usePartyKitProvider } from '@/src/hooks/usePartyKitProvider'
 import * as Y from 'yjs'
 import YPartyKitProvider from 'y-partykit/provider'
+import { EditorSkeleton, ListSkeleton } from "../../elements/skeletons"
 
 export const editorExtensions: Extensions = [
   StarterKit.configure({
@@ -36,160 +37,6 @@ export const editorProps = {
   }
 } as const
 
-function MenuBar({ editor }: { editor: Editor }) {
-  // Read the current editor's state, and re-render the component when it changes
-  const editorState = useEditorState({
-    editor,
-    selector: ctx => {
-      return {
-        isBold: ctx.editor.isActive('bold') ?? false,
-        canBold: ctx.editor.can().chain().toggleBold().run() ?? false,
-        isItalic: ctx.editor.isActive('italic') ?? false,
-        canItalic: ctx.editor.can().chain().toggleItalic().run() ?? false,
-        isStrike: ctx.editor.isActive('strike') ?? false,
-        canStrike: ctx.editor.can().chain().toggleStrike().run() ?? false,
-        isCode: ctx.editor.isActive('code') ?? false,
-        canCode: ctx.editor.can().chain().toggleCode().run() ?? false,
-        canClearMarks: ctx.editor.can().chain().unsetAllMarks().run() ?? false,
-        isParagraph: ctx.editor.isActive('paragraph') ?? false,
-        isHeading1: ctx.editor.isActive('heading', { level: 1 }) ?? false,
-        isHeading2: ctx.editor.isActive('heading', { level: 2 }) ?? false,
-        isHeading3: ctx.editor.isActive('heading', { level: 3 }) ?? false,
-        isHeading4: ctx.editor.isActive('heading', { level: 4 }) ?? false,
-        isHeading5: ctx.editor.isActive('heading', { level: 5 }) ?? false,
-        isHeading6: ctx.editor.isActive('heading', { level: 6 }) ?? false,
-        isBulletList: ctx.editor.isActive('bulletList') ?? false,
-        isOrderedList: ctx.editor.isActive('orderedList') ?? false,
-        isCodeBlock: ctx.editor.isActive('codeBlock') ?? false,
-        isBlockquote: ctx.editor.isActive('blockquote') ?? false,
-        canUndo: ctx.editor.can().chain().undo().run() ?? false,
-        canRedo: ctx.editor.can().chain().redo().run() ?? false,
-      }
-    },
-  })
-
-  return (
-    <div className="bg-white border-b border-gray-200">
-      <ButtonGroup>
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleBold().run()}
-          disabled={!editorState.canBold}
-          isActive={editorState.isBold}
-        >
-          Bold
-        </OptionButton>
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-          disabled={!editorState.canItalic}
-          isActive={editorState.isItalic}
-        >
-          Italic
-        </OptionButton>
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleStrike().run()}
-          disabled={!editorState.canStrike}
-          isActive={editorState.isStrike}
-        >
-          Strike
-        </OptionButton>
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleCode().run()}
-          disabled={!editorState.canCode}
-          isActive={editorState.isCode}
-        >
-          Code
-        </OptionButton>
-
-        <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
-
-        <OptionButton onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-          Clear marks
-        </OptionButton>
-        <OptionButton onClick={() => editor.chain().focus().clearNodes().run()}>
-          Clear nodes
-        </OptionButton>
-
-        <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
-
-        <OptionButton
-          onClick={() => editor.chain().focus().setParagraph().run()}
-          isActive={editorState.isParagraph}
-        >
-          Paragraph
-        </OptionButton>
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-          isActive={editorState.isHeading1}
-        >
-          H1
-        </OptionButton>
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-          isActive={editorState.isHeading2}
-        >
-          H2
-        </OptionButton>
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-          isActive={editorState.isHeading3}
-        >
-          H3
-        </OptionButton>
-
-        <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
-
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-          isActive={editorState.isBulletList}
-        >
-          Bullet list
-        </OptionButton>
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-          isActive={editorState.isOrderedList}
-        >
-          Ordered list
-        </OptionButton>
-
-        <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
-
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-          isActive={editorState.isCodeBlock}
-        >
-          Code block
-        </OptionButton>
-        <OptionButton
-          onClick={() => editor.chain().focus().toggleBlockquote().run()}
-          isActive={editorState.isBlockquote}
-        >
-          Blockquote
-        </OptionButton>
-        <OptionButton onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-          Horizontal rule
-        </OptionButton>
-        <OptionButton onClick={() => editor.chain().focus().setHardBreak().run()}>
-          Hard break
-        </OptionButton>
-
-        <div className="w-px h-6 bg-gray-200 mx-2 self-center" />
-
-        <OptionButton
-          onClick={() => editor.chain().focus().undo().run()}
-          disabled={!editorState.canUndo}
-        >
-          Undo
-        </OptionButton>
-        <OptionButton
-          onClick={() => editor.chain().focus().redo().run()}
-          disabled={!editorState.canRedo}
-        >
-          Redo
-        </OptionButton>
-      </ButtonGroup>
-    </div>
-  )
-}
 
 // --- Collaborative Title (synced via Yjs shared text) ---
 const CollaborativeTitle = ({ ydoc }: { ydoc: Y.Doc }) => {
@@ -333,7 +180,7 @@ const CollaborativeTiptapEditor = ({ provider, ydoc, userName, userColor }: {
 
   return (
     <>
-      <div className="mt-2 mb-2 bg-gray-500">
+      <div className="mt-2 mb-2 sticky top-2 z-10 w-full">
         {editor && <MenuBar editor={editor} />}
       </div>
       <div
@@ -385,19 +232,7 @@ export const CollaborativeEditor = ({ entryId, userName }: { entryId: string, us
           />
         </>
       ) : (
-        <div>
-          <div className="flex items-center gap-2 mt-1 mb-1">
-            <div className={`h-2 w-2 rounded-full ${
-              status === 'connected' ? 'bg-green-500' : status === 'error' ? 'bg-red-500' : 'bg-yellow-500 animate-pulse'
-            }`} />
-            <span className="text-xs text-gray-400">
-              {status === 'connected' ? 'Synced' : status === 'error' ? 'Connection error' : 'Syncing...'}
-            </span>
-          </div>
-          <div className="bg-white rounded-lg p-8 min-h-[300px] shadow-xl relative hover:cursor-text">
-            Connecting to collaborative session...
-          </div>
-        </div>
+        <EditorSkeleton />
       )}
     </div>
   )
