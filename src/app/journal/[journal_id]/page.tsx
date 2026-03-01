@@ -19,7 +19,7 @@ const Entries = async (props: {
   const entries = await fetchEntries(journal_id, session!.user.id);
 
   return (
-    <div className="max-w-4xl mx-auto p-4 relative">
+    <div className="max-w-4xl mx-auto p-2 md:p-4 mt-2 relative">
       <span className="flex flex-row justify-between items-center mb-4">
         <p className="text-3xl font-bold">Entries</p>
         <PrimaryButton

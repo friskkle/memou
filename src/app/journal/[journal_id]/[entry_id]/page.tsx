@@ -25,7 +25,7 @@ const Journal = async (props: { params: Promise<{ entry_id: string }> }): Promis
   } */
 
   return (
-    <div className="max-w-4xl mx-auto md:p-4 relative">
+    <div className="max-w-4xl mx-auto p-2 md:p-4 mt-2 relative">
       <CollaborativeEditor entryId={entry_id} userName={session.user.name || session.user.email} />
       
       {/* Helper text */}

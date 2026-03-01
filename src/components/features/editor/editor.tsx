@@ -184,7 +184,7 @@ const CollaborativeTiptapEditor = ({ provider, ydoc, userName, userColor }: {
         {editor && <MenuBar editor={editor} />}
       </div>
       <div
-        className="bg-white rounded-lg p-8 min-h-[300px] shadow-xl relative hover:cursor-text"
+        className="bg-white rounded-lg p-8 min-h-96 shadow-xl relative hover:cursor-text"
         onClick={focusEditor}
       >
         <EditorContent editor={editor} />
@@ -215,7 +215,7 @@ export const CollaborativeEditor = ({ entryId, userName }: { entryId: string, us
         <>
           <div className="flex">
             <CollaborativeTitle ydoc={ydoc} />
-            <div className="flex items-center gap-2 mt-1 mb-1 ml-auto">
+            <div className="flex items-center gap-2 mt-2 mb-1 ml-auto">
               <div className={`h-2 w-2 rounded-full ${
                 status === 'connected' ? 'bg-green-500' : status === 'error' ? 'bg-red-500' : 'bg-yellow-500 animate-pulse'
               }`} />

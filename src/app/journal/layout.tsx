@@ -12,7 +12,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
     redirect('/signin');
   }
   return (
-    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden bg-cream">
+    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
       <div className="p-4 flex md:flex-col gap-1">
         <BackButton />
         <div onClick={signOutAction} className="mt-auto ml-auto w-fit p-3 select-none text-sm font-bold rounded-lg
@@ -21,7 +21,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
           Sign Out
         </div>
       </div>
-      <div className="grow md:px-6 md:overflow-y-auto p-3 md:p-4">
+      <div className="grow md:overflow-y-auto p-3 md:p-4">
         {children}
       </div>
     </div>
