@@ -2,7 +2,7 @@
 
 import StarterKit from "@tiptap/starter-kit"
 import { SlashCommandsExtension } from './commands-list'
-import { Editor, Extensions, useEditorState, useEditor, EditorContent } from '@tiptap/react'
+import { Extensions, useEditor, EditorContent } from '@tiptap/react'
 import { useState, useEffect, useCallback } from 'react'
 import SlashMenu from '@/src/components/features/editor/commands-menu'
 import { MenuPosition, CommandRange } from '@/src/components/features/editor/types'
@@ -13,7 +13,7 @@ import CollaborationCaret from '@tiptap/extension-collaboration-caret'
 import { usePartyKitProvider } from '@/src/hooks/usePartyKitProvider'
 import * as Y from 'yjs'
 import YPartyKitProvider from 'y-partykit/provider'
-import { EditorSkeleton, ListSkeleton } from "../../elements/skeletons"
+import { EditorSkeleton } from "../../elements/skeletons"
 
 export const editorExtensions: Extensions = [
   StarterKit.configure({
@@ -180,7 +180,7 @@ const CollaborativeTiptapEditor = ({ provider, ydoc, userName, userColor }: {
 
   return (
     <>
-      <div className="mt-2 mb-2 sticky top-2 z-10 w-full">
+      <div className="mb-2 sticky top-0 z-10 w-full">
         {editor && <MenuBar editor={editor} />}
       </div>
       <div

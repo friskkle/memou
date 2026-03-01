@@ -1,6 +1,6 @@
 import { Editor } from '@tiptap/react'
 import { useEditorState } from '@tiptap/react'
-import { OptionButton, ButtonGroup } from '@/src/components/ui/EditorButton'
+import { OptionButton } from '@/src/components/ui/EditorButton'
 import FormatBoldIcon from '@mui/icons-material/FormatBold'
 import FormatItalicIcon from '@mui/icons-material/FormatItalic'
 import StrikethroughSIcon from '@mui/icons-material/StrikethroughS'
@@ -49,7 +49,7 @@ export function MenuBar({ editor }: { editor: Editor }) {
   }
 
   return (
-    <div className="bg-white border border-gray-100 shadow-sm rounded-lg overflow-hidden transition-all duration-200 sticky top-0 z-10 p-1 w-full flex items-center flex-wrap gap-1">
+    <div className="bg-white border border-gray-100 shadow-sm rounded-lg overflow-hidden transition-all duration-200 p-1 w-full flex items-center flex-wrap gap-1">
       <OptionButton
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editorState.canBold}
