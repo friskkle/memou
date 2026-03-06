@@ -1,13 +1,10 @@
 import BackButton from "@/src/components/elements/back";
 import { signOutAction } from "@/src/lib/actions/auth";
-import { auth } from "@/src/lib/auth";
-import { headers } from "next/headers";
+import { getSession } from "@/src/lib/auth";
 import { redirect } from "next/navigation";
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
-  const session = await auth.api.getSession({
-    headers: await headers()
-  });
+  const session = await getSession();
   if(!session) {
     redirect('/signin');
   }

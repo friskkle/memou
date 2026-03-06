@@ -1,15 +1,12 @@
 export const dynamic = "force-dynamic"
 
 import { CollaborativeEditor } from '@/src/components/features/editor/editor'
-import { auth } from '@/src/lib/auth'
-import { headers } from 'next/headers'
+import { getSession } from '@/src/lib/auth'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
 const Journal = async (props: { params: Promise<{ entry_id: string }> }): Promise<React.ReactElement> => {
-  const session = await auth.api.getSession({
-    headers: await headers()
-  })
+  const session = await getSession()
 
   if (!session) {
     redirect('/signin')

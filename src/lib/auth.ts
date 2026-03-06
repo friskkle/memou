@@ -1,8 +1,16 @@
 import { betterAuth } from "better-auth";
 import { nextCookies } from "better-auth/next-js";
 import { Pool } from "pg";
+import { headers } from "next/headers";
+import { cache } from "react";
 
 import { sendEmail } from "./email";
+
+export const getSession = cache(async () => {
+  return await auth.api.getSession({
+    headers: await headers()
+  });
+});
 
 export const auth = betterAuth({
   database: new Pool({

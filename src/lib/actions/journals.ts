@@ -10,8 +10,7 @@ import {
   deleteJournalId,
   editEntry,
 } from '../journals';
-import { auth } from '../auth';
-import { headers } from 'next/headers';
+import { getSession } from '../auth';
 
 // State for journal creation form validation
 export type State = {
@@ -36,9 +35,7 @@ export async function createEntry(
   console.log('Creating a new entry');
   let returning_id = 0;
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getSession();
 
   if (!session) {
     throw new Error('Unauthorized');
@@ -62,9 +59,7 @@ export async function updateEntry(
   content: string,
 ): Promise<void> {
   // Get user ID from session
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getSession();
   if (!session) {
     throw new Error('Unauthorized');
   }
@@ -81,9 +76,7 @@ export async function updateEntry(
 export async function deleteEntry(entry_id: number): Promise<void> {
   try {
     // Get user ID from session
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
+    const session = await getSession();
     if (!session) {
       throw new Error('Unauthorized');
     }
@@ -136,9 +129,7 @@ export async function createJournal(prevState: State, formData: FormData) {
 export async function deleteJournal(id: number): Promise<void> {
   try {
     // Get user ID from session
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
+    const session = await getSession();
     if (!session) {
       throw new Error('Unauthorized');
     }

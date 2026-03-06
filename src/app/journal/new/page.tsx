@@ -1,13 +1,10 @@
 import React from 'react';
 import { CreateJournalForm } from '@/src/components/features/forms/journal-form';
-import { auth } from '@/src/lib/auth';
-import { headers } from 'next/headers';
+import { getSession } from '@/src/lib/auth';
 import { redirect } from 'next/navigation';
 
 export default async function NewJournalPage() {
-  const session = await auth.api.getSession({
-    headers: await headers()
-  })
+  const session = await getSession();
   if (!session) {
     redirect('/signin');
   }

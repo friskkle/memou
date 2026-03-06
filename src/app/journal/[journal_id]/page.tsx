@@ -5,18 +5,21 @@ import { fetchEntries } from '@/src/lib/journals';
 import { createEntry } from '@/src/lib/actions/journals';
 import { EntryList } from '@/src/components/features/list/entry-list';
 import { PrimaryButton } from '@/src/components/elements/primary-button';
-import { auth } from '@/src/lib/auth';
-import { headers } from 'next/headers';
+import { getSession } from '@/src/lib/auth';
+import { redirect } from 'next/navigation';
 
 const Entries = async (props: {
   params: Promise<{ journal_id: string }>;
 }): Promise<React.ReactElement> => {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await getSession();
+
+  if (!session) {
+    redirect('/signin');
+  }
+
   const params = await props.params;
   const journal_id = params.journal_id;
-  const entries = await fetchEntries(journal_id, session!.user.id);
+  const entries = await fetchEntries(journal_id, session.user.id);
 
   return (
     <div className="max-w-4xl mx-auto p-2 md:p-4 mt-2 relative">

@@ -4,15 +4,12 @@ import React from "react";
 import { fetchJournals } from "@/src/lib/journals";
 import { PrimaryButton } from "@/src/components/elements/primary-button";
 import { JournalList } from "@/src/components/features/list/journal-list";
-import { auth } from "@/src/lib/auth";
-import { headers } from "next/headers";
+import { getSession } from "@/src/lib/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
 const Journals = async (): Promise<React.ReactElement> => {
-  const session = await auth.api.getSession({ // find a way if we can remove this and just use the session in layout for user id
-    headers: await headers()
-  });
+  const session = await getSession();
   if(!session) {
     redirect('/signin');
   }

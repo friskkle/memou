@@ -1,13 +1,10 @@
 
-import { auth } from "@/src/lib/auth";
-import { headers } from "next/headers";
+import { getSession } from "@/src/lib/auth";
 import { SignJWT } from "jose";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-    const session = await auth.api.getSession({
-        headers: await headers()
-    });
+    const session = await getSession();
     console.log("Getting token for user", session?.user.id)
 
     if (!session) {
