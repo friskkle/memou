@@ -26,6 +26,7 @@ const JournalFormSchema = z.object({
     .min(1, { message: 'Title is required' })
     .max(100, { message: 'Title must be less than 100 characters' }),
   uuid: z.string(),
+  shared_with: z.string().optional(),
 });
 
 export async function createEntry(
@@ -102,6 +103,7 @@ export async function createJournal(prevState: State, formData: FormData) {
   const validatedFields = JournalFormSchema.safeParse({
     title: formData.get('title'),
     uuid: formData.get('uuid'),
+    shared_with: formData.get('shared_with'),
   });
   if (!validatedFields.success) {
     return {
@@ -110,11 +112,21 @@ export async function createJournal(prevState: State, formData: FormData) {
     };
   }
 
-  const { title, uuid } = validatedFields.data;
+  const { title, uuid, shared_with } = validatedFields.data;
+  let shared_with_array: string[] = [];
+  
+  if (shared_with) {
+    try {
+      shared_with_array = JSON.parse(shared_with);
+    } catch (e) {
+      console.error('Failed to parse shared_with', e);
+    }
+  }
+
   let returning_id = 0;
 
   try {
-    const journal = await createNewJournal(uuid, title);
+    const journal = await createNewJournal(uuid, title, shared_with_array);
     returning_id = journal.id;
     revalidatePath(`/journal`);
   } catch (error) {

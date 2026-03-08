@@ -112,7 +112,7 @@ export default class JournalServer implements Party.Server {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                entry_id: docId,
+                entry_id: parseInt(docId),
                 title: title,
                 content: JSON.stringify(json),
                 userId: userId,

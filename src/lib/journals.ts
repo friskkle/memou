@@ -30,13 +30,14 @@ export async function fetchJournals(uid: string): Promise<Journal[]> {
 export async function createNewJournal(
   uid: string,
   title: string,
+  shared_with: string[] = [],
 ): Promise<Journal> {
   try {
     const journal = await prisma.journals.create({
       data: {
         uuid: uid,
         title: title,
-        shared_with: [],
+        shared_with: shared_with,
       },
     });
     return journal;
@@ -159,6 +160,17 @@ export async function createNewEntry(
   creator: string,
 ) {
   try {
+    const journal = await prisma.journals.findUnique({
+      where: { id: journal_id },
+      select: { uuid: true, shared_with: true },
+    });
+
+    if (!journal) {
+      throw new Error('Journal not found');
+    }
+
+    const editors = Array.from(new Set([journal.uuid, ...journal.shared_with]));
+
     const entry = await prisma.journal_entries.create({
       data: {
         journal_id,
@@ -167,7 +179,7 @@ export async function createNewEntry(
         created_date: new Date(),
         last_modified: new Date(),
         creator,
-        editors: [],
+        editors: editors.filter(id => id !== creator),
       },
     });
     return entry;
