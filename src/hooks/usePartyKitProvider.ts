@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import YPartyKitProvider from "y-partykit/provider";
 import * as Y from "yjs";
 
@@ -10,9 +10,9 @@ export function usePartyKitProvider(roomId: string) {
     const [provider, setProvider] = useState<YPartyKitProvider | null>(null);
     const [ydoc] = useState(() => new Y.Doc());
     const [status, setStatus] = useState<'loading' | 'connected' | 'error' | 'disconnected'>('loading');
+    const hasConnected = useRef(false);
 
     useEffect(() => {
-        console.log("Connecting to PartyKit, url: " + url)
         let mounted = true;
         let providerInstance: YPartyKitProvider | null = null;
         setStatus('loading');
@@ -41,7 +41,18 @@ export function usePartyKitProvider(roomId: string) {
                 );
                 
                 providerInstance.on('sync', (connected: boolean) => {
-                    if (mounted) setStatus(connected ? 'connected' : 'loading');
+                    if(!mounted) return;
+                    if (connected) {
+                        if (hasConnected.current) {
+                            // if this is a reconnection, refresh the current ydoc
+                            const yxml = ydoc.get("default", Y.XmlFragment);
+                            ydoc.transact(() => {
+                                yxml.delete(0, yxml.length);
+                            });
+                        }
+                        hasConnected.current = true;
+                    }
+                    setStatus(connected ? 'connected' : 'loading');
                 });
                 
                 providerInstance.on('connection-error', () => {
@@ -59,6 +70,7 @@ export function usePartyKitProvider(roomId: string) {
 
         return () => {
             mounted = false;
+            hasConnected.current = false;
             if (providerInstance) {
                 providerInstance.destroy();
             }
