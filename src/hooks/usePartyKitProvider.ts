@@ -8,7 +8,7 @@ const url = process.env.NEXT_PUBLIC_PARTYKIT_URL || "localhost:1999";
 
 export function usePartyKitProvider(roomId: string) {
     const [provider, setProvider] = useState<YPartyKitProvider | null>(null);
-    const [ydoc] = useState(() => new Y.Doc());
+    const [ydoc, setYdoc] = useState(() => new Y.Doc());
     const [status, setStatus] = useState<'loading' | 'connected' | 'error' | 'disconnected'>('loading');
     const hasConnected = useRef(false);
 
@@ -29,11 +29,18 @@ export function usePartyKitProvider(roomId: string) {
                 const { token } = await res.json();
 
                 if (!mounted) return;
+                
+                // On reconnection, create a fresh YDoc before connecting
+                // so there's nothing to broadcast to the server
+                const currentYdoc = hasConnected.current ? new Y.Doc() : ydoc;
+                if (hasConnected.current) {
+                    setYdoc(currentYdoc);
+                }
 
                 providerInstance = new YPartyKitProvider(
                     url,
                     roomId,
-                    ydoc,
+                    currentYdoc,
                     {
                         connect: true,
                         params: { token }, // Pass token in query params
@@ -43,13 +50,6 @@ export function usePartyKitProvider(roomId: string) {
                 providerInstance.on('sync', (connected: boolean) => {
                     if(!mounted) return;
                     if (connected) {
-                        if (hasConnected.current) {
-                            // if this is a reconnection, refresh the current ydoc
-                            const yxml = ydoc.get("default", Y.XmlFragment);
-                            ydoc.transact(() => {
-                                yxml.delete(0, yxml.length);
-                            });
-                        }
                         hasConnected.current = true;
                     }
                     setStatus(connected ? 'connected' : 'loading');
@@ -75,7 +75,7 @@ export function usePartyKitProvider(roomId: string) {
                 providerInstance.destroy();
             }
         };
-    }, [roomId, ydoc]);
+    }, [roomId]);
 
     return { provider, ydoc, status }
 }
