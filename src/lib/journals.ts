@@ -15,11 +15,33 @@ export async function fetchJournals(uid: string): Promise<Journal[]> {
       },
     });
 
-    return journals.map((journal: Journal) => ({
+    // Collect all unique user IDs (owners + shared_with) across all journals
+    const allUserIds = Array.from(
+      new Set([
+        ...journals.map((j) => j.uuid),
+        ...journals.flatMap((j) => j.shared_with),
+      ])
+    );
+
+    // Batch-resolve user names
+    let userNameMap: Record<string, string> = {};
+    if (allUserIds.length > 0) {
+      const users = await prisma.user.findMany({
+        where: { id: { in: allUserIds } },
+        select: { id: true, name: true },
+      });
+      userNameMap = Object.fromEntries(users.map((u) => [u.id, u.name]));
+    }
+
+    return journals.map((journal) => ({
       id: journal.id,
       uuid: journal.uuid,
       title: journal.title || '',
       shared_with: journal.shared_with,
+      shared_with_names: journal.shared_with
+        .filter((id) => id !== uid)
+        .map((id) => userNameMap[id] || 'Unknown'),
+      creator_name: userNameMap[journal.uuid] || 'Unknown',
     }));
   } catch (error) {
     console.error('Error fetching journals:', error);
@@ -40,7 +62,7 @@ export async function createNewJournal(
         shared_with: shared_with,
       },
     });
-    return journal;
+    return {...journal, shared_with_names: [], creator_name: ''};
   } catch (error) {
     console.error('Error creating journal:', error);
     throw error;

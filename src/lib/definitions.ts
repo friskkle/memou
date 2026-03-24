@@ -5,6 +5,8 @@ export type Journal = {
     uuid: string;
     title: nullable<string>;
     shared_with: string[];
+    shared_with_names: string[];
+    creator_name: string;
 }
 
 export type Entry = {
