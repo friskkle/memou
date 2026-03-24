@@ -8,10 +8,10 @@ const url = process.env.NEXT_PUBLIC_PARTYKIT_URL || "localhost:1999";
 
 export function usePartyKitProvider(roomId: string) {
     const [provider, setProvider] = useState<YPartyKitProvider | null>(null);
-    const [ydoc, setYdoc] = useState(() => new Y.Doc());
     const [status, setStatus] = useState<'loading' | 'connected' | 'error' | 'disconnected'>('loading');
     const hasConnected = useRef(false);
-
+    const ydocRef = useRef<Y.Doc>(new Y.Doc());
+    const [ydoc, setYdoc] = useState<Y.Doc>(() => ydocRef.current);
     useEffect(() => {
         let mounted = true;
         let providerInstance: YPartyKitProvider | null = null;
@@ -32,15 +32,16 @@ export function usePartyKitProvider(roomId: string) {
                 
                 // On reconnection, create a fresh YDoc before connecting
                 // so there's nothing to broadcast to the server
-                const currentYdoc = hasConnected.current ? new Y.Doc() : ydoc;
                 if (hasConnected.current) {
-                    setYdoc(currentYdoc);
+                    ydocRef.current.destroy();
+                    ydocRef.current = new Y.Doc();
+                    setYdoc(ydocRef.current);
                 }
 
                 providerInstance = new YPartyKitProvider(
                     url,
                     roomId,
-                    currentYdoc,
+                    ydocRef.current,
                     {
                         connect: true,
                         params: { token }, // Pass token in query params
@@ -75,6 +76,7 @@ export function usePartyKitProvider(roomId: string) {
                 providerInstance.destroy();
             }
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [roomId]);
 
     return { provider, ydoc, status }
