@@ -9,6 +9,7 @@ import React from "react";
 import { ConfirmationModal } from "@/src/components/ui/ConfirmationModal";
 import { Menu, MenuItem, IconButton, ListItemIcon, ListItemText } from "@mui/material";
 import { motion } from "framer-motion";
+import { redirect } from 'next/navigation';
 
 
 export function JournalActionMenu({ journal_id }: { journal_id: number }) {
@@ -23,6 +24,11 @@ export function JournalActionMenu({ journal_id }: { journal_id: number }) {
 
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleEditClick = () => {
+    handleClose();
+    redirect(`/journal/${journal_id}/edit`);
   };
 
   const handleDeleteClick = () => {
@@ -83,7 +89,7 @@ export function JournalActionMenu({ journal_id }: { journal_id: number }) {
         }}
       >
         <MenuItem
-          onClick={handleClose}
+          onClick={handleEditClick}
           disableRipple
           sx={{
             py: 1,

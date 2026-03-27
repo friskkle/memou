@@ -9,10 +9,11 @@ import {
   deleteJournalEntry,
   deleteJournalId,
   editEntry,
+  editJournalId,
 } from '../journals';
 import { getSession } from '../auth';
 
-// State for journal creation form validation
+// State for journal creation and editing form validation
 export type State = {
   message?: string | null;
   errors?: {
@@ -99,6 +100,7 @@ export async function deleteEntry(entry_id: number): Promise<void> {
   }
 }
 
+// Journal actions
 export async function createJournal(prevState: State, formData: FormData) {
   const validatedFields = JournalFormSchema.safeParse({
     title: formData.get('title'),
@@ -136,6 +138,54 @@ export async function createJournal(prevState: State, formData: FormData) {
     };
   }
   redirect(`/journal/${returning_id}`);
+}
+
+export async function editJournal(prevState: State, formData: FormData) {
+  const validatedFields = JournalFormSchema.safeParse({
+    title: formData.get('title'),
+    uuid: formData.get('uuid'), // we will reuse the zod schema from journal creation but in this submission, the uuid is the journal ID
+    shared_with: formData.get('shared_with'),
+  });
+  if (!validatedFields.success) {
+    return {
+      errors: validatedFields.error.flatten().fieldErrors,
+      message: 'Missing fields, failed to create journal.',
+    };
+  }
+
+  // authorization check, send the creator ID for authorization check in the server shared service layer
+  const session = await getSession();
+  if (!session) {
+    throw new Error('Unauthorized');
+  }
+  const creatorId = session.user.id;
+
+  // get fields data
+  const { title, uuid, shared_with } = validatedFields.data;
+
+  // parse shared_with string into JSON array
+  let shared_with_array: string[] = [];
+  if (shared_with) {
+    try {
+      shared_with_array = JSON.parse(shared_with);
+    } catch (e) {
+      console.error('Failed to parse shared_with', e);
+    }
+  }
+
+  // edit journal
+  try {
+    const journalId = await editJournalId(parseInt(uuid), creatorId, title, shared_with_array);
+
+    revalidatePath(`/journal`);
+    console.log(`Updated journal id: ${journalId}`);
+  } catch (error) {
+    console.error('Error creating journal:', error);
+    return {
+      message: 'Database error, failed to create journal, reason: ' + error,
+    };
+  }
+  redirect(`/journal`);
 }
 
 export async function deleteJournal(id: number): Promise<void> {

@@ -76,7 +76,6 @@ export function usePartyKitProvider(roomId: string) {
                 providerInstance.destroy();
             }
         };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [roomId]);
 
     return { provider, ydoc, status }

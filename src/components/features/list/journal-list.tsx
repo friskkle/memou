@@ -72,7 +72,7 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
             </span>
             <span className="flex-1 text-sm font-normal text-gray-500 text-right pr-2">
               {journal.shared_with_names.length > 0 && (
-                <CollaboratorBadge names={journal.shared_with_names} />
+                <CollaboratorBadge names={journal.shared_with_names.map((user) => user.name)} />
               )}
             </span>
           </Link>
