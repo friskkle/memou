@@ -42,9 +42,9 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
   return (
     (list &&
     <ul className="mt-2 bg-white shadow-sm rounded-lg">
-      <li className="py-3 px-4 flex border-b border-gray-200 select-none font-semibold">
+      <li className="text-sm md:text-base py-3 px-4 flex border-b border-gray-200 select-none font-semibold">
         <span
-          className="flex-3 text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
+          className="flex-1 md:flex-3 text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
           onClick={() => handleSort('name')}
         >
           Name
@@ -62,9 +62,9 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
         </span>
       </li>
       {sorted.map((journal) => (
-        <li key={journal.id} className="p-1 flex last:mb-0 border-b border-gray-200 last:border-0 items-center">
+        <li key={journal.id} className="text-sm md:text-base p-1 flex last:mb-0 border-b border-gray-200 last:border-0 items-center">
           <Link href={`/journal/${journal.id}`} className="flex flex-row items-center py-2 px-3 font-bold no-underline text-black w-full rounded hover:bg-[#e0e0e06a] transition-all duration-75">
-            <span className="flex-3 flex items-center gap-2">
+            <span className="flex-1 md:flex-3 flex items-center gap-2">
               {journal.title}
             </span>
             <span className="flex-1 text-sm font-normal text-gray-500 text-right pr-2">

@@ -15,6 +15,11 @@ const EditJournalPage = async ({
 
   const { journal_id } = await params;
   const journal = await fetchJournalId(journal_id, session.user.id);
+  if(journal) {
+    if(journal.uuid !== session.user.id) {
+      redirect('/journal');
+    }
+  }
   return (
     <main style={{ padding: 24 }}>
       <header style={{ maxWidth: 720, margin: '0 auto 24px' }}>

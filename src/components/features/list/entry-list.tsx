@@ -48,9 +48,9 @@ export const EntryList = ({ list }: { list: listType }) => {
   return (
     (sorted &&
     <ul className="mt-2 bg-white shadow-sm rounded-lg">
-      <li className="py-3 px-4 flex border-b border-gray-200 select-none font-semibold">
+      <li className="text-sm md:text-base py-3 px-4 flex border-b border-gray-200 select-none font-semibold">
         <span
-          className="flex-3 text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
+          className="flex-1 md:flex-3 text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
           onClick={() => handleSort('name')}
         >
           Name
@@ -72,15 +72,15 @@ export const EntryList = ({ list }: { list: listType }) => {
         </span>
       </li>
       {sorted.map((entry) => (
-        <li key={entry.id} className="p-1 flex last:mb-0 border-b border-gray-200 last:border-0 items-center">
+        <li key={entry.id} className="text-sm md:text-base p-1 flex last:mb-0 border-b border-gray-200 last:border-0 items-center">
           <Link href={`${entry.journal_id}/${entry.id}`} className="flex flex-row py-2 px-3 font-bold no-underline text-black w-full rounded hover:bg-[#e0e0e06a] transition-all duration-75">
-            <span className="flex-3">
+            <span className="flex-1 md:flex-3 overflow-hidden text-ellipsis whitespace-nowrap">
               {entry.title}
             </span>
-            <span className="flex-1 text-sm text-gray-500 text-right pr-2">
+            <span className="flex-1 text-xs md:text-sm text-gray-500 text-right pr-2">
               {new Date(entry.created_date).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
             </span>
-            <span className="flex-1 text-sm text-gray-500 text-right pr-2">
+            <span className="flex-1 text-xs md:text-sm text-gray-500 text-right pr-2">
               {new Date(entry.last_modified).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
             </span>
           </Link>

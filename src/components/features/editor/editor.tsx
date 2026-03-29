@@ -213,9 +213,9 @@ export const CollaborativeEditor = ({ entryId, userName }: { entryId: string, us
     <div>
       {provider ? (
         <>
-          <div className="flex">
+          <div className="flex flex-col md:flex-row">
             <CollaborativeTitle ydoc={ydoc} />
-            <div className="flex items-center gap-2 mt-2 mb-1 ml-auto">
+            <div className="flex items-center gap-2 mt-2 mb-1 ml-2 md:ml-auto">
               <div className={`h-2 w-2 rounded-full ${
                 status === 'connected' ? 'bg-green-500' : status === 'error' ? 'bg-red-500' : 'bg-yellow-500 animate-pulse'
               }`} />

@@ -272,21 +272,6 @@ export function EntryActionMenu({ entry_id }: { entry_id: number }) {
         }}
       >
         <MenuItem
-          onClick={handleClose}
-          disableRipple
-          sx={{
-            py: 1,
-            px: 2,
-            borderRadius: '8px',
-            '&:hover': { backgroundColor: '#f5f5f5' }
-          }}
-        >
-          <ListItemIcon sx={{ minWidth: '36px !important' }}>
-            <EditOutlinedIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="Edit" primaryTypographyProps={{ variant: 'body2', fontWeight: 500 }} />
-        </MenuItem>
-        <MenuItem
           onClick={handleDeleteClick}
           disableRipple
           sx={{
