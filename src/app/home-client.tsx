@@ -33,7 +33,7 @@ export const HomeClient = () => {
   return (
     <main className="flex-1 font-sans h-dvh overflow-y-auto overflow-x-hidden snap-y snap-mandatory scroll-smooth bg-transparent text-stone-900">
       {/* Segment 1: Hero Start */}
-      <section className="snap-always min-h-dvh w-full snap-center flex flex-col items-center justify-center p-8 md:p-20 relative">
+      <section className="snap-always min-h-dvh w-full snap-start flex flex-col items-center justify-center p-8 md:p-20 relative">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -71,7 +71,7 @@ export const HomeClient = () => {
       </section>
 
       {/* Segment 2: Introduction & Features Placeholder */}
-      <section className="snap-always min-h-dvh w-full snap-center flex flex-col items-center justify-between pl-8 md:pl-20 py-8 md:py-20">
+      <section className="snap-always min-h-dvh w-full snap-start flex flex-col items-center justify-between pl-8 md:pl-20 py-8 md:py-20">
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -120,7 +120,7 @@ export const HomeClient = () => {
       </section>
 
       {/* Segment 3: Free Tier Highlight */}
-      <section className="snap-always min-h-dvh w-full snap-center flex flex-col items-center justify-center p-8 md:p-20 bg-[#D49273] text-white relative overflow-hidden">
+      <section className="snap-always min-h-dvh w-full snap-start flex flex-col items-center justify-center p-8 md:p-20 bg-[#D49273] text-white relative overflow-hidden">
         {/* Decorative background elements */}
         <div className="absolute right-0 top-0 w-[80vh] h-[80vh] bg-white/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3" aria-hidden="true"></div>
         <div className="absolute left-0 bottom-0 w-[60vh] h-[60vh] bg-black/10 rounded-full blur-[100px] translate-y-1/3 -translate-x-1/3" aria-hidden="true"></div>
@@ -158,7 +158,7 @@ export const HomeClient = () => {
       </section>
 
       {/* Segment 4: GitHub Link & Footer */}
-      <section className="snap-always min-h-dvh w-full snap-center flex flex-col items-center justify-center p-8 md:p-20 bg-stone-900 text-stone-100 relative">
+      <section className="snap-always min-h-dvh w-full snap-start flex flex-col items-center justify-center p-8 md:p-20 bg-stone-900 text-stone-100 relative">
         <motion.div 
           initial="hidden"
           whileInView="visible"
