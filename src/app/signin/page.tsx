@@ -9,8 +9,8 @@ export default async function Signin() {
     redirect("/journal");
   }
   return (
-    <div className="flex-1 font-sans grid grid-rows-[20px_1fr_20px] p-10 gap-16">
-      <main className="flex flex-col gap-8">
+    <div className="flex-1 font-sans grid grid-rows-[20px_1fr_20px] gap-16">
+      <main className="flex flex-col gap-8 p-4">
         <BackButton />
         <div className="flex flex-col gap-8 items-center">
           <h1 className="font-serif text-3xl font-medium text-center">
