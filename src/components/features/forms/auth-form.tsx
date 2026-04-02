@@ -29,7 +29,7 @@ export function AuthForm() {
   };
 
   return (
-    <div className="flex flex-col rounded-2xl bg-white py-12 px-12 md:px-16 min-w-sm md:min-w-lg shadow-md">
+    <div className="flex flex-col rounded-2xl bg-white py-12 px-12 md:px-16 md:min-w-lg shadow-md">
       <div className="flex rounded-md">
         <h1 className="text-2xl font-semibold mb-6 rounded-md">
           {getTitle()}
