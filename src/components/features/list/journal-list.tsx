@@ -63,8 +63,8 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
       </li>
       {sorted.map((journal) => (
         <li key={journal.id} className="text-sm md:text-base p-1 flex last:mb-0 border-b border-gray-200 last:border-0 items-center">
-          <Link href={`/journal/${journal.id}`} className="flex flex-row items-center py-2 px-3 font-bold no-underline text-black w-full rounded hover:bg-[#e0e0e06a] transition-all duration-75">
-            <span className="flex-1 md:flex-3 flex items-center gap-2">
+          <Link href={`/journal/${journal.id}`} className="flex-1 min-w-0 flex flex-row items-center py-2 px-3 font-bold no-underline text-black rounded hover:bg-[#e0e0e06a] transition-all duration-75">
+            <span className="flex-1 md:flex-3 flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
               {journal.title}
             </span>
             <span className="flex-1 text-sm font-normal text-gray-500 text-right pr-2">
@@ -76,7 +76,7 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
               )}
             </span>
           </Link>
-          <div className="pr-2">
+          <div className="pr-2 shrink-0">
             <JournalActionMenu journal_id={Number(journal.id)} />
           </div>
         </li>

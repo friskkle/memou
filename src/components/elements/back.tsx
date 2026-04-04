@@ -1,10 +1,15 @@
 'use client';
 import { useRouter } from 'next/navigation';
 
-export default function BackButton() {
+export default function BackButton( {linkUrl}: {linkUrl?: string} ) {
   const router = useRouter();
 
   const handleBack = () => {
+    // if a specific link was given, go there
+    if (linkUrl) {
+      router.push(linkUrl);
+      return;
+    }
     // Go up one step in the route
     if (typeof window !== 'undefined') {
       const segments = window.location.pathname.split('/');

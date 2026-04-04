@@ -73,7 +73,7 @@ export const EntryList = ({ list }: { list: listType }) => {
       </li>
       {sorted.map((entry) => (
         <li key={entry.id} className="text-sm md:text-base p-1 flex last:mb-0 border-b border-gray-200 last:border-0 items-center">
-          <Link href={`${entry.journal_id}/${entry.id}`} className="flex flex-row py-2 px-3 font-bold no-underline text-black w-full rounded hover:bg-[#e0e0e06a] transition-all duration-75">
+          <Link href={`${entry.journal_id}/${entry.id}`} className="flex-1 min-w-0 flex flex-row py-2 px-3 font-bold no-underline text-black rounded hover:bg-[#e0e0e06a] transition-all duration-75">
             <span className="flex-1 md:flex-3 overflow-hidden text-ellipsis whitespace-nowrap">
               {entry.title}
             </span>
@@ -84,7 +84,7 @@ export const EntryList = ({ list }: { list: listType }) => {
               {new Date(entry.last_modified).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
             </span>
           </Link>
-          <div className="pr-2">
+          <div className="pr-2 shrink-0">
             <EntryActionMenu entry_id={Number(entry.id)} />
           </div>
         </li>
