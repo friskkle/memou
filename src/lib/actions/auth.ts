@@ -49,6 +49,7 @@ const SignUpFormSchema = z.object({
 const SignInFormSchema = z.object({
     email: z.email({message: "Invalid email address"}),
     password: z.string().min(1, {message: "Password is empty"}),
+    rememberMe: z.boolean().optional().default(false),
 })
 
 const ForgotPasswordSchema = z.object({
@@ -100,6 +101,7 @@ export async function signInAction(prevState: SignInState, formData: FormData) {
     const validatedFields = SignInFormSchema.safeParse({
         email: formData.get('email'),
         password: formData.get('password'),
+        rememberMe: formData.get('rememberMe') === 'on',
     })
     if (!validatedFields.success) {
         return {
@@ -107,13 +109,14 @@ export async function signInAction(prevState: SignInState, formData: FormData) {
             message: "Error validating sign in information."
         }
     }
-    const { email, password } = validatedFields.data
+    const { email, password, rememberMe } = validatedFields.data
     
     try {
         await auth.api.signInEmail({
         body: {
             email,
             password,
+            rememberMe,
         }
     });
     } catch (error) {
