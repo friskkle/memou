@@ -4,11 +4,11 @@ import { prisma } from './prisma';
 import { Journal, Entry } from './definitions';
 
 // Journals
-export async function fetchJournals(uid: string): Promise<Journal[]> {
+export async function fetchJournals(uid: string, query: string = ''): Promise<Journal[]> {
   try {
     const journals = await prisma.journals.findMany({
       where: {
-        OR: [{ uuid: uid }, { shared_with: { has: uid } }],
+        AND: [{ title: {contains: query, mode: "insensitive"}}, { OR: [{ uuid: uid }, { shared_with: { has: uid } }] }],
       },
       orderBy: {
         id: 'desc',
@@ -237,12 +237,13 @@ export async function fetchEntryId(
 export async function fetchEntries(
   journal_id: string,
   userId: string = '',
+  query: string = '',
 ): Promise<Entry[]> {
   try {
     const entries = await prisma.journal_entries.findMany({
       where: {
         journal_id: parseInt(journal_id),
-        OR: [{ creator: userId }, { editors: { has: userId } }],
+        AND: [{ title: {contains: query, mode: "insensitive"} }, { OR: [{ creator: userId }, { editors: { has: userId } }] }],
       },
       orderBy: {
         last_modified: 'desc',

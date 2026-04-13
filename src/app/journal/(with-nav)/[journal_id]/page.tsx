@@ -7,9 +7,13 @@ import { EntryList } from '@/src/components/features/list/entry-list';
 import { PrimaryButton } from '@/src/components/elements/primary-button';
 import { getSession } from '@/src/lib/auth';
 import { redirect } from 'next/navigation';
+import { SearchInput } from '@/src/components/ui/search-input';
 
 const Entries = async (props: {
   params: Promise<{ journal_id: string }>;
+  searchParams?: Promise<{
+    query?: string;
+  }>
 }): Promise<React.ReactElement> => {
   const session = await getSession();
 
@@ -19,7 +23,9 @@ const Entries = async (props: {
 
   const params = await props.params;
   const journal_id = params.journal_id;
-  const entries = await fetchEntries(journal_id, session.user.id);
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const entries = await fetchEntries(journal_id, session.user.id, query);
 
   return (
     <div className="max-w-4xl mx-auto p-2 md:p-4 mt-2 relative">
@@ -32,6 +38,7 @@ const Entries = async (props: {
           New Entry
         </PrimaryButton>
       </span>
+      <SearchInput placeholder='Search an Entry by Title...' />
       <EntryList list={entries} />
     </div>
   );
