@@ -3,6 +3,8 @@
 import StarterKit from "@tiptap/starter-kit"
 import { SlashCommandsExtension } from './commands-list'
 import { Extensions, useEditor, EditorContent } from '@tiptap/react'
+import TaskList from '@tiptap/extension-task-list'
+import TaskItem from '@tiptap/extension-task-item'
 import { useState, useEffect, useCallback } from 'react'
 import SlashMenu from '@/src/components/features/editor/commands-menu'
 import { MenuPosition, CommandRange } from '@/src/components/features/editor/types'
@@ -27,6 +29,14 @@ export const editorExtensions: Extensions = [
         class: 'list-decimal'
       }
     }
+  }),
+  TaskList.configure({
+    HTMLAttributes: {
+      class: 'task-list',
+    },
+  }),
+  TaskItem.configure({
+    nested: true,
   }),
   SlashCommandsExtension
 ]
@@ -99,6 +109,14 @@ const CollaborativeTiptapEditor = ({ provider, ydoc, userName, userColor }: {
             class: 'list-decimal'
           }
         }
+      }),
+      TaskList.configure({
+        HTMLAttributes: {
+          class: 'task-list',
+        },
+      }),
+      TaskItem.configure({
+        nested: true,
       }),
       SlashCommandsExtension,
       Collaboration.configure({

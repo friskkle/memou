@@ -14,6 +14,7 @@ import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule'
 import WrapTextIcon from '@mui/icons-material/WrapText'
 import UndoIcon from '@mui/icons-material/Undo'
 import RedoIcon from '@mui/icons-material/Redo'
+import CheckBoxIcon from '@mui/icons-material/CheckBox'
 
 // Divider component
 const Divider = () => <div className="w-px h-6 bg-gray-200 mx-1 self-center" />
@@ -36,6 +37,7 @@ export function MenuBar({ editor }: { editor: Editor }) {
       isHeading3: ctx.editor.isActive('heading', { level: 3 }),
       isBulletList: ctx.editor.isActive('bulletList'),
       isOrderedList: ctx.editor.isActive('orderedList'),
+      isTaskList: ctx.editor.isActive('taskList'),
       isCodeBlock: ctx.editor.isActive('codeBlock'),
       isBlockquote: ctx.editor.isActive('blockquote'),
       canUndo: ctx.editor.can().chain().undo().run(),
@@ -138,6 +140,13 @@ export function MenuBar({ editor }: { editor: Editor }) {
         title="Ordered List"
       >
         <FormatListNumberedIcon fontSize="small" />
+      </OptionButton>
+      <OptionButton
+        onClick={() => editor.chain().focus().toggleTaskList().run()}
+        isActive={editorState.isTaskList}
+        title="Checklist"
+      >
+        <CheckBoxIcon fontSize="small" />
       </OptionButton>
 
       <Divider />

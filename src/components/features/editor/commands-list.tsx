@@ -90,6 +90,19 @@ export const slashCommands: CommandItem[] = [
     icon: '1.'
   },
   {
+    title: 'Checklist',
+    command: ({ editor, range }) => {
+      editor
+        .chain()
+        .focus()
+        .deleteRange(range)
+        .toggleTaskList()
+        .run()
+    },
+    icon: '☑',
+    description: 'Create a list of tasks with checkboxes.'
+  },
+  {
     title: 'Quote',
     command: ({ editor, range }) => {
       editor
