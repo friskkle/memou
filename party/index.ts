@@ -45,7 +45,7 @@ export default class JournalServer implements Party.Server {
   onConnect(conn: Party.Connection, ctx: Party.ConnectionContext) {
     // A websocket just connected!
     console.log(
-      `Connected:
+      `User Connected:
       id: ${conn.id}
       room: ${this.party.id}
       url: ${new URL(ctx.request.url).pathname}`,
@@ -57,6 +57,9 @@ export default class JournalServer implements Party.Server {
     console.log(`User ID: ${userId}`);
 
     return onConnect(conn, this.party, {
+      persist: {
+        mode: "history"
+      },
       async load() {
         console.log(`Loading document for room: ${docId} for user: ${userId}`);
         console.log(`fetching in: ${process.env.APP_API_BASE_URL}/entries/fetch?entry=${docId}&userId=${userId}`);
@@ -135,11 +138,6 @@ export default class JournalServer implements Party.Server {
     const connections = [...this.party.getConnections()];
     console.log(`Connection closed: ${connection.id}`);
     console.log(`Connections left: ${connections.length}`);
-
-    if (connections.length === 0) {
-      console.log(`No connections left, deleting room: ${this.party.id}`);
-      await this.party.storage.delete('doc');
-    }
   }
 
   /*   onMessage(message: string, sender: Party.Connection) {
