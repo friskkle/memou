@@ -16,6 +16,5 @@ export type Entry = {
     content: nullable<string>;
     created_date: Date;
     last_modified: Date;
-    editors: string[];
     creator: string;
 }

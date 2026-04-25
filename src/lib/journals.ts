@@ -3,6 +3,23 @@
 import { prisma } from './prisma';
 import { Journal, Entry } from './definitions';
 
+async function getAccessibleJournal(
+  journalId: number,
+  userId: string,
+): Promise<{ id: number; uuid: string; shared_with: string[] } | null> {
+  return prisma.journals.findFirst({
+    where: {
+      id: journalId,
+      OR: [{ uuid: userId }, { shared_with: { has: userId } }],
+    },
+    select: {
+      id: true,
+      uuid: true,
+      shared_with: true,
+    },
+  });
+}
+
 // Journals
 export async function fetchJournals(uid: string, query: string = ''): Promise<Journal[]> {
   try {
@@ -73,7 +90,7 @@ export async function fetchJournalId(
       };
     }
 
-    // Authorization check: user must be creator, editor, or in the journal's shared_with list
+    // Authorization check: user must be the creator or in the journal's shared_with list
     if (userId) {
       const isCreator = journal.uuid === userId;
       const isSharedWith = journal.shared_with.includes(userId);
@@ -202,18 +219,16 @@ export async function fetchEntryId(
         content: '',
         created_date: new Date(),
         last_modified: new Date(),
-        editors: [],
         creator: '',
       };
     }
 
-    // Authorization check: user must be creator, editor, or in the journal's shared_with list
+    // Authorization check: user must have access to the parent journal.
     if (userId) {
-      const isCreator = entry.creator === userId;
-      const isEditor = entry.editors.includes(userId);
+      const isJournalOwner = entry.journals.uuid === userId;
       const isSharedWith = entry.journals.shared_with.includes(userId);
 
-      if (!isCreator && !isEditor && !isSharedWith) {
+      if (!isJournalOwner && !isSharedWith) {
         throw new Error('Unauthorized: You do not have access to this entry');
       }
     }
@@ -225,7 +240,6 @@ export async function fetchEntryId(
       content: entry.content || '',
       created_date: entry.created_date,
       last_modified: entry.last_modified,
-      editors: entry.editors,
       creator: entry.creator,
     };
   } catch (error) {
@@ -240,10 +254,20 @@ export async function fetchEntries(
   query: string = '',
 ): Promise<Entry[]> {
   try {
+    const parsedJournalId = parseInt(journal_id);
+
+    if (userId) {
+      const journal = await getAccessibleJournal(parsedJournalId, userId);
+      console.log(journal)
+      if (!journal) {
+        throw new Error('Unauthorized: You do not have access to this journal');
+      }
+    }
+
     const entries = await prisma.journal_entries.findMany({
       where: {
-        journal_id: parseInt(journal_id),
-        AND: [{ title: {contains: query, mode: "insensitive"} }, { OR: [{ creator: userId }, { editors: { has: userId } }] }],
+        journal_id: parsedJournalId,
+        title: { contains: query, mode: 'insensitive' },
       },
       orderBy: {
         last_modified: 'desc',
@@ -257,7 +281,6 @@ export async function fetchEntries(
       content: entry.content || '',
       created_date: entry.created_date,
       last_modified: entry.last_modified,
-      editors: entry.editors,
       creator: entry.creator,
     }));
   } catch (error) {
@@ -274,15 +297,12 @@ export async function createNewEntry(
   try {
     const journal = await prisma.journals.findUnique({
       where: { id: journal_id },
-      select: { uuid: true, shared_with: true },
+      select: { id: true },
     });
 
     if (!journal) {
       throw new Error('Journal not found');
     }
-
-    const editors = Array.from(new Set([journal.uuid, ...journal.shared_with]));
-
     const entry = await prisma.journal_entries.create({
       data: {
         journal_id,
@@ -291,7 +311,6 @@ export async function createNewEntry(
         created_date: new Date(),
         last_modified: new Date(),
         creator,
-        editors: editors.filter(id => id !== creator),
       },
     });
     return entry;
@@ -308,10 +327,23 @@ export async function editEntry(
   userId: string,
 ): Promise<Entry> {
   try {
+    const existingEntry = await prisma.journal_entries.findUnique({
+      where: { id: entry_id },
+      select: { journal_id: true },
+    });
+
+    if (!existingEntry) {
+      throw new Error('Entry not found');
+    }
+
+    const journal = await getAccessibleJournal(existingEntry.journal_id, userId);
+    if (!journal) {
+      throw new Error('Unauthorized: You do not have access to this journal');
+    }
+
     const entry = await prisma.journal_entries.update({
       where: {
         id: entry_id,
-        OR: [{ creator: userId }, { editors: { has: userId } }],
       },
       data: {
         title,
@@ -328,10 +360,23 @@ export async function editEntry(
 
 export async function deleteJournalEntry(entry_id: number, userId: string) {
   try {
+    const entry = await prisma.journal_entries.findUnique({
+      where: { id: entry_id },
+      select: { journal_id: true },
+    });
+
+    if (!entry) {
+      throw new Error('Entry not found');
+    }
+
+    const journal = await getAccessibleJournal(entry.journal_id, userId);
+    if (!journal) {
+      throw new Error('Unauthorized: You do not have access to this journal');
+    }
+
     const deletedEntry = await prisma.journal_entries.delete({
       where: {
         id: entry_id,
-        OR: [{ creator: userId }, { editors: { has: userId } }],
       },
       select: {
         journal_id: true,

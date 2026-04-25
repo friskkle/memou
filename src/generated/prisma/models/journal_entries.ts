@@ -63,7 +63,6 @@ export type Journal_entriesCountAggregateOutputType = {
   content: number
   created_date: number
   last_modified: number
-  editors: number
   creator: number
   _all: number
 }
@@ -106,7 +105,6 @@ export type Journal_entriesCountAggregateInputType = {
   content?: true
   created_date?: true
   last_modified?: true
-  editors?: true
   creator?: true
   _all?: true
 }
@@ -204,7 +202,6 @@ export type Journal_entriesGroupByOutputType = {
   content: string | null
   created_date: Date
   last_modified: Date
-  editors: string[]
   creator: string
   _count: Journal_entriesCountAggregateOutputType | null
   _avg: Journal_entriesAvgAggregateOutputType | null
@@ -238,7 +235,6 @@ export type journal_entriesWhereInput = {
   content?: Prisma.StringNullableFilter<"journal_entries"> | string | null
   created_date?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
   last_modified?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
-  editors?: Prisma.StringNullableListFilter<"journal_entries">
   creator?: Prisma.StringFilter<"journal_entries"> | string
   journals?: Prisma.XOR<Prisma.JournalsScalarRelationFilter, Prisma.journalsWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
@@ -251,7 +247,6 @@ export type journal_entriesOrderByWithRelationInput = {
   content?: Prisma.SortOrderInput | Prisma.SortOrder
   created_date?: Prisma.SortOrder
   last_modified?: Prisma.SortOrder
-  editors?: Prisma.SortOrder
   creator?: Prisma.SortOrder
   journals?: Prisma.journalsOrderByWithRelationInput
   user?: Prisma.userOrderByWithRelationInput
@@ -267,7 +262,6 @@ export type journal_entriesWhereUniqueInput = Prisma.AtLeast<{
   content?: Prisma.StringNullableFilter<"journal_entries"> | string | null
   created_date?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
   last_modified?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
-  editors?: Prisma.StringNullableListFilter<"journal_entries">
   creator?: Prisma.StringFilter<"journal_entries"> | string
   journals?: Prisma.XOR<Prisma.JournalsScalarRelationFilter, Prisma.journalsWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.userWhereInput>
@@ -280,7 +274,6 @@ export type journal_entriesOrderByWithAggregationInput = {
   content?: Prisma.SortOrderInput | Prisma.SortOrder
   created_date?: Prisma.SortOrder
   last_modified?: Prisma.SortOrder
-  editors?: Prisma.SortOrder
   creator?: Prisma.SortOrder
   _count?: Prisma.journal_entriesCountOrderByAggregateInput
   _avg?: Prisma.journal_entriesAvgOrderByAggregateInput
@@ -299,7 +292,6 @@ export type journal_entriesScalarWhereWithAggregatesInput = {
   content?: Prisma.StringNullableWithAggregatesFilter<"journal_entries"> | string | null
   created_date?: Prisma.DateTimeWithAggregatesFilter<"journal_entries"> | Date | string
   last_modified?: Prisma.DateTimeWithAggregatesFilter<"journal_entries"> | Date | string
-  editors?: Prisma.StringNullableListFilter<"journal_entries">
   creator?: Prisma.StringWithAggregatesFilter<"journal_entries"> | string
 }
 
@@ -308,7 +300,6 @@ export type journal_entriesCreateInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
-  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
   journals: Prisma.journalsCreateNestedOneWithoutJournal_entriesInput
   user: Prisma.userCreateNestedOneWithoutJournal_entriesInput
 }
@@ -320,7 +311,6 @@ export type journal_entriesUncheckedCreateInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
-  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
   creator: string
 }
 
@@ -329,7 +319,6 @@ export type journal_entriesUpdateInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
   journals?: Prisma.journalsUpdateOneRequiredWithoutJournal_entriesNestedInput
   user?: Prisma.userUpdateOneRequiredWithoutJournal_entriesNestedInput
 }
@@ -341,7 +330,6 @@ export type journal_entriesUncheckedUpdateInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
   creator?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -352,7 +340,6 @@ export type journal_entriesCreateManyInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
-  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
   creator: string
 }
 
@@ -361,7 +348,6 @@ export type journal_entriesUpdateManyMutationInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
 }
 
 export type journal_entriesUncheckedUpdateManyInput = {
@@ -371,16 +357,7 @@ export type journal_entriesUncheckedUpdateManyInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
   creator?: Prisma.StringFieldUpdateOperationsInput | string
-}
-
-export type StringNullableListFilter<$PrismaModel = never> = {
-  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
-  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
-  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
-  isEmpty?: boolean
 }
 
 export type journal_entriesCountOrderByAggregateInput = {
@@ -390,7 +367,6 @@ export type journal_entriesCountOrderByAggregateInput = {
   content?: Prisma.SortOrder
   created_date?: Prisma.SortOrder
   last_modified?: Prisma.SortOrder
-  editors?: Prisma.SortOrder
   creator?: Prisma.SortOrder
 }
 
@@ -432,15 +408,6 @@ export type Journal_entriesListRelationFilter = {
 
 export type journal_entriesOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
-}
-
-export type journal_entriesCreateeditorsInput = {
-  set: string[]
-}
-
-export type journal_entriesUpdateeditorsInput = {
-  set?: string[]
-  push?: string | string[]
 }
 
 export type IntFieldUpdateOperationsInput = {
@@ -540,7 +507,6 @@ export type journal_entriesCreateWithoutJournalsInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
-  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
   user: Prisma.userCreateNestedOneWithoutJournal_entriesInput
 }
 
@@ -550,7 +516,6 @@ export type journal_entriesUncheckedCreateWithoutJournalsInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
-  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
   creator: string
 }
 
@@ -590,7 +555,6 @@ export type journal_entriesScalarWhereInput = {
   content?: Prisma.StringNullableFilter<"journal_entries"> | string | null
   created_date?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
   last_modified?: Prisma.DateTimeFilter<"journal_entries"> | Date | string
-  editors?: Prisma.StringNullableListFilter<"journal_entries">
   creator?: Prisma.StringFilter<"journal_entries"> | string
 }
 
@@ -599,7 +563,6 @@ export type journal_entriesCreateWithoutUserInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
-  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
   journals: Prisma.journalsCreateNestedOneWithoutJournal_entriesInput
 }
 
@@ -610,7 +573,6 @@ export type journal_entriesUncheckedCreateWithoutUserInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
-  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
 }
 
 export type journal_entriesCreateOrConnectWithoutUserInput = {
@@ -645,7 +607,6 @@ export type journal_entriesCreateManyJournalsInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
-  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
   creator: string
 }
 
@@ -654,7 +615,6 @@ export type journal_entriesUpdateWithoutJournalsInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
   user?: Prisma.userUpdateOneRequiredWithoutJournal_entriesNestedInput
 }
 
@@ -664,7 +624,6 @@ export type journal_entriesUncheckedUpdateWithoutJournalsInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
   creator?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -674,7 +633,6 @@ export type journal_entriesUncheckedUpdateManyWithoutJournalsInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
   creator?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
@@ -685,7 +643,6 @@ export type journal_entriesCreateManyUserInput = {
   content?: string | null
   created_date: Date | string
   last_modified: Date | string
-  editors?: Prisma.journal_entriesCreateeditorsInput | string[]
 }
 
 export type journal_entriesUpdateWithoutUserInput = {
@@ -693,7 +650,6 @@ export type journal_entriesUpdateWithoutUserInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
   journals?: Prisma.journalsUpdateOneRequiredWithoutJournal_entriesNestedInput
 }
 
@@ -704,7 +660,6 @@ export type journal_entriesUncheckedUpdateWithoutUserInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
 }
 
 export type journal_entriesUncheckedUpdateManyWithoutUserInput = {
@@ -714,7 +669,6 @@ export type journal_entriesUncheckedUpdateManyWithoutUserInput = {
   content?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   created_date?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   last_modified?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  editors?: Prisma.journal_entriesUpdateeditorsInput | string[]
 }
 
 
@@ -726,7 +680,6 @@ export type journal_entriesSelect<ExtArgs extends runtime.Types.Extensions.Inter
   content?: boolean
   created_date?: boolean
   last_modified?: boolean
-  editors?: boolean
   creator?: boolean
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
@@ -739,7 +692,6 @@ export type journal_entriesSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   content?: boolean
   created_date?: boolean
   last_modified?: boolean
-  editors?: boolean
   creator?: boolean
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
@@ -752,7 +704,6 @@ export type journal_entriesSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   content?: boolean
   created_date?: boolean
   last_modified?: boolean
-  editors?: boolean
   creator?: boolean
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
@@ -765,11 +716,10 @@ export type journal_entriesSelectScalar = {
   content?: boolean
   created_date?: boolean
   last_modified?: boolean
-  editors?: boolean
   creator?: boolean
 }
 
-export type journal_entriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "journal_id" | "title" | "content" | "created_date" | "last_modified" | "editors" | "creator", ExtArgs["result"]["journal_entries"]>
+export type journal_entriesOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "journal_id" | "title" | "content" | "created_date" | "last_modified" | "creator", ExtArgs["result"]["journal_entries"]>
 export type journal_entriesInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   journals?: boolean | Prisma.journalsDefaultArgs<ExtArgs>
   user?: boolean | Prisma.userDefaultArgs<ExtArgs>
@@ -796,7 +746,6 @@ export type $journal_entriesPayload<ExtArgs extends runtime.Types.Extensions.Int
     content: string | null
     created_date: Date
     last_modified: Date
-    editors: string[]
     creator: string
   }, ExtArgs["result"]["journal_entries"]>
   composites: {}
@@ -1229,7 +1178,6 @@ export interface journal_entriesFieldRefs {
   readonly content: Prisma.FieldRef<"journal_entries", 'String'>
   readonly created_date: Prisma.FieldRef<"journal_entries", 'DateTime'>
   readonly last_modified: Prisma.FieldRef<"journal_entries", 'DateTime'>
-  readonly editors: Prisma.FieldRef<"journal_entries", 'String[]'>
   readonly creator: Prisma.FieldRef<"journal_entries", 'String'>
 }
     

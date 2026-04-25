@@ -60,7 +60,15 @@ export default class JournalServer implements Party.Server {
       persist: {
         mode: "history"
       },
-      async load() {
+      load: async () => {
+        // Prevent doubling: if we already loaded from DB into PartyKit storage,
+        // don't load again. Let PartyKit use its persisted Yjs history.
+        const hasLoaded = await this.party.storage.get('hasLoadedDb');
+        if (hasLoaded) {
+          console.log(`Room ${docId} already has state in PartyKit storage, skipping DB load.`);
+          return null;
+        }
+
         console.log(`Loading document for room: ${docId} for user: ${userId}`);
         console.log(`fetching in: ${process.env.APP_API_BASE_URL}/entries/fetch?entry=${docId}&userId=${userId}`);
         const entry = await fetch(`${process.env.APP_API_BASE_URL}/entries/fetch?entry=${docId}&userId=${userId}`, {
@@ -87,6 +95,7 @@ export default class JournalServer implements Party.Server {
           ydoc.getText('title').insert(0, data.title);
         }
 
+        await this.party.storage.put('hasLoadedDb', true);
         return ydoc;
       },
       callback: {

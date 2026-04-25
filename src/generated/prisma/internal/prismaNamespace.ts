@@ -993,7 +993,6 @@ export const Journal_entriesScalarFieldEnum = {
   content: 'content',
   created_date: 'created_date',
   last_modified: 'last_modified',
-  editors: 'editors',
   creator: 'creator'
 } as const
 

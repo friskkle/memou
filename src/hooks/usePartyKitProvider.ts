@@ -62,7 +62,6 @@ export function usePartyKitProvider(roomId: string) {
         return () => {
             mounted = false;
             providerInstance?.destroy();
-            ydoc.destroy();
         };
     }, [roomId, ydoc]);
 
