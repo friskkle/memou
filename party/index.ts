@@ -45,7 +45,7 @@ export default class JournalServer implements Party.Server {
   onConnect(conn: Party.Connection, ctx: Party.ConnectionContext) {
     // A websocket just connected!
     console.log(
-      `User Connected:
+      `Connected:
       id: ${conn.id}
       room: ${this.party.id}
       url: ${new URL(ctx.request.url).pathname}`,
@@ -57,18 +57,7 @@ export default class JournalServer implements Party.Server {
     console.log(`User ID: ${userId}`);
 
     return onConnect(conn, this.party, {
-      persist: {
-        mode: "history"
-      },
-      load: async () => {
-        // Prevent doubling: if we already loaded from DB into PartyKit storage,
-        // don't load again. Let PartyKit use its persisted Yjs history.
-        const hasLoaded = await this.party.storage.get('hasLoadedDb');
-        if (hasLoaded) {
-          console.log(`Room ${docId} already has state in PartyKit storage, skipping DB load.`);
-          return null;
-        }
-
+      async load() {
         console.log(`Loading document for room: ${docId} for user: ${userId}`);
         console.log(`fetching in: ${process.env.APP_API_BASE_URL}/entries/fetch?entry=${docId}&userId=${userId}`);
         const entry = await fetch(`${process.env.APP_API_BASE_URL}/entries/fetch?entry=${docId}&userId=${userId}`, {
@@ -95,7 +84,6 @@ export default class JournalServer implements Party.Server {
           ydoc.getText('title').insert(0, data.title);
         }
 
-        await this.party.storage.put('hasLoadedDb', true);
         return ydoc;
       },
       callback: {
@@ -147,6 +135,11 @@ export default class JournalServer implements Party.Server {
     const connections = [...this.party.getConnections()];
     console.log(`Connection closed: ${connection.id}`);
     console.log(`Connections left: ${connections.length}`);
+
+    if (connections.length === 0) {
+      console.log(`No connections left, deleting room: ${this.party.id}`);
+      await this.party.storage.delete('doc');
+    }
   }
 
   /*   onMessage(message: string, sender: Party.Connection) {

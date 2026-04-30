@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useRef } from "react";
 import YPartyKitProvider from "y-partykit/provider";
 import * as Y from "yjs";
 
@@ -9,10 +9,9 @@ const url = process.env.NEXT_PUBLIC_PARTYKIT_URL || "localhost:1999";
 export function usePartyKitProvider(roomId: string) {
     const [provider, setProvider] = useState<YPartyKitProvider | null>(null);
     const [status, setStatus] = useState<'loading' | 'connected' | 'error' | 'disconnected'>('loading');
-    
-    // Create a stable YDoc for the current roomId
-    const ydoc = useMemo(() => new Y.Doc(), [roomId]);
-
+    const hasConnected = useRef(false);
+    const ydocRef = useRef<Y.Doc>(new Y.Doc());
+    const [ydoc, setYdoc] = useState<Y.Doc>(() => ydocRef.current);
     useEffect(() => {
         let mounted = true;
         let providerInstance: YPartyKitProvider | null = null;
@@ -31,10 +30,18 @@ export function usePartyKitProvider(roomId: string) {
 
                 if (!mounted) return;
                 
+                // On reconnection, create a fresh YDoc before connecting
+                // so there's nothing to broadcast to the server
+                if (hasConnected.current) {
+                    ydocRef.current.destroy();
+                    ydocRef.current = new Y.Doc();
+                    setYdoc(ydocRef.current);
+                }
+
                 providerInstance = new YPartyKitProvider(
                     url,
                     roomId,
-                    ydoc,
+                    ydocRef.current,
                     {
                         connect: true,
                         params: { token }, // Pass token in query params
@@ -43,6 +50,9 @@ export function usePartyKitProvider(roomId: string) {
                 
                 providerInstance.on('sync', (connected: boolean) => {
                     if(!mounted) return;
+                    if (connected) {
+                        hasConnected.current = true;
+                    }
                     setStatus(connected ? 'connected' : 'loading');
                 });
                 
@@ -61,9 +71,12 @@ export function usePartyKitProvider(roomId: string) {
 
         return () => {
             mounted = false;
-            providerInstance?.destroy();
+            hasConnected.current = false;
+            if (providerInstance) {
+                providerInstance.destroy();
+            }
         };
-    }, [roomId, ydoc]);
+    }, [roomId]);
 
     return { provider, ydoc, status }
-}
+}
