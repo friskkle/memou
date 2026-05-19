@@ -50,6 +50,11 @@ export type account = Prisma.accountModel
  */
 export type journal_entries = Prisma.journal_entriesModel
 /**
+ * Model date_ideas
+ * 
+ */
+export type date_ideas = Prisma.date_ideasModel
+/**
  * Model journals
  * 
  */

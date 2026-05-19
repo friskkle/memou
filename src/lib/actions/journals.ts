@@ -51,7 +51,7 @@ export async function createEntry(
     console.error('Error creating entry:', error);
     throw error;
   } finally {
-    redirect(`/journal/${journal_id}/${returning_id}`);
+    redirect(`/journal/${journal_id}/entries/${returning_id}`);
   }
 }
 

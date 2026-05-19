@@ -5,6 +5,7 @@ interface PrimaryButtonProps
   size?: "small" | "medium" | "large";
   children: React.ReactNode;
   className?: string;
+  href?: string;
 }
 
 const sizeClasses = {

@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   account: 'account',
   journal_entries: 'journal_entries',
+  date_ideas: 'date_ideas',
   journals: 'journals',
   session: 'session',
   user: 'user',
@@ -106,6 +107,24 @@ export const Journal_entriesScalarFieldEnum = {
 } as const
 
 export type Journal_entriesScalarFieldEnum = (typeof Journal_entriesScalarFieldEnum)[keyof typeof Journal_entriesScalarFieldEnum]
+
+
+export const Date_ideasScalarFieldEnum = {
+  id: 'id',
+  journal_id: 'journal_id',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  budget: 'budget',
+  added_by: 'added_by',
+  created_at: 'created_at',
+  status: 'status',
+  planned_at: 'planned_at',
+  completed_at: 'completed_at',
+  completed_note: 'completed_note'
+} as const
+
+export type Date_ideasScalarFieldEnum = (typeof Date_ideasScalarFieldEnum)[keyof typeof Date_ideasScalarFieldEnum]
 
 
 export const JournalsScalarFieldEnum = {

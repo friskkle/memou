@@ -9,7 +9,10 @@
 * 🟢 You can import this file directly.
 */
 
+export const date_idea_status = {
+  idea: 'idea',
+  planned: 'planned',
+  completed: 'completed'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type date_idea_status = (typeof date_idea_status)[keyof typeof date_idea_status]

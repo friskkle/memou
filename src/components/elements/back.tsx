@@ -1,5 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function BackButton( {linkUrl}: {linkUrl?: string} ) {
   const router = useRouter();
@@ -25,14 +26,14 @@ export default function BackButton( {linkUrl}: {linkUrl?: string} ) {
   return (
     <button
       type="button"
-    className="flex px-4 py-2 md:pb-3 md:pt-2 w-fit items-center justify-center text-xl md:text-2xl leading-none font-bold rounded-lg select-none
+      className="group flex px-4 py-2 w-fit items-center justify-center text-xl leading-none font-bold rounded-lg select-none
         shadow-md border border-white/30 bg-white/10 backdrop-blur-md
         hover:bg-white/50 hover:-translate-y-0.5 hover:shadow-lg
         active:bg-white active:translate-y-0.5
         transition duration-200 ease-in-out"
       onClick={handleBack}
     >
-      ←
+      <ArrowBackIcon fontSize="small" />
     </button>
   );
 }

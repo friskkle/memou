@@ -258,7 +258,6 @@ export async function fetchEntries(
 
     if (userId) {
       const journal = await getAccessibleJournal(parsedJournalId, userId);
-      console.log(journal)
       if (!journal) {
         throw new Error('Unauthorized: You do not have access to this journal');
       }

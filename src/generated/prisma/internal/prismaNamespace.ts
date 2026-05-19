@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   account: 'account',
   journal_entries: 'journal_entries',
+  date_ideas: 'date_ideas',
   journals: 'journals',
   session: 'session',
   user: 'user',
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account" | "journal_entries" | "journals" | "session" | "user" | "users" | "verification"
+    modelProps: "account" | "journal_entries" | "date_ideas" | "journals" | "session" | "user" | "users" | "verification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -555,6 +556,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.journal_entriesCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.Journal_entriesCountAggregateOutputType> | number
+        }
+      }
+    }
+    date_ideas: {
+      payload: Prisma.$date_ideasPayload<ExtArgs>
+      fields: Prisma.date_ideasFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.date_ideasFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.date_ideasFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload>
+        }
+        findFirst: {
+          args: Prisma.date_ideasFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.date_ideasFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload>
+        }
+        findMany: {
+          args: Prisma.date_ideasFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload>[]
+        }
+        create: {
+          args: Prisma.date_ideasCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload>
+        }
+        createMany: {
+          args: Prisma.date_ideasCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.date_ideasCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload>[]
+        }
+        delete: {
+          args: Prisma.date_ideasDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload>
+        }
+        update: {
+          args: Prisma.date_ideasUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload>
+        }
+        deleteMany: {
+          args: Prisma.date_ideasDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.date_ideasUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.date_ideasUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload>[]
+        }
+        upsert: {
+          args: Prisma.date_ideasUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$date_ideasPayload>
+        }
+        aggregate: {
+          args: Prisma.Date_ideasAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDate_ideas>
+        }
+        groupBy: {
+          args: Prisma.date_ideasGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Date_ideasGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.date_ideasCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Date_ideasCountAggregateOutputType> | number
         }
       }
     }
@@ -999,6 +1074,24 @@ export const Journal_entriesScalarFieldEnum = {
 export type Journal_entriesScalarFieldEnum = (typeof Journal_entriesScalarFieldEnum)[keyof typeof Journal_entriesScalarFieldEnum]
 
 
+export const Date_ideasScalarFieldEnum = {
+  id: 'id',
+  journal_id: 'journal_id',
+  title: 'title',
+  description: 'description',
+  category: 'category',
+  budget: 'budget',
+  added_by: 'added_by',
+  created_at: 'created_at',
+  status: 'status',
+  planned_at: 'planned_at',
+  completed_at: 'completed_at',
+  completed_note: 'completed_note'
+} as const
+
+export type Date_ideasScalarFieldEnum = (typeof Date_ideasScalarFieldEnum)[keyof typeof Date_ideasScalarFieldEnum]
+
+
 export const JournalsScalarFieldEnum = {
   id: 'id',
   uuid: 'uuid',
@@ -1130,6 +1223,20 @@ export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
 
 
 /**
+ * Reference to a field of type 'date_idea_status'
+ */
+export type Enumdate_idea_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'date_idea_status'>
+    
+
+
+/**
+ * Reference to a field of type 'date_idea_status[]'
+ */
+export type ListEnumdate_idea_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'date_idea_status[]'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -1246,6 +1353,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   account?: Prisma.accountOmit
   journal_entries?: Prisma.journal_entriesOmit
+  date_ideas?: Prisma.date_ideasOmit
   journals?: Prisma.journalsOmit
   session?: Prisma.sessionOmit
   user?: Prisma.userOmit

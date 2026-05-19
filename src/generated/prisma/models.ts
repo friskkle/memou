@@ -10,6 +10,7 @@
  */
 export type * from './models/account'
 export type * from './models/journal_entries'
+export type * from './models/date_ideas'
 export type * from './models/journals'
 export type * from './models/session'
 export type * from './models/user'

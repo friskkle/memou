@@ -1,20 +1,43 @@
 import React from 'react';
+import { fetchEntries } from '@/src/lib/journals';
+import { createEntry } from '@/src/lib/actions/journals';
+import { EntryList } from '@/src/components/features/list/entry-list';
+import { PrimaryButton } from '@/src/components/elements/primary-button';
 import { getSession } from '@/src/lib/auth';
 import { redirect } from 'next/navigation';
+import { SearchInput } from '@/src/components/ui/search-input';
 
-const Entries = async (): Promise<React.ReactElement> => {
+const Entries = async (props: {
+  params: Promise<{ journal_id: string }>;
+  searchParams?: Promise<{
+    query?: string;
+  }>
+}): Promise<React.ReactElement> => {
   const session = await getSession();
 
   if (!session) {
     redirect('/signin');
   }
 
+  const params = await props.params;
+  const journal_id = params.journal_id;
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const entries = await fetchEntries(journal_id, session.user.id, query);
+
   return (
     <div className="max-w-4xl mx-auto p-2 md:p-4 mt-2 relative">
-      <span className="flex flex-col mb-4">
+      <span className="flex flex-row justify-between items-center mb-4">
         <p className="text-3xl font-bold">Entries</p>
-        <p className="text-lg text-stone-600 mt-2">Hey {session.user.name}, you&apos;ve discovered a new page! Entries will move here soon!</p>
+        <PrimaryButton
+          size="small"
+          onClick={createEntry.bind(null, Number(journal_id), 'New Entry')}
+        >
+          New Entry
+        </PrimaryButton>
       </span>
+      <SearchInput placeholder='Search an Entry by Title...' />
+      <EntryList list={entries} />
     </div>
   );
 };
