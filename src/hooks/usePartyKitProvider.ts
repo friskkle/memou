@@ -29,14 +29,6 @@ export function usePartyKitProvider(roomId: string) {
                 const { token } = await res.json();
 
                 if (!mounted) return;
-                
-                // On reconnection, create a fresh YDoc before connecting
-                // so there's nothing to broadcast to the server
-                if (hasConnected.current) {
-                    ydocRef.current.destroy();
-                    ydocRef.current = new Y.Doc();
-                    setYdoc(ydocRef.current);
-                }
 
                 providerInstance = new YPartyKitProvider(
                     url,

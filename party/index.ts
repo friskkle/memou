@@ -42,7 +42,7 @@ export default class JournalServer implements Party.Server {
     }
   }
 
-  onConnect(conn: Party.Connection, ctx: Party.ConnectionContext) {
+  async onConnect(conn: Party.Connection, ctx: Party.ConnectionContext) {
     // A websocket just connected!
     console.log(
       `Connected:
@@ -50,6 +50,9 @@ export default class JournalServer implements Party.Server {
       room: ${this.party.id}
       url: ${new URL(ctx.request.url).pathname}`,
     );
+
+    // Cancel any scheduled cleanup alarms since a client has connected
+    await this.party.storage.deleteAlarm();
 
     // Save user and document info for room
     const userId = ctx.request.headers.get('x-user-id');
@@ -137,8 +140,21 @@ export default class JournalServer implements Party.Server {
     console.log(`Connections left: ${connections.length}`);
 
     if (connections.length === 0) {
-      console.log(`No connections left, deleting room: ${this.party.id}`);
+      console.log(`No connections left. Scheduling storage cleanup alarm for room: ${this.party.id} in 5 minutes`);
+      // Schedule alarm to fire in 5 minutes (300,000 milliseconds)
+      await this.party.storage.setAlarm(Date.now() + 5 * 60 * 1000);
+    }
+  }
+
+  async onAlarm(): Promise<void> {
+    const connections = [...this.party.getConnections()];
+    console.log(`Alarm fired. Connections left: ${connections.length}`);
+
+    if (connections.length === 0) {
+      console.log(`No connections left after grace period. Deleting room storage for room: ${this.party.id}`);
       await this.party.storage.delete('doc');
+    } else {
+      console.log(`Active connections found during alarm, retaining room storage: ${this.party.id}`);
     }
   }
 
