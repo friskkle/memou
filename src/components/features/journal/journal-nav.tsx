@@ -36,7 +36,7 @@ export function JournalNav() {
   const basePath = `/journal/${journalId}`;
 
   return (
-    <nav className="flex gap-1 mt-3 overflow-x-auto rounded-lg border border-white/40 bg-white/20 p-1 shadow-sm backdrop-blur-md md:flex-col">
+    <nav className="flex items-center gap-1 h-10 md:h-auto md:w-10 md:mt-3 lg:w-full rounded-lg border border-white/40 bg-white/20 p-1 shadow-md backdrop-blur-md md:flex-col md:gap-1.5 md:p-1">
       {navItems.map((item) => {
         const href = `${basePath}${item.suffix}`;
         const isActive = item.suffix ? pathname.startsWith(href) : pathname === basePath;
@@ -47,14 +47,14 @@ export function JournalNav() {
             key={item.label}
             href={href}
             aria-current={isActive ? 'page' : undefined}
-            className={`flex min-w-fit items-center justify-start gap-2 rounded-md px-3 py-2 text-sm font-semibold no-underline transition ${
+            className={`flex h-8 w-8 md:h-8 md:w-8 lg:h-10 lg:w-full items-center justify-center lg:justify-start gap-2 rounded-md px-0 lg:px-4 text-sm font-semibold no-underline transition ${
               isActive
                 ? 'bg-white text-stone-900 shadow-sm'
                 : 'text-stone-600 hover:bg-white/60 hover:text-stone-900'
             }`}
           >
             <Icon fontSize="small" />
-            <span className="md:hidden lg:inline">{item.label}</span>
+            <span className="hidden lg:inline">{item.label}</span>
           </Link>
         );
       })}

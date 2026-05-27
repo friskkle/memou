@@ -34,7 +34,7 @@ export const auth = betterAuth({
   },
   plugins: [nextCookies()],
   session: {
-    expiresIn: 60 * 60 * 24,
-    disableSessionRefresh: true
+    expiresIn: 60 * 60 * 24 * 30,
+    updateAge: 60 * 60 * 24,
   }
 });
