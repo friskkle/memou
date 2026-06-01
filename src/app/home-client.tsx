@@ -120,7 +120,7 @@ export const HomeClient = () => {
                 className="flex items-center gap-4"
               >
                 <span
-                  className="flex items-center justify-center w-8 h-8 rounded-full bg-[#D49273]/20 text-[#D49273] text-sm"
+                  className="flex items-center justify-center w-8 h-8 rounded-full bg-jbrown/20 text-jbrown text-sm"
                   aria-hidden="true"
                 >
                   ✨
@@ -132,7 +132,7 @@ export const HomeClient = () => {
                 className="flex items-center gap-4"
               >
                 <span
-                  className="flex items-center justify-center w-8 h-8 rounded-full bg-[#D49273]/20 text-[#D49273] text-sm"
+                  className="flex items-center justify-center w-8 h-8 rounded-full bg-jbrown/20 text-jbrown text-sm"
                   aria-hidden="true"
                 >
                   🔒
@@ -144,7 +144,7 @@ export const HomeClient = () => {
                 className="flex items-center gap-4"
               >
                 <span
-                  className="flex items-center justify-center w-8 h-8 rounded-full bg-[#D49273]/20 text-[#D49273] text-sm"
+                  className="flex items-center justify-center w-8 h-8 rounded-full bg-jbrown/20 text-jbrown text-sm"
                   aria-hidden="true"
                 >
                   ⚡
@@ -169,7 +169,7 @@ export const HomeClient = () => {
       </section>
 
       {/* Segment 3: Free Tier Highlight */}
-      <section className="snap-always min-h-dvh w-full snap-start flex flex-col items-center justify-center p-8 md:p-20 bg-[#D49273] text-white relative overflow-hidden">
+      <section className="snap-always min-h-dvh w-full snap-start flex flex-col items-center justify-center p-8 md:p-20 bg-jbrown text-white relative overflow-hidden">
         {/* Decorative background elements */}
         <div
           className="absolute right-0 top-0 w-[80vh] h-[80vh] bg-white/10 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/3"
@@ -285,7 +285,7 @@ export const HomeClient = () => {
         </motion.div>
 
         <footer className="absolute bottom-10 text-stone-500 font-medium flex items-center gap-2 text-sm tracking-wide">
-          Memou <span className="text-[#D49273]">©</span>{' '}
+          Memou <span className="text-jbrown">©</span>{' '}
           {new Date().getFullYear()} ❤️
         </footer>
       </section>

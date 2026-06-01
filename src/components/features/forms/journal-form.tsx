@@ -124,7 +124,7 @@ export function CreateJournalForm({ uuid }: { uuid: string }) {
             name="title"
             defaultValue="New Journal"
             aria-describedby="title-error"
-            className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-base placeholder:text-gray-500 focus:border-[#D49273] focus:ring-[#D49273] transition-all duration-75"
+            className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-base placeholder:text-gray-500 focus:border-jbrown focus:ring-jbrown transition-all duration-75"
           />
         </div>
 
@@ -153,7 +153,7 @@ export function CreateJournalForm({ uuid }: { uuid: string }) {
                 onKeyDown={handleEmailSearch}
                 placeholder="user@example.com"
                 className={`peer block w-full rounded-lg bg-gray-100 py-2 px-3 text-base placeholder:text-gray-500 transition-all duration-75 focus:outline-none focus:ring-2
-                                    ${searchError ? 'border-2 border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200' : 'border border-transparent hover:bg-gray-200 active:border-gray-200 focus:bg-white focus:border-[#D49273] focus:ring-[#D49273]'}`}
+                                    ${searchError ? 'border-2 border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200' : 'border border-transparent hover:bg-gray-200 active:border-gray-200 focus:bg-white focus:border-jbrown focus:ring-jbrown'}`}
                 disabled={isSearching}
               />
               {/* Loading spinner during search */}
@@ -345,7 +345,7 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
             name="title"
             defaultValue={journal.title ?? ''}
             aria-describedby="title-error"
-            className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-base placeholder:text-gray-500 focus:border-[#D49273] focus:ring-[#D49273] transition-all duration-75"
+            className="peer block w-full rounded-lg hover:bg-gray-200 bg-gray-100 active:border-gray-200 py-2 px-3 text-base placeholder:text-gray-500 focus:border-jbrown focus:ring-jbrown transition-all duration-75"
           />
         </div>
 
@@ -374,7 +374,7 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
                 onKeyDown={handleEmailSearch}
                 placeholder="user@example.com"
                 className={`peer block w-full rounded-lg bg-gray-100 py-2 px-3 text-base placeholder:text-gray-500 transition-all duration-75 focus:outline-none focus:ring-2
-                                    ${searchError ? 'border-2 border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200' : 'border border-transparent hover:bg-gray-200 active:border-gray-200 focus:bg-white focus:border-[#D49273] focus:ring-[#D49273]'}`}
+                                    ${searchError ? 'border-2 border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200' : 'border border-transparent hover:bg-gray-200 active:border-gray-200 focus:bg-white focus:border-jbrown focus:ring-jbrown'}`}
                 disabled={isSearching}
               />
               {isSearching && (
@@ -387,7 +387,7 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
               type="button"
               onClick={performEmailSearch}
               disabled={isSearching || !emailInput.trim()}
-              className="rounded-lg bg-[#D49273] px-4 py-2 text-white font-medium hover:bg-[#b07456] active:bg-[#9A654B] disabled:bg-[#9A654B] disabled:cursor-not-allowed transition-colors"
+              className="rounded-lg bg-jbrown px-4 py-2 text-white font-medium hover:bg-jbrown-hover active:bg-jbrown-active disabled:bg-jbrown-active disabled:cursor-not-allowed transition-colors"
             >
               Add
             </button>
