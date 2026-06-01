@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { Entry } from "@/src/lib/definitions";
 import Link from "next/link";
 import { EntryActionMenu } from "./list-buttons";
@@ -21,29 +21,28 @@ const SortIcon = ({ active, dir }: { active: boolean; dir: SortDir }) => (
 );
 
 export const EntryList = ({ list }: { list: listType }) => {
-  const [sortKey, setSortKey] = useState<SortKey>('modified');
-  const [sortDir, setSortDir] = useState<SortDir>('desc');
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const sortKey = (searchParams.get('sort') as SortKey) || 'modified';
+  const sortDir = (searchParams.get('dir') as SortDir) || 'desc';
 
   const handleSort = (key: SortKey) => {
+    const params = new URLSearchParams(searchParams);
+    let newDir: SortDir = 'asc';
     if (sortKey === key) {
-      setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+      newDir = sortDir === 'asc' ? 'desc' : 'asc';
     } else {
-      setSortKey(key);
-      setSortDir(key === 'name' ? 'asc' : 'desc');
+      newDir = key === 'name' ? 'asc' : 'desc';
     }
+    params.set('sort', key);
+    params.set('dir', newDir);
+    params.set('page', '1'); // Reset to page 1 on sort change
+    replace(`${pathname}?${params.toString()}`);
   };
 
-  const sorted = list ? [...list].sort((a, b) => {
-    let cmp = 0;
-    if (sortKey === 'name') {
-      cmp = (a.title || '').localeCompare(b.title || '', undefined, { sensitivity: 'base' });
-    } else if (sortKey === 'created') {
-      cmp = new Date(a.created_date).getTime() - new Date(b.created_date).getTime();
-    } else {
-      cmp = new Date(a.last_modified).getTime() - new Date(b.last_modified).getTime();
-    }
-    return sortDir === 'asc' ? cmp : -cmp;
-  }) : null;
+  const sorted = list;
 
   return (
     (sorted &&

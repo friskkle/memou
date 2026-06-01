@@ -20,6 +20,7 @@ export function SearchInput({ placeholder = "Search...", className = "" }: Searc
     } else {
       params.delete('query')
     }
+    params.set('page', '1');
     replace(`${pathName}?${params.toString()}`)
   }, 250)
   return (

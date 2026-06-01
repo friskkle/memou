@@ -50,6 +50,9 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-cream: #FFF8F1;
+  --color-jbrown: #D49273;
+  --color-jbrown-hover: #b07456;
+  --color-jbrown-active: #8e5d3e;
 }
 
 @media (prefers-color-scheme: dark) {

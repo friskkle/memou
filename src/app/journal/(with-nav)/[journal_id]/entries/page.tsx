@@ -6,11 +6,15 @@ import { PrimaryButton } from '@/src/components/elements/primary-button';
 import { getSession } from '@/src/lib/auth';
 import { redirect } from 'next/navigation';
 import { SearchInput } from '@/src/components/ui/search-input';
+import { Pagination } from '@/src/components/ui/pagination';
 
 const Entries = async (props: {
   params: Promise<{ journal_id: string }>;
   searchParams?: Promise<{
     query?: string;
+    page?: string;
+    sort?: string;
+    dir?: string;
   }>
 }): Promise<React.ReactElement> => {
   const session = await getSession();
@@ -23,7 +27,17 @@ const Entries = async (props: {
   const journal_id = params.journal_id;
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
-  const entries = await fetchEntries(journal_id, session.user.id, query);
+  const page = Number(searchParams?.page) || 1;
+  const sortBy = (searchParams?.sort as 'name' | 'created' | 'modified') || 'modified';
+  const sortDir = (searchParams?.dir as 'asc' | 'desc') || 'desc';
+
+  const { entries, totalCount } = await fetchEntries(journal_id, session.user.id, {
+    query,
+    page,
+    limit: 10,
+    sortBy,
+    sortDir,
+  });
 
   return (
     <div className="max-w-4xl mx-auto p-2 md:p-4 mt-2 relative">
@@ -36,8 +50,11 @@ const Entries = async (props: {
           New Entry
         </PrimaryButton>
       </span>
-      <SearchInput placeholder='Search an Entry by Title...' />
+      <div className="mb-4">
+        <SearchInput placeholder='Search an Entry by Title...' />
+      </div>
       <EntryList list={entries} />
+      <Pagination totalCount={totalCount} itemsPerPage={10} />
     </div>
   );
 };

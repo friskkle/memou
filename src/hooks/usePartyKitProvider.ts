@@ -11,7 +11,7 @@ export function usePartyKitProvider(roomId: string) {
     const [status, setStatus] = useState<'loading' | 'connected' | 'error' | 'disconnected'>('loading');
     const hasConnected = useRef(false);
     const ydocRef = useRef<Y.Doc>(new Y.Doc());
-    const [ydoc, setYdoc] = useState<Y.Doc>(() => ydocRef.current);
+    const [ydoc] = useState<Y.Doc>(() => ydocRef.current);
     useEffect(() => {
         let mounted = true;
         let providerInstance: YPartyKitProvider | null = null;

@@ -2,6 +2,7 @@
 
 import { prisma } from './prisma';
 import { Journal, Entry } from './definitions';
+import { Prisma } from '../generated/prisma/client';
 
 async function getAccessibleJournal(
   journalId: number,
@@ -21,15 +22,50 @@ async function getAccessibleJournal(
 }
 
 // Journals
-export async function fetchJournals(uid: string, query: string = ''): Promise<Journal[]> {
+export async function fetchJournals(
+  uid: string,
+  options: {
+    query?: string;
+    page?: number;
+    limit?: number;
+    sortBy?: 'name' | 'creator';
+    sortDir?: 'asc' | 'desc';
+  } = {}
+): Promise<{ journals: Journal[]; totalCount: number }> {
+  const {
+    query = '',
+    page = 1,
+    limit = 10,
+    sortBy = 'name',
+    sortDir = 'asc'
+  } = options;
+
   try {
+    const where = {
+      AND: [
+        { title: { contains: query, mode: "insensitive" as const } },
+        { OR: [{ uuid: uid }, { shared_with: { has: uid } }] }
+      ],
+    };
+
+    const totalCount = await prisma.journals.count({ where });
+
+    // Determine orderBy structure
+    let orderBy: Prisma.journalsOrderByWithRelationInput = { id: 'desc' };
+    if (sortBy === 'name') {
+      orderBy = { title: sortDir };
+    } else if (sortBy === 'creator') {
+      orderBy = { user: { name: sortDir } };
+    }
+
+    const skip = (page - 1) * limit;
+    const take = limit;
+
     const journals = await prisma.journals.findMany({
-      where: {
-        AND: [{ title: {contains: query, mode: "insensitive"}}, { OR: [{ uuid: uid }, { shared_with: { has: uid } }] }],
-      },
-      orderBy: {
-        id: 'desc',
-      },
+      where,
+      orderBy,
+      skip,
+      take,
     });
 
     // Collect all unique user IDs (owners + shared_with) across all journals
@@ -52,7 +88,7 @@ export async function fetchJournals(uid: string, query: string = ''): Promise<Jo
       );
     }
 
-    return journals.map((journal) => ({
+    const mappedJournals = journals.map((journal) => ({
       id: journal.id,
       uuid: journal.uuid,
       title: journal.title || '',
@@ -62,6 +98,8 @@ export async function fetchJournals(uid: string, query: string = ''): Promise<Jo
         .map((id) => userMap[id] || { id: id, name: 'Unknown', email: '' }),
       creator_name: userMap[journal.uuid]?.name || 'Unknown',
     }));
+
+    return { journals: mappedJournals, totalCount };
   } catch (error) {
     console.error('Error fetching journals:', error);
     throw error;
@@ -251,8 +289,22 @@ export async function fetchEntryId(
 export async function fetchEntries(
   journal_id: string,
   userId: string = '',
-  query: string = '',
-): Promise<Entry[]> {
+  options: {
+    query?: string;
+    page?: number;
+    limit?: number;
+    sortBy?: 'name' | 'created' | 'modified';
+    sortDir?: 'asc' | 'desc';
+  } = {}
+): Promise<{ entries: Entry[]; totalCount: number }> {
+  const {
+    query = '',
+    page,
+    limit,
+    sortBy = 'modified',
+    sortDir = 'desc'
+  } = options;
+
   try {
     const parsedJournalId = parseInt(journal_id);
 
@@ -263,17 +315,34 @@ export async function fetchEntries(
       }
     }
 
+    const where = {
+      journal_id: parsedJournalId,
+      title: { contains: query, mode: 'insensitive' as const },
+    };
+
+    const totalCount = await prisma.journal_entries.count({ where });
+
+    // Determine orderBy structure
+    let orderBy: Prisma.journal_entriesOrderByWithRelationInput = { last_modified: 'desc' };
+    if (sortBy === 'name') {
+      orderBy = { title: sortDir };
+    } else if (sortBy === 'created') {
+      orderBy = { created_date: sortDir };
+    } else if (sortBy === 'modified') {
+      orderBy = { last_modified: sortDir };
+    }
+
+    const skip = page && limit ? (page - 1) * limit : undefined;
+    const take = limit ?? undefined;
+
     const entries = await prisma.journal_entries.findMany({
-      where: {
-        journal_id: parsedJournalId,
-        title: { contains: query, mode: 'insensitive' },
-      },
-      orderBy: {
-        last_modified: 'desc',
-      },
+      where,
+      orderBy,
+      ...(skip !== undefined ? { skip } : {}),
+      ...(take !== undefined ? { take } : {}),
     });
 
-    return entries.map((entry) => ({
+    const mappedEntries = entries.map((entry) => ({
       id: entry.id,
       journal_id: entry.journal_id,
       title: entry.title || 'Untitled',
@@ -282,6 +351,8 @@ export async function fetchEntries(
       last_modified: entry.last_modified,
       creator: entry.creator,
     }));
+
+    return { entries: mappedEntries, totalCount };
   } catch (error) {
     console.error('Error fetching entries:', error);
     throw error;

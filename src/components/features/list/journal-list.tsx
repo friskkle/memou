@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 import { Journal } from "@/src/lib/definitions";
 import Link from "next/link";
 import { JournalActionMenu } from "./list-buttons";
@@ -9,24 +9,28 @@ type SortKey = 'name' | 'creator';
 type SortDir = 'asc' | 'desc';
 
 export const JournalList = ({ list }: { list: Journal[] }) => {
-  const [sortKey, setSortKey] = useState<SortKey>('name');
-  const [sortDir, setSortDir] = useState<SortDir>('asc');
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const sortKey = (searchParams.get('sort') as SortKey) || 'name';
+  const sortDir = (searchParams.get('dir') as SortDir) || 'asc';
 
   const handleSort = (key: SortKey) => {
+    const params = new URLSearchParams(searchParams);
+    let newDir: SortDir = 'asc';
     if (sortKey === key) {
-      setSortDir(sortDir === 'asc' ? 'desc' : 'asc');
+      newDir = sortDir === 'asc' ? 'desc' : 'asc';
     } else {
-      setSortKey(key);
-      setSortDir('asc');
+      newDir = key === 'name' ? 'asc' : 'desc';
     }
+    params.set('sort', key);
+    params.set('dir', newDir);
+    params.set('page', '1'); // Reset to page 1 on sort change
+    replace(`${pathname}?${params.toString()}`);
   };
 
-  const sorted = [...list].sort((a, b) => {
-    const valA = sortKey === 'name' ? (a.title || '') : a.creator_name;
-    const valB = sortKey === 'name' ? (b.title || '') : b.creator_name;
-    const cmp = valA.localeCompare(valB, undefined, { sensitivity: 'base' });
-    return sortDir === 'asc' ? cmp : -cmp;
-  });
+  const sorted = list;
 
   const SortIcon = ({ active, dir }: { active: boolean; dir: SortDir }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"

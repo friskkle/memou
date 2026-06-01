@@ -24,18 +24,21 @@ const JournalDashboardPage = async (props: {
     redirect('/journal');
   }
 
-  const [entries, dateSummary] = await Promise.all([
-    fetchEntries(journal_id, session.user.id),
+  const [entriesData, dateSummary] = await Promise.all([
+    fetchEntries(journal_id, session.user.id, {
+      limit: 4,
+      sortBy: 'modified',
+      sortDir: 'desc'
+    }),
     fetchDateIdeaSummary(Number(journal_id), session.user.id),
   ]);
-  const recentEntries = entries.slice(0, 4);
 
   return (
     <JournalDashboard
       journal={journal}
       journalId={journal_id}
-      recentEntries={recentEntries}
-      entryCount={entries.length}
+      recentEntries={entriesData.entries}
+      entryCount={entriesData.totalCount}
       dateSummary={dateSummary}
     />
   );
