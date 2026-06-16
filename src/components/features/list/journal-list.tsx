@@ -1,9 +1,9 @@
 'use client';
 
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import { Journal } from "@/src/lib/definitions";
-import Link from "next/link";
-import { JournalActionMenu } from "./list-buttons";
+import { Journal } from '@/src/lib/definitions';
+import Link from 'next/link';
+import { JournalActionMenu } from './list-buttons';
 
 type SortKey = 'name' | 'creator';
 type SortDir = 'asc' | 'desc';
@@ -33,59 +33,80 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
   const sorted = list;
 
   const SortIcon = ({ active, dir }: { active: boolean; dir: SortDir }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
-      stroke={active ? '#374151' : '#9ca3af'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-      style={{ display: 'inline', verticalAlign: 'middle', marginLeft: 4 }}>
-      {dir === 'asc'
-        ? <path d="m5 15 7-7 7 7"/>
-        : <path d="m5 9 7 7 7-7"/>
-      }
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="12"
+      height="12"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke={active ? '#374151' : '#9ca3af'}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      style={{ display: 'inline', verticalAlign: 'middle', marginLeft: 4 }}
+    >
+      {dir === 'asc' ? <path d="m5 15 7-7 7 7" /> : <path d="m5 9 7 7 7-7" />}
     </svg>
   );
 
   return (
-    (list &&
-    <ul className="mt-2 bg-white shadow-sm rounded-lg">
-      <li className="text-sm md:text-base py-3 px-4 flex border-b border-gray-200 select-none font-semibold">
-        <span
-          className="flex-1 md:flex-3 text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
-          onClick={() => handleSort('name')}
-        >
-          Name
-          <SortIcon active={sortKey === 'name'} dir={sortKey === 'name' ? sortDir : 'asc'} />
-        </span>
-        <span
-          className="flex-1 pr-2 border-l border-gray-200 text-gray-500 text-right cursor-pointer hover:text-gray-700 transition-colors"
-          onClick={() => handleSort('creator')}
-        >
-          Creator
-          <SortIcon active={sortKey === 'creator'} dir={sortKey === 'creator' ? sortDir : 'asc'} />
-        </span>
-        <span className="flex-1 pr-4 border-l border-gray-200 text-gray-500 text-right">
-          Shared With
-        </span>
-      </li>
-      {sorted.map((journal) => (
-        <li key={journal.id} className="text-sm md:text-base p-1 flex last:mb-0 border-b border-gray-200 last:border-0 items-center">
-          <Link href={`/journal/${journal.id}`} className="flex-1 min-w-0 flex flex-row items-center py-2 px-3 font-bold no-underline text-black rounded hover:bg-[#e0e0e06a] transition-all duration-75">
-            <span className="flex-1 md:flex-3 flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
-              {journal.title}
-            </span>
-            <span className="flex-1 text-sm font-normal text-gray-500 text-right pr-2">
-              {journal.creator_name}
-            </span>
-            <span className="flex-1 text-sm font-normal text-gray-500 text-right pr-2">
-              {journal.shared_with_names.length > 0 && (
-                <CollaboratorBadge names={journal.shared_with_names.map((user) => user.name)} />
-              )}
-            </span>
-          </Link>
-          <div className="pr-2 shrink-0">
-            <JournalActionMenu journal_id={Number(journal.id)} />
-          </div>
+    (list && (
+      <ul className="mt-2 bg-white shadow-sm rounded-lg">
+        <li className="text-sm md:text-base py-3 px-4 flex border-b border-gray-200 select-none font-semibold">
+          <span
+            className="flex-1 md:flex-3 text-gray-500 cursor-pointer hover:text-gray-700 transition-colors"
+            onClick={() => handleSort('name')}
+          >
+            Name
+            <SortIcon
+              active={sortKey === 'name'}
+              dir={sortKey === 'name' ? sortDir : 'asc'}
+            />
+          </span>
+          <span
+            className="flex-1 pr-2 border-l border-gray-200 text-gray-500 text-right cursor-pointer hover:text-gray-700 transition-colors"
+            onClick={() => handleSort('creator')}
+          >
+            Creator
+            <SortIcon
+              active={sortKey === 'creator'}
+              dir={sortKey === 'creator' ? sortDir : 'asc'}
+            />
+          </span>
+          <span className="flex-1 pr-4 border-l border-gray-200 text-gray-500 text-right">
+            Shared With
+          </span>
         </li>
-      ))}
-    </ul>) || <div>No Journals found.</div>
+        {sorted.map((journal) => (
+          <li
+            key={journal.id}
+            className="text-sm md:text-base p-1 flex last:mb-0 border-b border-gray-200 last:border-0 items-center"
+          >
+            <Link
+              href={`/journal/${journal.id}`}
+              className="flex-1 min-w-0 flex flex-row items-center py-2 px-3 font-bold no-underline text-black rounded hover:bg-[#e0e0e06a] transition-all duration-75"
+            >
+              <span className="flex-1 md:flex-3 flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
+                {journal.title}
+              </span>
+              <span className="flex-1 text-sm font-normal text-gray-500 text-right pr-2">
+                {journal.creator_name}
+              </span>
+              <span className="flex-1 text-sm font-normal text-gray-500 text-right pr-2">
+                {journal.shared_with_names.length > 0 && (
+                  <CollaboratorBadge
+                    names={journal.shared_with_names.map((user) => user.name)}
+                  />
+                )}
+              </span>
+            </Link>
+            <div className="pr-2 shrink-0">
+              <JournalActionMenu journal_id={Number(journal.id)} />
+            </div>
+          </li>
+        ))}
+      </ul>
+    )) || <div>No Journals found, click New Journal to start.</div>
   );
 };
 
@@ -96,18 +117,32 @@ function CollaboratorBadge({ names }: { names: string[] }) {
   return (
     <span className="collaborator-badge">
       <span className="collaborator-trail">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}>
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}
+        >
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg>
-        {displayName}{remaining > 0 ? ` +${remaining}` : ''}
+        {displayName}
+        {remaining > 0 ? ` +${remaining}` : ''}
       </span>
       <span className="collaborator-tooltip">
         <span className="collaborator-tooltip-title">Shared with:</span>
         {names.map((name, i) => (
-          <span key={i} className="collaborator-tooltip-name">{name}</span>
+          <span key={i} className="collaborator-tooltip-name">
+            {name}
+          </span>
         ))}
       </span>
 

@@ -17,7 +17,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
         shadow-md border border-white/30 bg-white/10 backdrop-blur-md
         hover:bg-white/50 hover:-translate-y-0.5 hover:shadow-lg
         active:bg-white active:translate-y-0.5
-        transition duration-200 ease-in-out text-red-600">
+        transition duration-200 ease-in-out text-jred">
           Sign Out
         </div>
       </div>

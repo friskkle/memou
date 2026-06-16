@@ -235,7 +235,7 @@ export const CollaborativeEditor = ({ entryId, userName }: { entryId: string, us
             <CollaborativeTitle ydoc={ydoc} />
             <div className="flex items-center gap-2 mt-2 mb-1 ml-2 md:ml-auto">
               <div className={`h-2 w-2 rounded-full ${
-                status === 'connected' ? 'bg-green-500' : status === 'error' ? 'bg-red-500' : 'bg-yellow-500 animate-pulse'
+                status === 'connected' ? 'bg-green-500' : status === 'error' ? 'bg-jred' : 'bg-yellow-500 animate-pulse'
               }`} />
               <span className="text-xs text-gray-400">
                 {status === 'connected' ? 'Synced' : status === 'error' ? 'Connection error' : 'Syncing...'}

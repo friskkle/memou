@@ -127,7 +127,7 @@ export default function SlashMenu({
             key={command.title}
             ref={el => { itemRefs.current[index] = el }}
             className={`px-3 py-2 cursor-pointer flex items-center space-x-3 ${index === selectedIndex
-                ? 'bg-blue-50 text-blue-700'
+                ? 'bg-jblue-lightest text-jblue-dark'
                 : 'hover:bg-gray-50'
               }`}
             onClick={() => handleCommandClick(command)}

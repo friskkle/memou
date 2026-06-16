@@ -1,6 +1,10 @@
 'use client';
 
-import type { ButtonHTMLAttributes, ReactNode, TransitionStartFunction } from 'react';
+import type {
+  ButtonHTMLAttributes,
+  ReactNode,
+  TransitionStartFunction,
+} from 'react';
 import { useMemo, useState, useTransition } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import AddIcon from '@mui/icons-material/Add';
@@ -17,7 +21,13 @@ import {
   returnDateIdeaToPool,
   updateDateIdea,
 } from '@/src/lib/actions/date-ideas';
-import { DATE_IDEA_BUDGETS, DATE_IDEA_CATEGORIES, DateIdea, DateIdeaStatus } from '@/src/lib/definitions';
+import {
+  DATE_IDEA_BUDGETS,
+  DATE_IDEA_CATEGORIES,
+  DateIdea,
+  DateIdeaStatus,
+} from '@/src/lib/definitions';
+import { PrimaryButton } from '../../elements/primary-button';
 
 const statusLabels: Record<DateIdeaStatus | 'all', string> = {
   all: 'All',
@@ -42,7 +52,10 @@ export function DatePlannerClient({
   const [selectedIdea, setSelectedIdea] = useState<DateIdea | null>(null);
   const [editingIdea, setEditingIdea] = useState<DateIdea | null>(null);
   const [isPending, startTransition] = useTransition();
-  const eligibleIdeas = useMemo(() => ideas.filter((idea) => idea.status === 'idea'), [ideas]);
+  const eligibleIdeas = useMemo(
+    () => ideas.filter((idea) => idea.status === 'idea'),
+    [ideas],
+  );
 
   const spin = () => {
     if (eligibleIdeas.length === 0) {
@@ -50,7 +63,8 @@ export function DatePlannerClient({
       return;
     }
 
-    const nextIdea = eligibleIdeas[Math.floor(Math.random() * eligibleIdeas.length)];
+    const nextIdea =
+      eligibleIdeas[Math.floor(Math.random() * eligibleIdeas.length)];
     setSelectedIdea(nextIdea);
   };
 
@@ -66,17 +80,19 @@ export function DatePlannerClient({
     <div className="mx-auto max-w-6xl p-2 md:p-4 mt-2">
       <header className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-stone-500">Date Planner</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.12em] text-stone-500">
+            Date Planner
+          </p>
           <h1 className="mt-1 text-3xl font-bold text-stone-900">Date Ideas</h1>
         </div>
-        <button
+        <PrimaryButton
           type="button"
           onClick={() => setEditingIdea({} as DateIdea)}
-          className="inline-flex w-fit items-center gap-2 rounded-lg bg-stone-900 px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-stone-700"
+          size="small"
         >
           <AddIcon fontSize="small" />
           Add Idea
-        </button>
+        </PrimaryButton>
       </header>
 
       <DateIdeaFilters filters={filters} />
@@ -86,13 +102,15 @@ export function DatePlannerClient({
           <div className="mb-4 flex items-center justify-between gap-3">
             <div>
               <h2 className="text-lg font-bold text-stone-900">Spinner</h2>
-              <p className="text-sm text-stone-500">{eligibleIdeas.length} in the pool</p>
+              <p className="text-sm text-stone-500">
+                {eligibleIdeas.length} in the pool
+              </p>
             </div>
             <button
               type="button"
               onClick={spin}
               disabled={eligibleIdeas.length === 0 || isPending}
-              className="inline-flex items-center gap-2 rounded-lg bg-[#D49273] px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-[#b07456] disabled:cursor-not-allowed disabled:opacity-50"
+              className="inline-flex items-center gap-2 rounded-lg bg-jbrown px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-jbrown-hover disabled:cursor-not-allowed disabled:opacity-50"
             >
               <CasinoOutlinedIcon fontSize="small" />
               Spin
@@ -103,11 +121,20 @@ export function DatePlannerClient({
             {selectedIdea ? (
               <div className="flex h-full flex-col justify-between gap-4">
                 <div>
-                  <p className="text-2xl font-bold text-stone-900">{selectedIdea.title}</p>
-                  <p className="mt-2 text-sm text-stone-600">{selectedIdea.description || 'A shared pick from your idea pool.'}</p>
+                  <p className="text-2xl font-bold text-stone-900">
+                    {selectedIdea.title}
+                  </p>
+                  <p className="mt-2 text-sm text-stone-600">
+                    {selectedIdea.description ||
+                      'A shared pick from your idea pool.'}
+                  </p>
                   <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-stone-600">
-                    <span className="rounded-full bg-[#D49273]/15 px-3 py-1 text-[#9A654B]">{selectedIdea.category}</span>
-                    <span className="rounded-full bg-white px-3 py-1 shadow-sm">{selectedIdea.budget}</span>
+                    <span className="rounded-full bg-jbrown/15 px-3 py-1 text-[#9A654B]">
+                      {selectedIdea.category}
+                    </span>
+                    <span className="rounded-full bg-white px-3 py-1 shadow-sm">
+                      {selectedIdea.budget}
+                    </span>
                   </div>
                 </div>
                 <button
@@ -122,7 +149,9 @@ export function DatePlannerClient({
               </div>
             ) : (
               <div className="flex h-full min-h-36 items-center justify-center text-center text-sm text-stone-500">
-                {eligibleIdeas.length === 0 ? 'No eligible ideas in this view.' : 'Ready when you are.'}
+                {eligibleIdeas.length === 0
+                  ? 'No eligible ideas in this view.'
+                  : 'Ready when you are.'}
               </div>
             )}
           </div>
@@ -173,21 +202,39 @@ function DateIdeaFilters({
 
   return (
     <div className="grid gap-2 rounded-lg border border-stone-200 bg-white p-3 shadow-sm sm:grid-cols-3">
-      <FilterSelect label="Status" value={filters.status} onChange={(value) => updateFilter('status', value)}>
+      <FilterSelect
+        label="Status"
+        value={filters.status}
+        onChange={(value) => updateFilter('status', value)}
+      >
         {Object.entries(statusLabels).map(([value, label]) => (
-          <option key={value} value={value}>{label}</option>
+          <option key={value} value={value}>
+            {label}
+          </option>
         ))}
       </FilterSelect>
-      <FilterSelect label="Category" value={filters.category || 'all'} onChange={(value) => updateFilter('category', value)}>
+      <FilterSelect
+        label="Category"
+        value={filters.category || 'all'}
+        onChange={(value) => updateFilter('category', value)}
+      >
         <option value="all">All</option>
         {DATE_IDEA_CATEGORIES.map((category) => (
-          <option key={category} value={category}>{category}</option>
+          <option key={category} value={category}>
+            {category}
+          </option>
         ))}
       </FilterSelect>
-      <FilterSelect label="Budget" value={filters.budget || 'all'} onChange={(value) => updateFilter('budget', value)}>
+      <FilterSelect
+        label="Budget"
+        value={filters.budget || 'all'}
+        onChange={(value) => updateFilter('budget', value)}
+      >
         <option value="all">All</option>
         {DATE_IDEA_BUDGETS.map((budget) => (
-          <option key={budget} value={budget}>{budget}</option>
+          <option key={budget} value={budget}>
+            {budget}
+          </option>
         ))}
       </FilterSelect>
     </div>
@@ -211,7 +258,7 @@ function FilterSelect({
       <select
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        className="mt-1 block w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm font-semibold normal-case tracking-normal text-stone-800 outline-none transition focus:border-[#D49273] focus:bg-white"
+        className="mt-1 block w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-sm font-semibold normal-case tracking-normal text-stone-800 outline-none transition focus:border-jbrown focus:bg-white"
       >
         {children}
       </select>
@@ -243,26 +290,53 @@ function DateIdeaList({
   return (
     <div className="space-y-3">
       {ideas.map((idea) => (
-        <article key={idea.id} className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
+        <article
+          key={idea.id}
+          className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm"
+        >
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <h2 className="truncate text-lg font-bold text-stone-900">{idea.title}</h2>
-                <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold capitalize text-stone-600">{idea.status}</span>
+                <h2 className="truncate text-lg font-bold text-stone-900">
+                  {idea.title}
+                </h2>
+                <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs font-semibold capitalize text-stone-600">
+                  {idea.status}
+                </span>
               </div>
-              <p className="mt-1 text-sm text-stone-600">{idea.description || 'No description yet.'}</p>
+              <p className="mt-1 text-sm text-stone-600">
+                {idea.description || 'No description yet.'}
+              </p>
               <div className="mt-3 flex flex-wrap gap-2 text-xs font-semibold text-stone-600">
-                <span className="rounded-full bg-[#D49273]/15 px-3 py-1 text-[#9A654B]">{idea.category}</span>
-                <span className="rounded-full bg-stone-100 px-3 py-1">{idea.budget}</span>
-                <span className="rounded-full bg-stone-100 px-3 py-1">Added by {idea.added_by_name}</span>
+                <span className="rounded-full bg-jbrown/15 px-3 py-1 text-[#9A654B]">
+                  {idea.category}
+                </span>
+                <span className="rounded-full bg-stone-100 px-3 py-1">
+                  {idea.budget}
+                </span>
+                <span className="rounded-full bg-stone-100 px-3 py-1">
+                  Added by {idea.added_by_name}
+                </span>
               </div>
             </div>
             <div className="flex shrink-0 flex-wrap gap-1">
-              <IconButton label="Edit" onClick={() => onEdit(idea)} disabled={isPending}>
+              <IconButton
+                label="Edit"
+                onClick={() => onEdit(idea)}
+                disabled={isPending}
+              >
                 <EditOutlinedIcon fontSize="small" />
               </IconButton>
               {idea.status === 'idea' ? (
-                <IconButton label="Plan" onClick={() => startTransition(() => { void planDateIdea(idea.id, journalId); })} disabled={isPending}>
+                <IconButton
+                  label="Plan"
+                  onClick={() =>
+                    startTransition(() => {
+                      void planDateIdea(idea.id, journalId);
+                    })
+                  }
+                  disabled={isPending}
+                >
                   <CheckCircleOutlineIcon fontSize="small" />
                 </IconButton>
               ) : null}
@@ -270,17 +344,34 @@ function DateIdeaList({
                 <>
                   <form action={completeDateIdea.bind(null, idea.id)}>
                     <input type="hidden" name="journal_id" value={journalId} />
-                    <IconButton label="Complete" type="submit" disabled={isPending}>
+                    <IconButton
+                      label="Complete"
+                      type="submit"
+                      disabled={isPending}
+                    >
                       <CheckCircleOutlineIcon fontSize="small" />
                     </IconButton>
                   </form>
-                  <IconButton label="Return" onClick={() => startTransition(() => { void returnDateIdeaToPool(idea.id, journalId); })} disabled={isPending}>
+                  <IconButton
+                    label="Return"
+                    onClick={() =>
+                      startTransition(() => {
+                        void returnDateIdeaToPool(idea.id, journalId);
+                      })
+                    }
+                    disabled={isPending}
+                  >
                     <ReplayOutlinedIcon fontSize="small" />
                   </IconButton>
                 </>
               ) : null}
               <form action={deleteDateIdea.bind(null, idea.id)}>
-                <IconButton label="Delete" type="submit" danger disabled={isPending}>
+                <IconButton
+                  label="Delete"
+                  type="submit"
+                  danger
+                  disabled={isPending}
+                >
                   <DeleteOutlineIcon fontSize="small" />
                 </IconButton>
               </form>
@@ -309,7 +400,7 @@ function IconButton({
       aria-label={label}
       className={`flex h-9 w-9 items-center justify-center rounded-lg border text-sm transition disabled:cursor-not-allowed disabled:opacity-50 ${
         danger
-          ? 'border-red-100 bg-red-50 text-red-600 hover:bg-red-100'
+          ? 'border-jred-light bg-jred-lightest text-jred hover:bg-jred-light'
           : 'border-stone-200 bg-white text-stone-600 hover:bg-stone-50 hover:text-stone-900'
       }`}
     >
@@ -343,10 +434,15 @@ function DateIdeaModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-stone-900/35 p-4 backdrop-blur-sm">
-      <form action={handleSubmit} className="w-full max-w-xl rounded-lg bg-white p-5 shadow-2xl">
+      <form
+        action={handleSubmit}
+        className="w-full max-w-xl rounded-lg bg-white p-5 shadow-2xl"
+      >
         <input type="hidden" name="journal_id" value={journalId} />
         <div className="mb-4 flex items-center justify-between gap-3">
-          <h2 className="text-xl font-bold text-stone-900">{idea ? 'Edit Idea' : 'Add Idea'}</h2>
+          <h2 className="text-xl font-bold text-stone-900">
+            {idea ? 'Edit Idea' : 'Add Idea'}
+          </h2>
         </div>
 
         <div className="space-y-3">
@@ -357,7 +453,7 @@ function DateIdeaModal({
               required
               maxLength={96}
               defaultValue={idea?.title || ''}
-              className="mt-1 block w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-base font-medium text-stone-900 outline-none transition focus:border-[#D49273] focus:bg-white"
+              className="mt-1 block w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-base font-medium text-stone-900 outline-none transition focus:border-jbrown focus:bg-white"
             />
           </label>
 
@@ -368,7 +464,7 @@ function DateIdeaModal({
               maxLength={500}
               defaultValue={idea?.description || ''}
               rows={3}
-              className="mt-1 block w-full resize-none rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-base text-stone-900 outline-none transition focus:border-[#D49273] focus:bg-white"
+              className="mt-1 block w-full resize-none rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-base text-stone-900 outline-none transition focus:border-jbrown focus:bg-white"
             />
           </label>
 
@@ -378,10 +474,12 @@ function DateIdeaModal({
               <select
                 name="category"
                 defaultValue={idea?.category || DATE_IDEA_CATEGORIES[0]}
-                className="mt-1 block w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-base text-stone-900 outline-none transition focus:border-[#D49273] focus:bg-white"
+                className="mt-1 block w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-base text-stone-900 outline-none transition focus:border-jbrown focus:bg-white"
               >
                 {DATE_IDEA_CATEGORIES.map((category) => (
-                  <option key={category} value={category}>{category}</option>
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
                 ))}
               </select>
             </label>
@@ -391,10 +489,12 @@ function DateIdeaModal({
               <select
                 name="budget"
                 defaultValue={idea?.budget || DATE_IDEA_BUDGETS[0]}
-                className="mt-1 block w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-base text-stone-900 outline-none transition focus:border-[#D49273] focus:bg-white"
+                className="mt-1 block w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-base text-stone-900 outline-none transition focus:border-jbrown focus:bg-white"
               >
                 {DATE_IDEA_BUDGETS.map((budget) => (
-                  <option key={budget} value={budget}>{budget}</option>
+                  <option key={budget} value={budget}>
+                    {budget}
+                  </option>
                 ))}
               </select>
             </label>

@@ -153,7 +153,7 @@ export function CreateJournalForm({ uuid }: { uuid: string }) {
                 onKeyDown={handleEmailSearch}
                 placeholder="user@example.com"
                 className={`peer block w-full rounded-lg bg-gray-100 py-2 px-3 text-base placeholder:text-gray-500 transition-all duration-75 focus:outline-none focus:ring-2
-                                    ${searchError ? 'border-2 border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200' : 'border border-transparent hover:bg-gray-200 active:border-gray-200 focus:bg-white focus:border-jbrown focus:ring-jbrown'}`}
+                                    ${searchError ? 'border-2 border-jred bg-jred-lightest focus:border-jred focus:ring-jred-border' : 'border border-transparent hover:bg-gray-200 active:border-gray-200 focus:bg-white focus:border-jbrown focus:ring-jbrown'}`}
                 disabled={isSearching}
               />
               {/* Loading spinner during search */}
@@ -173,7 +173,7 @@ export function CreateJournalForm({ uuid }: { uuid: string }) {
             </button>
           </div>
           {searchError && (
-            <p className="mt-1 text-sm text-red-600 px-1">{searchError}</p>
+            <p className="mt-1 text-sm text-jred px-1">{searchError}</p>
           )}
 
           {/* List of currently added co-authors (badges) */}
@@ -182,14 +182,14 @@ export function CreateJournalForm({ uuid }: { uuid: string }) {
               {sharedUsers.map((user) => (
                 <div
                   key={user.id}
-                  className="flex items-center gap-1.5 rounded-full bg-blue-50 pl-3 pr-1.5 py-1 text-sm border border-blue-200"
+                  className="flex items-center gap-1.5 rounded-full bg-jblue-lightest pl-3 pr-1.5 py-1 text-sm border border-jblue-border"
                 >
-                  <span className="font-medium text-blue-800">{user.name}</span>
-                  <span className="text-blue-500 text-xs">({user.email})</span>
+                  <span className="font-medium text-jblue-dark">{user.name}</span>
+                  <span className="text-jblue text-xs">({user.email})</span>
                   <button
                     type="button"
                     onClick={() => removeUser(user.id)}
-                    className="ml-1 rounded-full p-0.5 text-blue-400 hover:bg-blue-100 hover:text-blue-600 transition-colors"
+                    className="ml-1 rounded-full p-0.5 text-jblue-muted hover:bg-jblue-light hover:text-jblue transition-colors"
                     aria-label={`Remove ${user.name}`}
                   >
                     <svg
@@ -221,7 +221,7 @@ export function CreateJournalForm({ uuid }: { uuid: string }) {
           className="min-h-5"
         >
           {state.errors?.title && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.title}</p>
+            <p className="mt-1 text-sm text-jred">{state.errors.title}</p>
           )}
         </div>
 
@@ -374,7 +374,7 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
                 onKeyDown={handleEmailSearch}
                 placeholder="user@example.com"
                 className={`peer block w-full rounded-lg bg-gray-100 py-2 px-3 text-base placeholder:text-gray-500 transition-all duration-75 focus:outline-none focus:ring-2
-                                    ${searchError ? 'border-2 border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-200' : 'border border-transparent hover:bg-gray-200 active:border-gray-200 focus:bg-white focus:border-jbrown focus:ring-jbrown'}`}
+                                    ${searchError ? 'border-2 border-jred bg-jred-lightest focus:border-jred focus:ring-jred-border' : 'border border-transparent hover:bg-gray-200 active:border-gray-200 focus:bg-white focus:border-jbrown focus:ring-jbrown'}`}
                 disabled={isSearching}
               />
               {isSearching && (
@@ -393,7 +393,7 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
             </button>
           </div>
           {searchError && (
-            <p className="mt-1 text-sm text-red-600 px-1">{searchError}</p>
+            <p className="mt-1 text-sm text-jred px-1">{searchError}</p>
           )}
 
           {/* List of currently associated co-authors (badges) */}
@@ -402,14 +402,14 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
               {sharedUsers.map((user) => (
                 <div
                   key={user.id}
-                  className="flex items-center gap-1.5 rounded-full bg-blue-50 pl-3 pr-1.5 py-1 text-sm border border-blue-200"
+                  className="flex items-center gap-1.5 rounded-full bg-jblue-lightest pl-3 pr-1.5 py-1 text-sm border border-jblue-border"
                 >
-                  <span className="font-medium text-blue-800">{user.name}</span>
-                  <span className="text-blue-500 text-xs">({user.email})</span>
+                  <span className="font-medium text-jblue-dark">{user.name}</span>
+                  <span className="text-jblue text-xs">({user.email})</span>
                   <button
                     type="button"
                     onClick={() => removeUser(user.id)}
-                    className="ml-1 rounded-full p-0.5 text-blue-400 hover:bg-blue-100 hover:text-blue-600 transition-colors"
+                    className="ml-1 rounded-full p-0.5 text-jblue-muted hover:bg-jblue-light hover:text-jblue transition-colors"
                     aria-label={`Remove ${user.name}`}
                   >
                     <svg
@@ -440,7 +440,7 @@ export function EditJournalForm({ journal }: { journal: Journal }) {
           className="min-h-5"
         >
           {state.errors?.title && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.title}</p>
+            <p className="mt-1 text-sm text-jred">{state.errors.title}</p>
           )}
         </div>
 

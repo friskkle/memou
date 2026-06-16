@@ -152,7 +152,7 @@ export function DeleteEntryButton({entry_id}: {entry_id: number}) {
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
-          className="px-2 text-red-600 font-bold"
+          className="px-2 text-jred font-bold"
         >
           <DeleteOutlineIcon />
         </button>
@@ -184,7 +184,7 @@ export function DeleteJournalButton({journal_id}: {journal_id: number}) {
         <button
           type="button"
           onClick={() => setIsModalOpen(true)}
-          className="px-2 text-red-600 font-bold"
+          className="px-2 text-jred font-bold"
         >
           <DeleteOutlineIcon />
         </button>

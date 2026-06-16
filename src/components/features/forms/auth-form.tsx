@@ -44,18 +44,18 @@ export function AuthForm() {
         {view === 'signin' && (
           <div className="cursor-pointer" onClick={() => setView('signup')}>
             {`Don't have an account? `}
-            <p className="text-blue-500 inline">Sign Up</p>
+            <p className="text-jblue inline">Sign Up</p>
           </div>
         )}
         {view === 'signup' && (
           <div className="cursor-pointer" onClick={() => setView('signin')}>
             {`Already have an account? `}
-            <p className="text-blue-500 inline">Sign In</p>
+            <p className="text-jblue inline">Sign In</p>
           </div>
         )}
         {view === 'forgot-password' && (
           <div className="cursor-pointer" onClick={() => setView('signin')}>
-            <p className="text-blue-500 inline">Back to Sign In</p>
+            <p className="text-jblue inline">Back to Sign In</p>
           </div>
         )}
       </div>
@@ -91,7 +91,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword: () => void 
           className="min-h-3"
         >
           {state.errors?.email && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.email}</p>
+            <p className="mt-1 text-sm text-jred">{state.errors.email}</p>
           )}
         </div>
       </div>
@@ -117,7 +117,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword: () => void 
           className="min-h-3"
         >
           {state.errors?.password && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.password}</p>
+            <p className="mt-1 text-sm text-jred">{state.errors.password}</p>
           )}
         </div>
       </div>
@@ -137,7 +137,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword: () => void 
         <button
           type="button"
           onClick={onForgotPassword}
-          className="text-sm text-blue-500 hover:underline"
+          className="text-sm text-jblue hover:underline"
         >
           Forgot Password?
         </button>
@@ -178,7 +178,7 @@ export function SignUpForm() {
           className="min-h-3"
         >
           {state.errors?.name && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.name}</p>
+            <p className="mt-1 text-sm text-jred">{state.errors.name}</p>
           )}
         </div>
       </div>
@@ -204,7 +204,7 @@ export function SignUpForm() {
           className="min-h-3"
         >
           {state.errors?.email && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.email}</p>
+            <p className="mt-1 text-sm text-jred">{state.errors.email}</p>
           )}
         </div>
       </div>
@@ -230,7 +230,7 @@ export function SignUpForm() {
           className="min-h-3"
         >
           {state.errors?.password && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.password}</p>
+            <p className="mt-1 text-sm text-jred">{state.errors.password}</p>
           )}
         </div>
       </div>
@@ -256,7 +256,7 @@ export function SignUpForm() {
           className="min-h-3"
         >
           {state.errors?.confirmPassword && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-sm text-jred">
               {state.errors.confirmPassword}
             </p>
           )}
@@ -298,7 +298,7 @@ export function ForgotPasswordForm() {
           className="min-h-3"
         >
           {state.errors?.email && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.email}</p>
+            <p className="mt-1 text-sm text-jred">{state.errors.email}</p>
           )}
         </div>
       </div>
@@ -345,7 +345,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
           className="min-h-3"
         >
           {state.errors?.password && (
-            <p className="mt-1 text-sm text-red-600">{state.errors.password}</p>
+            <p className="mt-1 text-sm text-jred">{state.errors.password}</p>
           )}
         </div>
       </div>
@@ -371,7 +371,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
           className="min-h-3"
         >
           {state.errors?.confirmPassword && (
-            <p className="mt-1 text-sm text-red-600">
+            <p className="mt-1 text-sm text-jred">
               {state.errors.confirmPassword}
             </p>
           )}
@@ -379,7 +379,7 @@ export function ResetPasswordForm({ token }: { token: string }) {
       </div>
 
       {state.message && (
-        <div className="mb-4 p-3 bg-red-50 text-red-700 rounded-md text-sm">
+        <div className="mb-4 p-3 bg-jred-lightest text-jred rounded-md text-sm">
           {state.message}
         </div>
       )}

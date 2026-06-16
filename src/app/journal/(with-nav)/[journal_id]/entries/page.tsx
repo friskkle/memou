@@ -1,5 +1,5 @@
 import React from 'react';
-import { fetchEntries } from '@/src/lib/journals';
+import { fetchEntries, fetchJournalId } from '@/src/lib/journals';
 import { createEntry } from '@/src/lib/actions/journals';
 import { EntryList } from '@/src/components/features/list/entry-list';
 import { PrimaryButton } from '@/src/components/elements/primary-button';
@@ -31,6 +31,11 @@ const Entries = async (props: {
   const sortBy = (searchParams?.sort as 'name' | 'created' | 'modified') || 'modified';
   const sortDir = (searchParams?.dir as 'asc' | 'desc') || 'desc';
 
+  const journal = await fetchJournalId(journal_id, session.user.id);
+  if (!journal.id) {
+    redirect('/journal');
+  }
+
   const { entries, totalCount } = await fetchEntries(journal_id, session.user.id, {
     query,
     page,
@@ -42,7 +47,10 @@ const Entries = async (props: {
   return (
     <div className="max-w-4xl mx-auto p-2 md:p-4 mt-2 relative">
       <span className="flex flex-row justify-between items-center mb-4">
-        <p className="text-3xl font-bold">Entries</p>
+        <div>
+          <p className='text-md font-medium text-gray-500'>{journal.title}</p>
+          <p className="text-3xl font-bold">Entries</p>
+        </div>
         <PrimaryButton
           size="small"
           onClick={createEntry.bind(null, Number(journal_id), 'New Entry')}

@@ -11,7 +11,7 @@ export default async function ResetPasswordPage({
     return (
       <div className="flex flex-col items-center justify-center min-h-screen">
         <div className="p-8 bg-white rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Invalid Link</h1>
+          <h1 className="text-2xl font-bold text-jred mb-4">Invalid Link</h1>
           <p className="text-gray-600">The password reset link is invalid or missing a token.</p>
         </div>
       </div>

@@ -20,10 +20,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
         <div
           onClick={signOutAction}
           className="group flex mt-auto h-10 w-10 md:h-10 md:w-10 lg:w-full lg:px-4 items-center justify-center lg:justify-start rounded-lg select-none cursor-pointer
-            shadow-md border border-red-200/30 bg-red-500/10 backdrop-blur-md
-            hover:bg-red-500/20 hover:-translate-y-0.5 hover:shadow-lg
-            active:bg-red-500/30 active:translate-y-0.5
-            transition duration-200 ease-in-out text-red-600"
+            shadow-md border border-jred-border/30 bg-jred/10 backdrop-blur-md
+            hover:bg-jred/20 hover:-translate-y-0.5 hover:shadow-lg
+            active:bg-jred/30 active:translate-y-0.5
+            transition duration-200 ease-in-out text-jred"
         >
           <LogoutOutlinedIcon fontSize="small" />
           <span className="hidden lg:inline ml-2 text-sm font-semibold">Sign Out</span>

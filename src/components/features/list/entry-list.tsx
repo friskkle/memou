@@ -88,6 +88,6 @@ export const EntryList = ({ list }: { list: listType }) => {
           </div>
         </li>
       ))}
-    </ul>) || <div>No entries found.</div>
+    </ul>) || <div>No entries found, click new entry to begin writing.</div>
   );
 };
