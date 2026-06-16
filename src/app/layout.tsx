@@ -19,8 +19,14 @@ const inter = Inter({
 }); */
 
 export const metadata: Metadata = {
-  title: "Memou",
-  description: "Home for you and your loved ones.",
+  title: 'Memou',
+  description: 'Memou is a simple collaborative environment to log your memories and thoughts effortlessly with your loved ones. Completely free and secure.',
+  keywords: ['memou', 'journal', 'collaborative journaling', 'free journal app', 'memories', 'secure diary', 'date planner'],
+  openGraph: {
+    title: 'Memou | Save and Plan Memories Together',
+    description: 'A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
+    type: 'website',
+  }
 };
 
 export default function RootLayout({

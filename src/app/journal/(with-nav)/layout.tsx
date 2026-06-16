@@ -4,6 +4,18 @@ import { signOutAction } from "@/src/lib/actions/auth";
 import { getSession } from "@/src/lib/auth";
 import { redirect } from "next/navigation";
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Memou | Journal',
+  description: 'A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
+  keywords: ['memou', 'journal', 'collaborative journaling', 'free journal app', 'memories', 'secure diary', 'date planner'],
+  openGraph: {
+    title: 'Memou | Journal',
+    description: 'A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
+    type: 'website',
+  }
+};
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
   const session = await getSession();

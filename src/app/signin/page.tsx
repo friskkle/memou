@@ -1,7 +1,19 @@
 import BackButton from '@/src/components/elements/back';
 import { AuthForm } from '@/src/components/features/forms/auth-form';
 import { getSession } from '@/src/lib/auth';
+import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
+
+export const metadata: Metadata = {
+  title: 'Memou | Sign in',
+  description: 'Sign in to your Memou account to access your journals.',
+  keywords: ['memou', 'signin', 'journal', 'memories', 'secure diary'],
+  openGraph: {
+    title: 'Memou | Sign in',
+    description: 'Sign in to your Memou account to access your journals.',
+    type: 'website',
+  }
+};
 
 export default async function Signin() {
   const session = await getSession();

@@ -46,3 +46,32 @@ export type DateIdeaSummary = {
     completed: number;
     plannedIdea: nullable<DateIdea>;
 }
+
+type MarkType = "bold" | "italic" | "underline" | "strike" | "code" | "link";
+
+interface Mark {
+  type: MarkType;
+  attrs?: Record<string, unknown>;
+}
+
+type NodeType =
+  | "doc"
+  | "paragraph"
+  | "text"
+  | "hardBreak"
+  | "blockquote"
+  | "heading"
+  | "bulletList"
+  | "orderedList"
+  | "listItem"
+  | "codeBlock"
+  | "horizontalRule"
+  | "image";
+
+export interface DocNode {
+  type: NodeType;
+  text?: string;        // only on "text" nodes
+  marks?: Mark[];       // only on "text" nodes
+  attrs?: Record<string, unknown>;  // e.g. heading level, image src
+  content?: DocNode[];  // absent on leaf nodes (text, hardBreak, etc.)
+}

@@ -6,6 +6,18 @@ import { fetchEntries, fetchJournalId } from '@/src/lib/journals';
 import { fetchDateIdeaSummary } from '@/src/lib/date-ideas';
 import { getSession } from '@/src/lib/auth';
 import { redirect } from 'next/navigation';
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Memou | Journal',
+  description: 'A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
+  keywords: ['memou', 'journal', 'collaborative journaling', 'free journal app', 'memories', 'secure diary', 'date planner'],
+  openGraph: {
+    title: 'Memou | Journal',
+    description: 'A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
+    type: 'website',
+  }
+};
 
 const JournalDashboardPage = async (props: {
   params: Promise<{ journal_id: string }>;

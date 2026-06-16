@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname, useSearchParams, useRouter } from 'next/navigation';
-import { Entry } from "@/src/lib/definitions";
+import { DocNode, Entry } from "@/src/lib/definitions";
 import Link from "next/link";
 import { EntryActionMenu } from "./list-buttons";
 
@@ -70,12 +70,27 @@ export const EntryList = ({ list }: { list: listType }) => {
           <SortIcon active={sortKey === 'modified'} dir={sortKey === 'modified' ? sortDir : 'desc'} />
         </span>
       </li>
-      {sorted.map((entry) => (
+      {sorted.map((entry) => { 
+      const entryContent: DocNode = JSON.parse(entry.content || '[]');
+
+      function extractText(node: DocNode, separator = " "): string {
+        if (node.type === "text") return node.text ?? "";
+        if (node.type === "hardBreak") return "\n";
+        if (!node.content) return "";
+        return node.content.map((child: DocNode) => extractText(child, separator)).join(separator);
+      }
+      const textSample = extractText(entryContent);
+      return (
         <li key={entry.id} className="text-sm md:text-base p-1 flex last:mb-0 border-b border-gray-200 last:border-0 items-center">
           <Link href={`/journal/${entry.journal_id}/entries/${entry.id}`} className="flex-1 min-w-0 flex flex-row py-2 px-3 font-bold no-underline text-black rounded hover:bg-[#e0e0e06a] transition-all duration-75">
-            <span className="flex-1 md:flex-3 overflow-hidden text-ellipsis whitespace-nowrap">
-              {entry.title}
-            </span>
+            <div className='flex flex-col flex-1 md:flex-3 overflow-hidden text-ellipsis whitespace-nowrap'>
+              <span>
+                {entry.title}
+              </span>
+              <span className='text-gray-400 font-semibold text-xs md:text-sm overflow-hidden text-ellipsis whitespace-nowrap'>
+                {textSample}
+              </span>
+            </div>
             <span className="flex-1 text-xs md:text-sm text-gray-500 text-right pr-2">
               {new Date(entry.created_date).toLocaleDateString('en-US', { year: 'numeric', month: 'numeric', day: 'numeric' })}
             </span>
@@ -87,7 +102,8 @@ export const EntryList = ({ list }: { list: listType }) => {
             <EntryActionMenu entry_id={Number(entry.id)} />
           </div>
         </li>
-      ))}
+      );
+    })}
     </ul>) || <div>No entries found, click new entry to begin writing.</div>
   );
 };
