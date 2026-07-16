@@ -8,7 +8,6 @@ import type {
 import { useMemo, useState, useTransition } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import AddIcon from '@mui/icons-material/Add';
-import CasinoOutlinedIcon from '@mui/icons-material/CasinoOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -28,6 +27,7 @@ import {
   DateIdeaStatus,
 } from '@/src/lib/definitions';
 import { PrimaryButton } from '../../elements/primary-button';
+import { Spinner } from './spinner';
 
 const statusLabels: Record<DateIdeaStatus | 'all', string> = {
   all: 'All',
@@ -49,32 +49,12 @@ export function DatePlannerClient({
     status: DateIdeaStatus | 'all';
   };
 }) {
-  const [selectedIdea, setSelectedIdea] = useState<DateIdea | null>(null);
   const [editingIdea, setEditingIdea] = useState<DateIdea | null>(null);
   const [isPending, startTransition] = useTransition();
   const eligibleIdeas = useMemo(
     () => ideas.filter((idea) => idea.status === 'idea'),
     [ideas],
   );
-
-  const spin = () => {
-    if (eligibleIdeas.length === 0) {
-      setSelectedIdea(null);
-      return;
-    }
-
-    const nextIdea =
-      eligibleIdeas[Math.floor(Math.random() * eligibleIdeas.length)];
-    setSelectedIdea(nextIdea);
-  };
-
-  const planSelectedIdea = () => {
-    if (!selectedIdea) return;
-    startTransition(() => {
-      void planDateIdea(selectedIdea.id, journalId);
-      setSelectedIdea(null);
-    });
-  };
 
   return (
     <div className="mx-auto max-w-6xl p-2 md:p-4 mt-2">
@@ -98,64 +78,16 @@ export function DatePlannerClient({
       <DateIdeaFilters filters={filters} />
 
       <section className="mt-4 grid gap-4 lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="rounded-lg border border-stone-200 bg-white p-4 shadow-sm">
-          <div className="mb-4 flex items-center justify-between gap-3">
-            <div>
-              <h2 className="text-lg font-bold text-stone-900">Spinner</h2>
-              <p className="text-sm text-stone-500">
-                {eligibleIdeas.length} in the pool
-              </p>
-            </div>
-            <button
-              type="button"
-              onClick={spin}
-              disabled={eligibleIdeas.length === 0 || isPending}
-              className="inline-flex items-center gap-2 rounded-lg bg-jbrown px-3 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-jbrown-hover disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <CasinoOutlinedIcon fontSize="small" />
-              Spin
-            </button>
-          </div>
-
-          <div className="min-h-44 rounded-lg border border-dashed border-stone-300 bg-stone-50 p-4">
-            {selectedIdea ? (
-              <div className="flex h-full flex-col justify-between gap-4">
-                <div>
-                  <p className="text-2xl font-bold text-stone-900">
-                    {selectedIdea.title}
-                  </p>
-                  <p className="mt-2 text-sm text-stone-600">
-                    {selectedIdea.description ||
-                      'A shared pick from your idea pool.'}
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2 text-xs font-semibold text-stone-600">
-                    <span className="rounded-full bg-jbrown/15 px-3 py-1 text-[#9A654B]">
-                      {selectedIdea.category}
-                    </span>
-                    <span className="rounded-full bg-white px-3 py-1 shadow-sm">
-                      {selectedIdea.budget}
-                    </span>
-                  </div>
-                </div>
-                <button
-                  type="button"
-                  disabled={isPending}
-                  onClick={planSelectedIdea}
-                  className="inline-flex w-fit items-center gap-2 rounded-lg bg-stone-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-stone-700 disabled:opacity-50"
-                >
-                  <CheckCircleOutlineIcon fontSize="small" />
-                  Mark planned
-                </button>
-              </div>
-            ) : (
-              <div className="flex h-full min-h-36 items-center justify-center text-center text-sm text-stone-500">
-                {eligibleIdeas.length === 0
-                  ? 'No eligible ideas in this view.'
-                  : 'Ready when you are.'}
-              </div>
-            )}
-          </div>
-        </div>
+        <Spinner
+          ideas={eligibleIdeas}
+          onSpin={() => {}}
+          onPlan={(idea) => {
+            startTransition(() => {
+              void planDateIdea(idea.id, journalId);
+            });
+          }}
+          disabled={isPending}
+        />
 
         <DateIdeaList
           ideas={ideas}
