@@ -38,7 +38,7 @@ const Journals = async (props: {
   });
 
   return (
-    <div className="max-w-4xl mx-auto p-2 md:p-4 mt-2 relative">
+    <div className="w-full md:max-w-[85%] mx-auto p-2 md:p-4 mt-2 relative">
       <header className="flex flex-row justify-between items-center mb-4">
         <h1 className="text-3xl font-bold">Journals</h1>
         <Link href="/journal/new">

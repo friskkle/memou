@@ -140,7 +140,7 @@ export function Spinner({ ideas, onSpin, onPlan, disabled }: SpinnerProps) {
   }, [ideas, spinning, disabled, controls, onSpin]);
 
   return (
-    <div className="rounded-lg h-fit border border-stone-200 bg-white shadow-sm">
+    <div className="rounded-lg border border-stone-200 bg-white shadow-sm h-fit">
       <div className="flex items-center justify-between gap-3 border-b border-stone-200 px-4 py-3">
         <div>
           <h2 className="text-lg font-bold text-stone-900">Spinner</h2>
@@ -182,36 +182,34 @@ export function Spinner({ ideas, onSpin, onPlan, disabled }: SpinnerProps) {
         </div>
       </div>
 
-      <div className="flex min-h-[160px] flex-col justify-center border-t border-stone-200">
+      <div className="flex flex-col min-h-[125px] justify-center border-t border-stone-200">
         {spinning ? (
-          <div className="flex-1 p-4">
-            <div className="flex h-full min-h-[120px] w-full animate-pulse items-center justify-center rounded-lg bg-stone-100">
-              <span className="text-sm font-medium text-stone-400">
-                Spinning…
-              </span>
-            </div>
+          <div className="flex h-full w-full items-center animate-pulse justify-center py-8 text-sm text-stone-500">
+            <span className='px-4 py-1 rounded-2xl bg-jbrown text-white animate-bounce'>
+              Spinning...
+            </span>
           </div>
         ) : selectedIdea ? (
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 15 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ type: 'spring', damping: 15, stiffness: 300 }}
-            className="w-full p-4"
+            transition={{ type: 'spring', damping: 10, stiffness: 300 }}
+            className="w-full px-4 py-2"
           >
             <div
               className={cn(
-                'rounded-lg bg-linear-to-br p-4 text-white',
+                'rounded-lg bg-linear-to-br px-4 py-3 text-white',
                 CATEGORY_CLASSES[selectedIdea.category]?.gradient ??
                   'from-stone-500 to-stone-600',
               )}
             >
               <p className="text-lg font-bold">{selectedIdea.title}</p>
               {selectedIdea.description && (
-                <p className="mt-1 text-sm text-white/80">
+                <p className="text-sm text-white/80 line-clamp-1">
                   {selectedIdea.description}
                 </p>
               )}
-              <div className="mt-3 flex flex-wrap items-center gap-2">
+              <div className="mt-2 flex flex-wrap items-center gap-2">
                 <span className="rounded-full bg-white/20 px-3 py-1 text-xs font-semibold">
                   {selectedIdea.category}
                 </span>

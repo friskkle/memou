@@ -5,6 +5,7 @@ import { getSession } from "@/src/lib/auth";
 import { redirect } from "next/navigation";
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import { Metadata } from "next";
+import HomeButton from "@/src/components/elements/home-button";
 
 export const metadata: Metadata = {
   title: 'Memou | Journal',
@@ -27,7 +28,10 @@ export default async function Layout({ children }: { children: React.ReactNode }
       <div className="p-4 flex flex-row items-center justify-between
         gap-2 border-b border-white/20 bg-white/10 backdrop-blur-md md:border-b-0 md:bg-transparent md:backdrop-blur-none 
         md:flex-col md:items-stretch md:justify-start md:gap-3 md:w-fit lg:w-52">
-        <BackButton />
+        <div className="flex gap-2">
+          <BackButton />
+          <HomeButton />
+        </div>
         <JournalNav />
         <div
           onClick={signOutAction}
@@ -41,7 +45,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
           <span className="hidden lg:inline ml-2 text-sm font-semibold">Sign Out</span>
         </div>
       </div>
-      <div className="grow md:overflow-y-auto p-3 md:p-4">
+      <div className="grow md:overflow-y-auto px-3 py-3 md:py-1">
         {children}
       </div>
     </div>
