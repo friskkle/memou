@@ -122,7 +122,7 @@ export function SignInForm({ onForgotPassword }: { onForgotPassword: () => void 
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center gap-1">
         <div className="flex items-center">
           <input
             type="checkbox"
