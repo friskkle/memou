@@ -4,6 +4,7 @@ export type DateIdeaStatus = 'idea' | 'planned' | 'completed';
 
 export const DATE_IDEA_CATEGORIES = ['Cozy In', 'Foodie', 'Outdoor', 'Creative', 'Adventure', 'Errands Plus'] as const;
 export const DATE_IDEA_BUDGETS = ['Free', '$', '$$', '$$$'] as const;
+export const DATE_IDEA_PRIORITIES = {1: 'Low', 2: 'Medium', 3: "High"} as const;
 
 export type Journal = {
     id: number;
@@ -31,6 +32,7 @@ export type DateIdea = {
     description: nullable<string>;
     category: string;
     budget: string;
+    priority: number;
     added_by: string;
     added_by_name: string;
     created_at: Date;

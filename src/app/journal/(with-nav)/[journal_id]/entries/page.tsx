@@ -45,7 +45,7 @@ const Entries = async (props: {
   });
 
   return (
-    <div className="w-full md:max-w-[85%] mx-auto p-2 md:p-4 mt-2 relative">
+    <div className="max-w-5xl mx-auto p-2 md:p-4 mt-2 relative">
       <span className="flex flex-row justify-between items-center mb-4">
         <div>
           <p className='text-md font-medium text-gray-500'>{journal.title}</p>

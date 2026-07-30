@@ -1,7 +1,7 @@
 'use client';
 
 import type { DateIdea } from "@/src/lib/definitions";
-import { DATE_IDEA_BUDGETS, DATE_IDEA_CATEGORIES } from "@/src/lib/definitions";
+import { DATE_IDEA_BUDGETS, DATE_IDEA_CATEGORIES, DATE_IDEA_PRIORITIES } from "@/src/lib/definitions";
 import { createDateIdea, updateDateIdea } from "@/src/lib/actions/date-ideas";
 import { useTransition } from "react";
 
@@ -90,6 +90,21 @@ export function DateIdeaModal({
                 {DATE_IDEA_BUDGETS.map((budget) => (
                   <option key={budget} value={budget}>
                     {budget}
+                  </option>
+                ))}
+              </select>
+            </label>
+
+            <label className="block text-sm font-semibold text-stone-700">
+              Priority
+              <select
+                name="priority"
+                defaultValue={idea?.priority || 1}
+                className="mt-1 block w-full rounded-lg border border-stone-200 bg-stone-50 px-3 py-2 text-base text-stone-900 outline-none transition focus:border-jbrown focus:bg-white"
+              >
+                {Object.entries(DATE_IDEA_PRIORITIES).map(([key, value]) => (
+                  <option key={key} value={key}>
+                    {value}
                   </option>
                 ))}
               </select>

@@ -1081,6 +1081,7 @@ export const Date_ideasScalarFieldEnum = {
   description: 'description',
   category: 'category',
   budget: 'budget',
+  priority: 'priority',
   added_by: 'added_by',
   created_at: 'created_at',
   status: 'status',

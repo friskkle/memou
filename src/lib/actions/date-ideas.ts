@@ -16,6 +16,7 @@ const DateIdeaFormSchema = z.object({
   description: z.string().trim().max(500, 'Description must be under 500 characters').optional(),
   category: z.string().trim().min(1, 'Category is required').max(32),
   budget: z.string().trim().min(1, 'Budget is required').max(32),
+  priority: z.coerce.number().int().positive(),
 });
 
 async function requireUserId(): Promise<string> {
@@ -40,6 +41,7 @@ export async function createDateIdea(formData: FormData): Promise<void> {
     description: formData.get('description') || undefined,
     category: formData.get('category'),
     budget: formData.get('budget'),
+    priority: formData.get('priority')
   });
 
   await createDateIdeaRecord(parsed.journal_id, userId, parsed);
@@ -54,6 +56,7 @@ export async function updateDateIdea(ideaId: number, formData: FormData): Promis
     description: formData.get('description') || undefined,
     category: formData.get('category'),
     budget: formData.get('budget'),
+    priority: formData.get('priority')
   });
 
   await updateDateIdeaRecord(ideaId, userId, parsed);

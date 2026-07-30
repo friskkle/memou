@@ -25,9 +25,8 @@ export default async function Layout({ children }: { children: React.ReactNode }
   }
   return (
     <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
-      <div className="p-4 flex flex-row items-center justify-between
-        gap-2 border-b border-white/20 bg-white/10 backdrop-blur-md md:border-b-0 md:bg-transparent md:backdrop-blur-none 
-        md:flex-col md:items-stretch md:justify-start md:gap-3 md:w-fit lg:w-52">
+      <div className="p-4 flex flex-row md:flex-col items-center justify-between md:items-stretch md:justify-start md:gap-3 md:w-fit lg:w-52
+        gap-2 border-b border-white/20 bg-white/10 backdrop-blur-md md:border-b-0 md:bg-transparent md:backdrop-blur-none">
         <div className="flex gap-2">
           <BackButton />
           <HomeButton />

@@ -44,7 +44,7 @@ export function DatePlannerClient({
   );
 
   return (
-    <div className="mx-auto max-w-[85%] p-2 md:p-4 mt-2">
+    <div className="mx-auto max-w-5xl p-2 md:p-4 mt-2">
       <header className="mb-5 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-sm font-semibold uppercase tracking-[0.12em] text-stone-500">

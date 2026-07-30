@@ -34,6 +34,7 @@ function toDateIdea(
     description: string | null;
     category: string;
     budget: string;
+    priority: number;
     added_by: string;
     created_at: Date;
     status: DateIdeaStatus;
@@ -50,6 +51,7 @@ function toDateIdea(
     description: idea.description,
     category: idea.category,
     budget: idea.budget,
+    priority: idea.priority,
     added_by: idea.added_by,
     added_by_name: idea.user?.name || 'Someone',
     created_at: idea.created_at,
@@ -120,6 +122,7 @@ export async function createDateIdeaRecord(
     description?: string | null;
     category: string;
     budget: string;
+    priority: number;
   },
 ): Promise<DateIdea> {
   const journal = await getAccessibleJournal(journalId, userId);
@@ -134,6 +137,7 @@ export async function createDateIdeaRecord(
       description: data.description || null,
       category: data.category,
       budget: data.budget,
+      priority: data.priority,
       added_by: userId,
     },
     include: {
@@ -156,6 +160,7 @@ export async function updateDateIdeaRecord(
     description?: string | null;
     category: string;
     budget: string;
+    priority: number;
   },
 ): Promise<DateIdea> {
   const existingIdea = await prisma.date_ideas.findUnique({
@@ -179,6 +184,7 @@ export async function updateDateIdeaRecord(
       description: data.description || null,
       category: data.category,
       budget: data.budget,
+      priority: data.priority,
     },
     include: {
       user: {

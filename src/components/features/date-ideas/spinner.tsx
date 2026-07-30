@@ -4,6 +4,7 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import CasinoOutlinedIcon from '@mui/icons-material/CasinoOutlined';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import confetti from 'canvas-confetti';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import type { DateIdea } from '@/src/lib/definitions';
@@ -98,11 +99,19 @@ export function Spinner({ ideas, onSpin, onPlan, disabled }: SpinnerProps) {
   const [selectedIdea, setSelectedIdea] = useState<DateIdea | null>(null);
   const controls = useAnimation();
   const containerRef = useRef<HTMLDivElement>(null);
+  const confettiRef = useRef<HTMLDivElement>(null);
 
   const reelItems = useMemo(() => {
+    if (ideas.length === 0) return [];
+
+    const weightedIdeas: DateIdea[] = ideas.flatMap(
+      idea => Array.from({ length: idea.priority ?? 1 }, () => idea)
+    ).sort(() => Math.random() - 0.5)
+
     const duplicates: DateIdea[] = [];
     for (let i = 0; i < 8; i++) {
-      duplicates.push(...ideas);
+
+      duplicates.push(...weightedIdeas);
     }
     return duplicates;
   }, [ideas]);
@@ -137,6 +146,17 @@ export function Spinner({ ideas, onSpin, onPlan, disabled }: SpinnerProps) {
     setSelectedIdea(idea);
     setSpinning(false);
     onSpin(idea);
+
+    if(!confettiRef.current) return;
+    const rect = confettiRef.current.getBoundingClientRect();
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: {
+        x: (rect.left + rect.width / 2) / window.innerWidth,
+        y: (rect.top + rect.height) / window.innerHeight,
+      },
+    });
   }, [ideas, spinning, disabled, controls, onSpin]);
 
   return (
@@ -182,7 +202,7 @@ export function Spinner({ ideas, onSpin, onPlan, disabled }: SpinnerProps) {
         </div>
       </div>
 
-      <div className="flex flex-col min-h-[125px] justify-center border-t border-stone-200">
+      <div ref={confettiRef} className="flex flex-col min-h-[125px] justify-center border-t border-stone-200">
         {spinning ? (
           <div className="flex h-full w-full items-center animate-pulse justify-center py-8 text-sm text-stone-500">
             <span className='px-4 py-1 rounded-2xl bg-jbrown text-white animate-bounce'>

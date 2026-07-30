@@ -21,38 +21,43 @@ export type State = {
   };
 };
 
-const JournalFormSchema = z.object({
+async function requireUserId(): Promise<string> {
+  const session = await getSession();
+  if (!session?.user?.id) {
+    throw new Error('Unauthorized');
+  }
+  return session.user.id;
+}
+
+const CreateJournalSchema = z.object({
   title: z
     .string()
     .min(1, { message: 'Title is required' })
     .max(100, { message: 'Title must be less than 100 characters' }),
-  uuid: z.string(),
   shared_with: z.string().optional(),
+});
+
+const EditJournalSchema = CreateJournalSchema.extend({
+  journalId: z.coerce.number().int().positive(),
 });
 
 export async function createEntry(
   journal_id: number,
   title: string,
 ): Promise<void> {
-  console.log('Creating a new entry');
+  const userId = await requireUserId();
   let returning_id = 0;
 
-  const session = await getSession();
-
-  if (!session) {
-    throw new Error('Unauthorized');
-  }
-
   try {
-    const entry = await createNewEntry(journal_id, title, session.user.id);
+    const entry = await createNewEntry(journal_id, title, userId);
     returning_id = entry.id;
     revalidatePath(`/journal/${journal_id}`);
   } catch (error) {
     console.error('Error creating entry:', error);
     throw error;
-  } finally {
-    redirect(`/journal/${journal_id}/entries/${returning_id}`);
   }
+
+  redirect(`/journal/${journal_id}/entries/${returning_id}`);
 }
 
 export async function updateEntry(
@@ -60,12 +65,7 @@ export async function updateEntry(
   title: string,
   content: string,
 ): Promise<void> {
-  // Get user ID from session
-  const session = await getSession();
-  if (!session) {
-    throw new Error('Unauthorized');
-  }
-  const userId = session.user.id;
+  const userId = await requireUserId();
 
   try {
     await editEntry(entry_id, title, content, userId);
@@ -76,14 +76,9 @@ export async function updateEntry(
 }
 
 export async function deleteEntry(entry_id: number): Promise<void> {
-  try {
-    // Get user ID from session
-    const session = await getSession();
-    if (!session) {
-      throw new Error('Unauthorized');
-    }
-    const userId = session.user.id;
+  const userId = await requireUserId();
 
+  try {
     console.log('Deleting entry with ID:', entry_id);
     const returning_id = await deleteJournalEntry(entry_id, userId);
 
@@ -102,11 +97,13 @@ export async function deleteEntry(entry_id: number): Promise<void> {
 
 // Journal actions
 export async function createJournal(prevState: State, formData: FormData) {
-  const validatedFields = JournalFormSchema.safeParse({
+  const userId = await requireUserId();
+
+  const validatedFields = CreateJournalSchema.safeParse({
     title: formData.get('title'),
-    uuid: formData.get('uuid'),
     shared_with: formData.get('shared_with'),
   });
+
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
@@ -114,9 +111,9 @@ export async function createJournal(prevState: State, formData: FormData) {
     };
   }
 
-  const { title, uuid, shared_with } = validatedFields.data;
+  const { title, shared_with } = validatedFields.data;
   let shared_with_array: string[] = [];
-  
+
   if (shared_with) {
     try {
       shared_with_array = JSON.parse(shared_with);
@@ -128,7 +125,7 @@ export async function createJournal(prevState: State, formData: FormData) {
   let returning_id = 0;
 
   try {
-    const journal = await createNewJournal(uuid, title, shared_with_array);
+    const journal = await createNewJournal(userId, title, shared_with_array);
     returning_id = journal.id;
     revalidatePath(`/journal`);
   } catch (error) {
@@ -137,33 +134,28 @@ export async function createJournal(prevState: State, formData: FormData) {
       message: 'Database error, failed to create journal.',
     };
   }
+
   redirect(`/journal/${returning_id}`);
 }
 
 export async function editJournal(prevState: State, formData: FormData) {
-  const validatedFields = JournalFormSchema.safeParse({
+  const userId = await requireUserId();
+
+  const validatedFields = EditJournalSchema.safeParse({
     title: formData.get('title'),
-    uuid: formData.get('uuid'), // we will reuse the zod schema from journal creation but in this submission, the uuid is the journal ID
+    journalId: formData.get('uuid'),
     shared_with: formData.get('shared_with'),
   });
+
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing fields, failed to create journal.',
+      message: 'Missing fields, failed to edit journal.',
     };
   }
 
-  // authorization check, send the creator ID for authorization check in the server shared service layer
-  const session = await getSession();
-  if (!session) {
-    throw new Error('Unauthorized');
-  }
-  const creatorId = session.user.id;
+  const { title, journalId, shared_with } = validatedFields.data;
 
-  // get fields data
-  const { title, uuid, shared_with } = validatedFields.data;
-
-  // parse shared_with string into JSON array
   let shared_with_array: string[] = [];
   if (shared_with) {
     try {
@@ -173,30 +165,24 @@ export async function editJournal(prevState: State, formData: FormData) {
     }
   }
 
-  // edit journal
   try {
-    const journalId = await editJournalId(parseInt(uuid), creatorId, title, shared_with_array);
-
+    await editJournalId(journalId, userId, title, shared_with_array);
     revalidatePath(`/journal`);
     console.log(`Updated journal id: ${journalId}`);
   } catch (error) {
-    console.error('Error creating journal:', error);
+    console.error('Error editing journal:', error);
     return {
-      message: 'Database error, failed to create journal, reason: ' + error,
+      message: 'Database error, failed to update journal.',
     };
   }
+
   redirect(`/journal`);
 }
 
 export async function deleteJournal(id: number): Promise<void> {
-  try {
-    // Get user ID from session
-    const session = await getSession();
-    if (!session) {
-      throw new Error('Unauthorized');
-    }
-    const userId = session.user.id;
+  const userId = await requireUserId();
 
+  try {
     console.log('Deleting journal with ID:', id);
     const returning_id = await deleteJournalId(id, userId);
 
