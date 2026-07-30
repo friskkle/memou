@@ -123,9 +123,9 @@ export function Spinner({ ideas, onSpin, onPlan, disabled }: SpinnerProps) {
     setSelectedIdea(null);
     controls.set({ y: 0 });
 
-    const targetIndex = Math.floor(Math.random() * ideas.length);
+    const targetIndex = Math.floor(Math.random() * reelItems.length/8);
     const cycles = 3 + Math.floor(Math.random() * 3);
-    const targetOffset = (cycles * ideas.length + targetIndex) * ITEM_SLOT;
+    const targetOffset = (cycles * reelItems.length/8 + targetIndex) * ITEM_SLOT;
 
     const overshoot = ITEM_SLOT * (Math.random() * 0.5 - 0.15);
 
@@ -142,7 +142,7 @@ export function Spinner({ ideas, onSpin, onPlan, disabled }: SpinnerProps) {
       transition: { type: 'spring', stiffness: 300, damping: 28, mass: 0.6 },
     });
 
-    const idea = ideas[targetIndex];
+    const idea = reelItems[targetIndex];
     setSelectedIdea(idea);
     setSpinning(false);
     onSpin(idea);
