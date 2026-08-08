@@ -4,16 +4,32 @@ import { redirect } from 'next/navigation';
 import { EditJournalForm } from '@/src/components/features/forms/journal-form';
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: 'Memou | Edit Journal',
-  description: 'Edit journal name or description. A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
-  keywords: ['memou', 'journal', 'collaborative journaling', 'free journal app', 'memories', 'secure diary', 'date planner'],
-  openGraph: {
-    title: 'Memou | Edit Journal',
-    description: 'Edit journal name or description. A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
-    type: 'website',
+export async function generateMetadata(props: {
+  params: Promise<{ journal_id: string }>;
+}): Promise<Metadata> {
+  const { journal_id } = await props.params;
+
+  try {
+    const journal = await fetchJournalId(journal_id, '');
+    const journalName = journal.title || 'Journal';
+    return {
+      title: `Edit ${journalName}`,
+      description: `Edit the name or description of the ${journalName} journal.`,
+      alternates: {
+        canonical: `https://memou.me/journal/${journal_id}/edit`,
+      },
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  } catch {
+    return {
+      title: 'Edit Journal',
+      robots: { index: false, follow: false },
+    };
   }
-};
+}
 
 const EditJournalPage = async ({
   params,

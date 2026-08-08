@@ -8,14 +8,9 @@ import { Metadata } from "next";
 import HomeButton from "@/src/components/elements/home-button";
 
 export const metadata: Metadata = {
-  title: 'Memou | Journal',
-  description: 'A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
-  keywords: ['memou', 'journal', 'collaborative journaling', 'free journal app', 'memories', 'secure diary', 'date planner'],
-  openGraph: {
-    title: 'Memou | Journal',
-    description: 'A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
-    type: 'website',
-  }
+  alternates: {
+    canonical: 'https://memou.me/journal',
+  },
 };
 
 export default async function Layout({ children }: { children: React.ReactNode }) {

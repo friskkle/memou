@@ -1,4 +1,18 @@
+import { Metadata } from 'next';
 import { ResetPasswordForm } from "@/src/components/features/forms/auth-form";
+
+export const metadata: Metadata = {
+  title: 'Reset Password',
+  description: 'Reset your Memou account password to regain access to your journals and memories.',
+  keywords: ['memou', 'reset password', 'journal', 'secure diary'],
+  alternates: {
+    canonical: 'https://memou.me/reset-password',
+  },
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default async function ResetPasswordPage({
   searchParams,

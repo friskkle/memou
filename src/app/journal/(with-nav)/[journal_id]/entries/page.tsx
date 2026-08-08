@@ -7,6 +7,34 @@ import { getSession } from '@/src/lib/auth';
 import { redirect } from 'next/navigation';
 import { SearchInput } from '@/src/components/ui/search-input';
 import { Pagination } from '@/src/components/ui/pagination';
+import { Metadata } from 'next';
+
+export async function generateMetadata(props: {
+  params: Promise<{ journal_id: string }>;
+}): Promise<Metadata> {
+  const { journal_id } = await props.params;
+
+  try {
+    const journal = await fetchJournalId(journal_id, '');
+    const journalName = journal.title || 'Journal';
+    return {
+      title: `${journalName} | Entries`,
+      description: `Browse and manage entries in the ${journalName} journal.`,
+      alternates: {
+        canonical: `https://memou.me/journal/${journal_id}/entries`,
+      },
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  } catch {
+    return {
+      title: 'Entries',
+      robots: { index: false, follow: false },
+    };
+  }
+}
 
 const Entries = async (props: {
   params: Promise<{ journal_id: string }>;

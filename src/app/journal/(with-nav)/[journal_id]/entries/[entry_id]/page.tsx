@@ -4,6 +4,32 @@ import { CollaborativeEditor } from '@/src/components/features/editor/editor'
 import { getSession } from '@/src/lib/auth'
 import { redirect } from 'next/navigation'
 import React from 'react'
+import { Metadata } from 'next'
+import { fetchEntryId } from '@/src/lib/journals'
+
+export async function generateMetadata(props: {
+  params: Promise<{ entry_id: string }>;
+}): Promise<Metadata> {
+  const { entry_id } = await props.params;
+
+  try {
+    const entry = await fetchEntryId(entry_id, '');
+    const entryTitle = entry.title || 'Entry';
+    return {
+      title: entryTitle,
+      description: `Collaboratively edit and work on "${entryTitle}" in Memou.`,
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  } catch {
+    return {
+      title: 'Entry',
+      robots: { index: false, follow: false },
+    };
+  }
+}
 
 const JournalEntry = async (props: { params: Promise<{ entry_id: string }> }): Promise<React.ReactElement> => {
   const session = await getSession()

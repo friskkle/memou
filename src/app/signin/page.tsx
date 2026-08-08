@@ -5,14 +5,18 @@ import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
-  title: 'Memou | Sign in',
-  description: 'Sign in to your Memou account to access your journals.',
+  title: 'Sign in',
+  description: 'Sign in to your Memou account to access your collaborative journals and memories.',
   keywords: ['memou', 'signin', 'journal', 'memories', 'secure diary'],
+  alternates: {
+    canonical: 'https://memou.me/signin',
+  },
   openGraph: {
-    title: 'Memou | Sign in',
-    description: 'Sign in to your Memou account to access your journals.',
+    title: 'Sign in to Memou',
+    description: 'Sign in to your Memou account to access your collaborative journals and memories.',
+    url: 'https://memou.me/signin',
     type: 'website',
-  }
+  },
 };
 
 export default async function Signin() {

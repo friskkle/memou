@@ -9,6 +9,22 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { SearchInput } from '@/src/components/ui/search-input';
 import { Pagination } from '@/src/components/ui/pagination';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Journals',
+  description: 'Browse and manage your collaborative journals. Create new journals and share memories with your loved ones.',
+  keywords: ['memou', 'journals', 'collaborative journaling', 'free journal app', 'memories', 'secure diary'],
+  alternates: {
+    canonical: 'https://memou.me/journal',
+  },
+  openGraph: {
+    title: 'Memou | Journals',
+    description: 'Browse and manage your collaborative journals. Create new journals and share memories with your loved ones.',
+    url: 'https://memou.me/journal',
+    type: 'website',
+  },
+};
 
 const Journals = async (props: {
   searchParams?: Promise<{

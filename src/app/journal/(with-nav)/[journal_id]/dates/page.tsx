@@ -4,8 +4,37 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 import { getSession } from '@/src/lib/auth';
 import { fetchDateIdeas } from '@/src/lib/date-ideas';
+import { fetchJournalId } from '@/src/lib/journals';
 import { DateIdeaStatus } from '@/src/lib/definitions';
 import { DatePlannerClient } from '@/src/components/features/date-ideas/date-planner-client';
+import { Metadata } from 'next';
+
+export async function generateMetadata(props: {
+  params: Promise<{ journal_id: string }>;
+}): Promise<Metadata> {
+  const { journal_id } = await props.params;
+
+  try {
+    const journal = await fetchJournalId(journal_id, '');
+    const journalName = journal.title || 'Journal';
+    return {
+      title: `${journalName} | Dates`,
+      description: `Plan and manage date ideas for the ${journalName} journal.`,
+      alternates: {
+        canonical: `https://memou.me/journal/${journal_id}/dates`,
+      },
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  } catch {
+    return {
+      title: 'Dates',
+      robots: { index: false, follow: false },
+    };
+  }
+}
 
 const validStatuses = new Set(['all', 'idea', 'planned', 'completed']);
 

@@ -8,22 +8,37 @@ import { getSession } from '@/src/lib/auth';
 import { redirect } from 'next/navigation';
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: 'Memou | Journal',
-  description: 'A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
-  keywords: ['memou', 'journal', 'collaborative journaling', 'free journal app', 'memories', 'secure diary', 'date planner'],
-  openGraph: {
-    title: 'Memou | Journal',
-    description: 'A completely free, minimalist environment to note your thoughts and ideas together, anywhere, anytime.',
-    type: 'website',
+export async function generateMetadata(props: {
+  params: Promise<{ journal_id: string }>;
+}): Promise<Metadata> {
+  const { journal_id } = await props.params;
+
+  try {
+    const journal = await fetchJournalId(journal_id, '');
+    const journalName = journal.title || 'Journal';
+    return {
+      title: journalName,
+      description: `View the ${journalName} journal dashboard. Track recent entries and date plans.`,
+      alternates: {
+        canonical: `https://memou.me/journal/${journal_id}`,
+      },
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  } catch {
+    return {
+      title: 'Journal',
+      robots: { index: false, follow: false },
+    };
   }
-};
+}
 
 const JournalDashboardPage = async (props: {
   params: Promise<{ journal_id: string }>;
 }): Promise<React.ReactElement> => {
   const session = await getSession();
-
   if (!session) {
     redirect('/signin');
   }
