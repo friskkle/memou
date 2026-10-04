@@ -10,6 +10,7 @@ import {
   deleteJournalId,
   editEntry,
   editJournalId,
+  updateInvite,
 } from '../journals';
 import { getSession } from '../auth';
 
@@ -190,6 +191,25 @@ export async function deleteJournal(id: number): Promise<void> {
     revalidatePath(`/journal`);
   } catch (error) {
     console.error('Error deleting journal:', error);
+    throw error;
+  }
+}
+
+// Invite actions
+
+export async function updateInviteStatus(
+  id: number,
+  journal_id: number,
+  status: 'accepted' | 'declined'
+): Promise<void> {
+  const userId = await requireUserId();
+
+  try {
+    console.log(`Updating status of invite ${id} to ${status} for user ${userId} and journal ${journal_id}`);
+    await updateInvite(id, userId, journal_id, status);
+    revalidatePath(`/journal`);
+  } catch (error) {
+    console.error('Error updating invite:', error);
     throw error;
   }
 }

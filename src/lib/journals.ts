@@ -1,7 +1,7 @@
 'use server';
 
 import { prisma } from './prisma';
-import { Journal, Entry } from './definitions';
+import { Journal, Entry, JournalInvite } from './definitions';
 import { Prisma } from '../generated/prisma/client';
 
 async function getAccessibleJournal(
@@ -179,9 +179,9 @@ export async function createNewJournal(
       data: {
         uuid: uid,
         title: title,
-        shared_with: shared_with,
       },
     });
+    await createInvite(journal.id, shared_with, uid);
     return {...journal, shared_with_names: [], creator_name: ''};
   } catch (error) {
     console.error('Error creating journal:', error);
@@ -224,9 +224,10 @@ export async function editJournalId(
       },
       data: {
         title,
-        shared_with,
       },
     });
+    // Create invites for new shared users
+    await createInvite(id, shared_with, uuid);
     return journal.id;
   } catch (error) {
     console.error('Error editing journal:', error);
@@ -234,7 +235,112 @@ export async function editJournalId(
   }
 }
 
+// Invites
+export async function fetchInvites(userId: string): Promise<JournalInvite[]> {
+  try {
+    const today = new Date();
+    const invites = await prisma.journal_invites.findMany({
+      where: {
+        user_id: userId,
+        status: 'pending',
+        expires_at: {
+          gte: today,
+        }
+      },
+      include: {
+        journals: {
+          select: {
+            title: true
+          }
+        },
+        user: {
+          select: {
+            name: true
+          }
+        }
+      }
+    });
+    return invites;
+  } catch (error) {
+    console.error('Error fetching invites:', error);
+    throw error;
+  }
+}
+
+export async function createInvite(
+  journal_id: number,
+  user_ids: string[],
+  invited_by: string,
+) {
+  try {
+    const invites = user_ids.map((user_id) => {
+      return {
+        journal_id,
+        user_id,
+        invited_by,
+        expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+      };
+    });
+    const invite = await prisma.journal_invites.createMany({
+      data: invites,
+    });
+    return invite;
+  } catch (error) {
+    console.error('Error creating invite:', error);
+    throw error;
+  }
+}
+
+export async function updateInvite(
+  invite_id: number,
+  user_id: string,
+  journal_id: number,
+  status: 'accepted' | 'declined'
+): Promise<void> {
+  try {
+    const invite = await prisma.journal_invites.update({
+      where: {
+        id: invite_id,
+        user_id: user_id
+      },
+      data: {
+        status: status,
+      },
+    });
+    
+    if(invite.status === 'accepted') {
+      await prisma.journals.update({
+        where: {
+          id: journal_id,
+        },
+        data: {
+          shared_with: {
+            push: invite.user_id,
+          },
+        },
+      });
+    }
+  } catch (error) {
+    console.error('Error accepting invite:', error);
+    throw error;
+  }
+}
+
+export async function removeInvite(invite_id: number): Promise<void> {
+  try {
+    await prisma.journal_invites.delete({
+      where: {
+        id: invite_id,
+      },
+    });
+  } catch (error) {
+    console.error('Error removing invite:', error);
+    throw error;
+  }
+}
+
 // Entries
+
 export async function fetchEntryId(
   entry_id: string,
   userId: string,

@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import React from 'react';
-import { fetchJournals } from '@/src/lib/journals';
+import { fetchJournals, fetchInvites } from '@/src/lib/journals';
 import { PrimaryButton } from '@/src/components/elements/primary-button';
 import { JournalList } from '@/src/components/features/list/journal-list';
 import { getSession } from '@/src/lib/auth';
@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { SearchInput } from '@/src/components/ui/search-input';
 import { Pagination } from '@/src/components/ui/pagination';
 import { Metadata } from 'next';
+import { InvitesList } from '@/src/components/features/list/invites-list';
 
 export const metadata: Metadata = {
   title: 'Journals',
@@ -53,6 +54,8 @@ const Journals = async (props: {
     sortDir,
   });
 
+  const invites = await fetchInvites(session.user.id);
+
   return (
     <div className="max-w-5xl mx-auto p-2 md:p-4 mt-2 relative">
       <header className="flex flex-row justify-between items-center mb-4">
@@ -61,11 +64,16 @@ const Journals = async (props: {
           <PrimaryButton size="small">New Journal</PrimaryButton>
         </Link>
       </header>
-      <div className="mb-4">
-        <SearchInput placeholder="Search journal by name..." />
+      <div className='flex gap-4 items-start'>
+        <div className="mb-4 flex-5">
+          <SearchInput placeholder="Search journal by name..." className='mb-4' />
+          <JournalList list={journals} />
+          <Pagination totalCount={totalCount} itemsPerPage={10} />
+        </div>
+        <div className='flex-2'>
+          <InvitesList invites={invites} />
+        </div>
       </div>
-      <JournalList list={journals} />
-      <Pagination totalCount={totalCount} itemsPerPage={10} />
     </div>
   );
 };

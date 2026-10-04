@@ -9,6 +9,15 @@
 * 🟢 You can import this file directly.
 */
 
+export const invite_status = {
+  pending: 'pending',
+  accepted: 'accepted',
+  declined: 'declined'
+} as const
+
+export type invite_status = (typeof invite_status)[keyof typeof invite_status]
+
+
 export const date_idea_status = {
   idea: 'idea',
   planned: 'planned',

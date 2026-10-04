@@ -55,6 +55,7 @@ export const ModelName = {
   journal_entries: 'journal_entries',
   date_ideas: 'date_ideas',
   journals: 'journals',
+  journal_invites: 'journal_invites',
   session: 'session',
   user: 'user',
   users: 'users',
@@ -136,6 +137,19 @@ export const JournalsScalarFieldEnum = {
 } as const
 
 export type JournalsScalarFieldEnum = (typeof JournalsScalarFieldEnum)[keyof typeof JournalsScalarFieldEnum]
+
+
+export const Journal_invitesScalarFieldEnum = {
+  id: 'id',
+  journal_id: 'journal_id',
+  user_id: 'user_id',
+  invited_by: 'invited_by',
+  created_at: 'created_at',
+  expires_at: 'expires_at',
+  status: 'status'
+} as const
+
+export type Journal_invitesScalarFieldEnum = (typeof Journal_invitesScalarFieldEnum)[keyof typeof Journal_invitesScalarFieldEnum]
 
 
 export const SessionScalarFieldEnum = {

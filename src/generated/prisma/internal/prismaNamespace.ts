@@ -388,6 +388,7 @@ export const ModelName = {
   journal_entries: 'journal_entries',
   date_ideas: 'date_ideas',
   journals: 'journals',
+  journal_invites: 'journal_invites',
   session: 'session',
   user: 'user',
   users: 'users',
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "account" | "journal_entries" | "date_ideas" | "journals" | "session" | "user" | "users" | "verification"
+    modelProps: "account" | "journal_entries" | "date_ideas" | "journals" | "journal_invites" | "session" | "user" | "users" | "verification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -704,6 +705,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.journalsCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.JournalsCountAggregateOutputType> | number
+        }
+      }
+    }
+    journal_invites: {
+      payload: Prisma.$journal_invitesPayload<ExtArgs>
+      fields: Prisma.journal_invitesFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.journal_invitesFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.journal_invitesFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload>
+        }
+        findFirst: {
+          args: Prisma.journal_invitesFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.journal_invitesFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload>
+        }
+        findMany: {
+          args: Prisma.journal_invitesFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload>[]
+        }
+        create: {
+          args: Prisma.journal_invitesCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload>
+        }
+        createMany: {
+          args: Prisma.journal_invitesCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.journal_invitesCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload>[]
+        }
+        delete: {
+          args: Prisma.journal_invitesDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload>
+        }
+        update: {
+          args: Prisma.journal_invitesUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload>
+        }
+        deleteMany: {
+          args: Prisma.journal_invitesDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.journal_invitesUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.journal_invitesUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload>[]
+        }
+        upsert: {
+          args: Prisma.journal_invitesUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$journal_invitesPayload>
+        }
+        aggregate: {
+          args: Prisma.Journal_invitesAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateJournal_invites>
+        }
+        groupBy: {
+          args: Prisma.journal_invitesGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Journal_invitesGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.journal_invitesCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Journal_invitesCountAggregateOutputType> | number
         }
       }
     }
@@ -1103,6 +1178,19 @@ export const JournalsScalarFieldEnum = {
 export type JournalsScalarFieldEnum = (typeof JournalsScalarFieldEnum)[keyof typeof JournalsScalarFieldEnum]
 
 
+export const Journal_invitesScalarFieldEnum = {
+  id: 'id',
+  journal_id: 'journal_id',
+  user_id: 'user_id',
+  invited_by: 'invited_by',
+  created_at: 'created_at',
+  expires_at: 'expires_at',
+  status: 'status'
+} as const
+
+export type Journal_invitesScalarFieldEnum = (typeof Journal_invitesScalarFieldEnum)[keyof typeof Journal_invitesScalarFieldEnum]
+
+
 export const SessionScalarFieldEnum = {
   id: 'id',
   expiresAt: 'expiresAt',
@@ -1238,6 +1326,20 @@ export type ListEnumdate_idea_statusFieldRefInput<$PrismaModel> = FieldRefInputT
 
 
 /**
+ * Reference to a field of type 'invite_status'
+ */
+export type Enuminvite_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'invite_status'>
+    
+
+
+/**
+ * Reference to a field of type 'invite_status[]'
+ */
+export type ListEnuminvite_statusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'invite_status[]'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
@@ -1356,6 +1458,7 @@ export type GlobalOmitConfig = {
   journal_entries?: Prisma.journal_entriesOmit
   date_ideas?: Prisma.date_ideasOmit
   journals?: Prisma.journalsOmit
+  journal_invites?: Prisma.journal_invitesOmit
   session?: Prisma.sessionOmit
   user?: Prisma.userOmit
   users?: Prisma.usersOmit

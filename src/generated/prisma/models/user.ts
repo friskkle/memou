@@ -203,6 +203,8 @@ export type userWhereInput = {
   journal_entries?: Prisma.Journal_entriesListRelationFilter
   journals?: Prisma.JournalsListRelationFilter
   session?: Prisma.SessionListRelationFilter
+  journal_invites_invited?: Prisma.Journal_invitesListRelationFilter
+  journal_invites_inviter?: Prisma.Journal_invitesListRelationFilter
 }
 
 export type userOrderByWithRelationInput = {
@@ -218,6 +220,8 @@ export type userOrderByWithRelationInput = {
   journal_entries?: Prisma.journal_entriesOrderByRelationAggregateInput
   journals?: Prisma.journalsOrderByRelationAggregateInput
   session?: Prisma.sessionOrderByRelationAggregateInput
+  journal_invites_invited?: Prisma.journal_invitesOrderByRelationAggregateInput
+  journal_invites_inviter?: Prisma.journal_invitesOrderByRelationAggregateInput
 }
 
 export type userWhereUniqueInput = Prisma.AtLeast<{
@@ -236,6 +240,8 @@ export type userWhereUniqueInput = Prisma.AtLeast<{
   journal_entries?: Prisma.Journal_entriesListRelationFilter
   journals?: Prisma.JournalsListRelationFilter
   session?: Prisma.SessionListRelationFilter
+  journal_invites_invited?: Prisma.Journal_invitesListRelationFilter
+  journal_invites_inviter?: Prisma.Journal_invitesListRelationFilter
 }, "id" | "email">
 
 export type userOrderByWithAggregationInput = {
@@ -277,6 +283,8 @@ export type userCreateInput = {
   journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsCreateNestedManyWithoutUserInput
   session?: Prisma.sessionCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesCreateNestedManyWithoutInviterInput
 }
 
 export type userUncheckedCreateInput = {
@@ -292,6 +300,8 @@ export type userUncheckedCreateInput = {
   journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutInviterInput
 }
 
 export type userUpdateInput = {
@@ -307,6 +317,8 @@ export type userUpdateInput = {
   journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUpdateManyWithoutInviterNestedInput
 }
 
 export type userUncheckedUpdateInput = {
@@ -322,6 +334,8 @@ export type userUncheckedUpdateInput = {
   journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedUpdateManyWithoutInviterNestedInput
 }
 
 export type userCreateManyInput = {
@@ -445,6 +459,34 @@ export type userUpdateOneRequiredWithoutJournalsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutJournalsInput, Prisma.userUpdateWithoutJournalsInput>, Prisma.userUncheckedUpdateWithoutJournalsInput>
 }
 
+export type userCreateNestedOneWithoutJournal_invites_invitedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutJournal_invites_invitedInput, Prisma.userUncheckedCreateWithoutJournal_invites_invitedInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutJournal_invites_invitedInput
+  connect?: Prisma.userWhereUniqueInput
+}
+
+export type userCreateNestedOneWithoutJournal_invites_inviterInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutJournal_invites_inviterInput, Prisma.userUncheckedCreateWithoutJournal_invites_inviterInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutJournal_invites_inviterInput
+  connect?: Prisma.userWhereUniqueInput
+}
+
+export type userUpdateOneRequiredWithoutJournal_invites_invitedNestedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutJournal_invites_invitedInput, Prisma.userUncheckedCreateWithoutJournal_invites_invitedInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutJournal_invites_invitedInput
+  upsert?: Prisma.userUpsertWithoutJournal_invites_invitedInput
+  connect?: Prisma.userWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutJournal_invites_invitedInput, Prisma.userUpdateWithoutJournal_invites_invitedInput>, Prisma.userUncheckedUpdateWithoutJournal_invites_invitedInput>
+}
+
+export type userUpdateOneRequiredWithoutJournal_invites_inviterNestedInput = {
+  create?: Prisma.XOR<Prisma.userCreateWithoutJournal_invites_inviterInput, Prisma.userUncheckedCreateWithoutJournal_invites_inviterInput>
+  connectOrCreate?: Prisma.userCreateOrConnectWithoutJournal_invites_inviterInput
+  upsert?: Prisma.userUpsertWithoutJournal_invites_inviterInput
+  connect?: Prisma.userWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.userUpdateToOneWithWhereWithoutJournal_invites_inviterInput, Prisma.userUpdateWithoutJournal_invites_inviterInput>, Prisma.userUncheckedUpdateWithoutJournal_invites_inviterInput>
+}
+
 export type userCreateNestedOneWithoutSessionInput = {
   create?: Prisma.XOR<Prisma.userCreateWithoutSessionInput, Prisma.userUncheckedCreateWithoutSessionInput>
   connectOrCreate?: Prisma.userCreateOrConnectWithoutSessionInput
@@ -475,6 +517,8 @@ export type userCreateWithoutAccountInput = {
   journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsCreateNestedManyWithoutUserInput
   session?: Prisma.sessionCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesCreateNestedManyWithoutInviterInput
 }
 
 export type userUncheckedCreateWithoutAccountInput = {
@@ -489,6 +533,8 @@ export type userUncheckedCreateWithoutAccountInput = {
   journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutInviterInput
 }
 
 export type userCreateOrConnectWithoutAccountInput = {
@@ -519,6 +565,8 @@ export type userUpdateWithoutAccountInput = {
   journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUpdateManyWithoutInviterNestedInput
 }
 
 export type userUncheckedUpdateWithoutAccountInput = {
@@ -533,6 +581,8 @@ export type userUncheckedUpdateWithoutAccountInput = {
   journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedUpdateManyWithoutInviterNestedInput
 }
 
 export type userCreateWithoutJournal_entriesInput = {
@@ -547,6 +597,8 @@ export type userCreateWithoutJournal_entriesInput = {
   date_ideas?: Prisma.date_ideasCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsCreateNestedManyWithoutUserInput
   session?: Prisma.sessionCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesCreateNestedManyWithoutInviterInput
 }
 
 export type userUncheckedCreateWithoutJournal_entriesInput = {
@@ -561,6 +613,8 @@ export type userUncheckedCreateWithoutJournal_entriesInput = {
   date_ideas?: Prisma.date_ideasUncheckedCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutInviterInput
 }
 
 export type userCreateOrConnectWithoutJournal_entriesInput = {
@@ -591,6 +645,8 @@ export type userUpdateWithoutJournal_entriesInput = {
   date_ideas?: Prisma.date_ideasUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUpdateManyWithoutInviterNestedInput
 }
 
 export type userUncheckedUpdateWithoutJournal_entriesInput = {
@@ -605,6 +661,8 @@ export type userUncheckedUpdateWithoutJournal_entriesInput = {
   date_ideas?: Prisma.date_ideasUncheckedUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedUpdateManyWithoutInviterNestedInput
 }
 
 export type userCreateWithoutDate_ideasInput = {
@@ -619,6 +677,8 @@ export type userCreateWithoutDate_ideasInput = {
   journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsCreateNestedManyWithoutUserInput
   session?: Prisma.sessionCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesCreateNestedManyWithoutInviterInput
 }
 
 export type userUncheckedCreateWithoutDate_ideasInput = {
@@ -633,6 +693,8 @@ export type userUncheckedCreateWithoutDate_ideasInput = {
   journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutInviterInput
 }
 
 export type userCreateOrConnectWithoutDate_ideasInput = {
@@ -663,6 +725,8 @@ export type userUpdateWithoutDate_ideasInput = {
   journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUpdateManyWithoutInviterNestedInput
 }
 
 export type userUncheckedUpdateWithoutDate_ideasInput = {
@@ -677,6 +741,8 @@ export type userUncheckedUpdateWithoutDate_ideasInput = {
   journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedUpdateManyWithoutInviterNestedInput
 }
 
 export type userCreateWithoutJournalsInput = {
@@ -691,6 +757,8 @@ export type userCreateWithoutJournalsInput = {
   date_ideas?: Prisma.date_ideasCreateNestedManyWithoutUserInput
   journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
   session?: Prisma.sessionCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesCreateNestedManyWithoutInviterInput
 }
 
 export type userUncheckedCreateWithoutJournalsInput = {
@@ -705,6 +773,8 @@ export type userUncheckedCreateWithoutJournalsInput = {
   date_ideas?: Prisma.date_ideasUncheckedCreateNestedManyWithoutUserInput
   journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
   session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutInviterInput
 }
 
 export type userCreateOrConnectWithoutJournalsInput = {
@@ -735,6 +805,8 @@ export type userUpdateWithoutJournalsInput = {
   date_ideas?: Prisma.date_ideasUpdateManyWithoutUserNestedInput
   journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUpdateManyWithoutInviterNestedInput
 }
 
 export type userUncheckedUpdateWithoutJournalsInput = {
@@ -749,6 +821,168 @@ export type userUncheckedUpdateWithoutJournalsInput = {
   date_ideas?: Prisma.date_ideasUncheckedUpdateManyWithoutUserNestedInput
   journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
   session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedUpdateManyWithoutInviterNestedInput
+}
+
+export type userCreateWithoutJournal_invites_invitedInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  account?: Prisma.accountCreateNestedManyWithoutUserInput
+  date_ideas?: Prisma.date_ideasCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsCreateNestedManyWithoutUserInput
+  session?: Prisma.sessionCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesCreateNestedManyWithoutInviterInput
+}
+
+export type userUncheckedCreateWithoutJournal_invites_invitedInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  account?: Prisma.accountUncheckedCreateNestedManyWithoutUserInput
+  date_ideas?: Prisma.date_ideasUncheckedCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
+  session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutInviterInput
+}
+
+export type userCreateOrConnectWithoutJournal_invites_invitedInput = {
+  where: Prisma.userWhereUniqueInput
+  create: Prisma.XOR<Prisma.userCreateWithoutJournal_invites_invitedInput, Prisma.userUncheckedCreateWithoutJournal_invites_invitedInput>
+}
+
+export type userCreateWithoutJournal_invites_inviterInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  account?: Prisma.accountCreateNestedManyWithoutUserInput
+  date_ideas?: Prisma.date_ideasCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsCreateNestedManyWithoutUserInput
+  session?: Prisma.sessionCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesCreateNestedManyWithoutUserInput
+}
+
+export type userUncheckedCreateWithoutJournal_invites_inviterInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  account?: Prisma.accountUncheckedCreateNestedManyWithoutUserInput
+  date_ideas?: Prisma.date_ideasUncheckedCreateNestedManyWithoutUserInput
+  journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
+  journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
+  session?: Prisma.sessionUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type userCreateOrConnectWithoutJournal_invites_inviterInput = {
+  where: Prisma.userWhereUniqueInput
+  create: Prisma.XOR<Prisma.userCreateWithoutJournal_invites_inviterInput, Prisma.userUncheckedCreateWithoutJournal_invites_inviterInput>
+}
+
+export type userUpsertWithoutJournal_invites_invitedInput = {
+  update: Prisma.XOR<Prisma.userUpdateWithoutJournal_invites_invitedInput, Prisma.userUncheckedUpdateWithoutJournal_invites_invitedInput>
+  create: Prisma.XOR<Prisma.userCreateWithoutJournal_invites_invitedInput, Prisma.userUncheckedCreateWithoutJournal_invites_invitedInput>
+  where?: Prisma.userWhereInput
+}
+
+export type userUpdateToOneWithWhereWithoutJournal_invites_invitedInput = {
+  where?: Prisma.userWhereInput
+  data: Prisma.XOR<Prisma.userUpdateWithoutJournal_invites_invitedInput, Prisma.userUncheckedUpdateWithoutJournal_invites_invitedInput>
+}
+
+export type userUpdateWithoutJournal_invites_invitedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account?: Prisma.accountUpdateManyWithoutUserNestedInput
+  date_ideas?: Prisma.date_ideasUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
+  session?: Prisma.sessionUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUpdateManyWithoutInviterNestedInput
+}
+
+export type userUncheckedUpdateWithoutJournal_invites_invitedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account?: Prisma.accountUncheckedUpdateManyWithoutUserNestedInput
+  date_ideas?: Prisma.date_ideasUncheckedUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
+  session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedUpdateManyWithoutInviterNestedInput
+}
+
+export type userUpsertWithoutJournal_invites_inviterInput = {
+  update: Prisma.XOR<Prisma.userUpdateWithoutJournal_invites_inviterInput, Prisma.userUncheckedUpdateWithoutJournal_invites_inviterInput>
+  create: Prisma.XOR<Prisma.userCreateWithoutJournal_invites_inviterInput, Prisma.userUncheckedCreateWithoutJournal_invites_inviterInput>
+  where?: Prisma.userWhereInput
+}
+
+export type userUpdateToOneWithWhereWithoutJournal_invites_inviterInput = {
+  where?: Prisma.userWhereInput
+  data: Prisma.XOR<Prisma.userUpdateWithoutJournal_invites_inviterInput, Prisma.userUncheckedUpdateWithoutJournal_invites_inviterInput>
+}
+
+export type userUpdateWithoutJournal_invites_inviterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account?: Prisma.accountUpdateManyWithoutUserNestedInput
+  date_ideas?: Prisma.date_ideasUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
+  session?: Prisma.sessionUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUpdateManyWithoutUserNestedInput
+}
+
+export type userUncheckedUpdateWithoutJournal_invites_inviterInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  account?: Prisma.accountUncheckedUpdateManyWithoutUserNestedInput
+  date_ideas?: Prisma.date_ideasUncheckedUpdateManyWithoutUserNestedInput
+  journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
+  journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
+  session?: Prisma.sessionUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type userCreateWithoutSessionInput = {
@@ -763,6 +997,8 @@ export type userCreateWithoutSessionInput = {
   date_ideas?: Prisma.date_ideasCreateNestedManyWithoutUserInput
   journal_entries?: Prisma.journal_entriesCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesCreateNestedManyWithoutInviterInput
 }
 
 export type userUncheckedCreateWithoutSessionInput = {
@@ -777,6 +1013,8 @@ export type userUncheckedCreateWithoutSessionInput = {
   date_ideas?: Prisma.date_ideasUncheckedCreateNestedManyWithoutUserInput
   journal_entries?: Prisma.journal_entriesUncheckedCreateNestedManyWithoutUserInput
   journals?: Prisma.journalsUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutUserInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedCreateNestedManyWithoutInviterInput
 }
 
 export type userCreateOrConnectWithoutSessionInput = {
@@ -807,6 +1045,8 @@ export type userUpdateWithoutSessionInput = {
   date_ideas?: Prisma.date_ideasUpdateManyWithoutUserNestedInput
   journal_entries?: Prisma.journal_entriesUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUpdateManyWithoutInviterNestedInput
 }
 
 export type userUncheckedUpdateWithoutSessionInput = {
@@ -821,6 +1061,8 @@ export type userUncheckedUpdateWithoutSessionInput = {
   date_ideas?: Prisma.date_ideasUncheckedUpdateManyWithoutUserNestedInput
   journal_entries?: Prisma.journal_entriesUncheckedUpdateManyWithoutUserNestedInput
   journals?: Prisma.journalsUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_invited?: Prisma.journal_invitesUncheckedUpdateManyWithoutUserNestedInput
+  journal_invites_inviter?: Prisma.journal_invitesUncheckedUpdateManyWithoutInviterNestedInput
 }
 
 
@@ -834,6 +1076,8 @@ export type UserCountOutputType = {
   journal_entries: number
   journals: number
   session: number
+  journal_invites_invited: number
+  journal_invites_inviter: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -842,6 +1086,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   journal_entries?: boolean | UserCountOutputTypeCountJournal_entriesArgs
   journals?: boolean | UserCountOutputTypeCountJournalsArgs
   session?: boolean | UserCountOutputTypeCountSessionArgs
+  journal_invites_invited?: boolean | UserCountOutputTypeCountJournal_invites_invitedArgs
+  journal_invites_inviter?: boolean | UserCountOutputTypeCountJournal_invites_inviterArgs
 }
 
 /**
@@ -889,6 +1135,20 @@ export type UserCountOutputTypeCountSessionArgs<ExtArgs extends runtime.Types.Ex
   where?: Prisma.sessionWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountJournal_invites_invitedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.journal_invitesWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountJournal_invites_inviterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.journal_invitesWhereInput
+}
+
 
 export type userSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -903,6 +1163,8 @@ export type userSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   journal_entries?: boolean | Prisma.user$journal_entriesArgs<ExtArgs>
   journals?: boolean | Prisma.user$journalsArgs<ExtArgs>
   session?: boolean | Prisma.user$sessionArgs<ExtArgs>
+  journal_invites_invited?: boolean | Prisma.user$journal_invites_invitedArgs<ExtArgs>
+  journal_invites_inviter?: boolean | Prisma.user$journal_invites_inviterArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -943,6 +1205,8 @@ export type userInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   journal_entries?: boolean | Prisma.user$journal_entriesArgs<ExtArgs>
   journals?: boolean | Prisma.user$journalsArgs<ExtArgs>
   session?: boolean | Prisma.user$sessionArgs<ExtArgs>
+  journal_invites_invited?: boolean | Prisma.user$journal_invites_invitedArgs<ExtArgs>
+  journal_invites_inviter?: boolean | Prisma.user$journal_invites_inviterArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type userIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -956,6 +1220,8 @@ export type $userPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     journal_entries: Prisma.$journal_entriesPayload<ExtArgs>[]
     journals: Prisma.$journalsPayload<ExtArgs>[]
     session: Prisma.$sessionPayload<ExtArgs>[]
+    journal_invites_invited: Prisma.$journal_invitesPayload<ExtArgs>[]
+    journal_invites_inviter: Prisma.$journal_invitesPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1364,6 +1630,8 @@ export interface Prisma__userClient<T, Null = never, ExtArgs extends runtime.Typ
   journal_entries<T extends Prisma.user$journal_entriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$journal_entriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$journal_entriesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   journals<T extends Prisma.user$journalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$journalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$journalsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   session<T extends Prisma.user$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$sessionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$sessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  journal_invites_invited<T extends Prisma.user$journal_invites_invitedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$journal_invites_invitedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$journal_invitesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  journal_invites_inviter<T extends Prisma.user$journal_invites_inviterArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.user$journal_invites_inviterArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$journal_invitesPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1905,6 +2173,54 @@ export type user$sessionArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.SessionScalarFieldEnum | Prisma.SessionScalarFieldEnum[]
+}
+
+/**
+ * user.journal_invites_invited
+ */
+export type user$journal_invites_invitedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the journal_invites
+   */
+  select?: Prisma.journal_invitesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the journal_invites
+   */
+  omit?: Prisma.journal_invitesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.journal_invitesInclude<ExtArgs> | null
+  where?: Prisma.journal_invitesWhereInput
+  orderBy?: Prisma.journal_invitesOrderByWithRelationInput | Prisma.journal_invitesOrderByWithRelationInput[]
+  cursor?: Prisma.journal_invitesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Journal_invitesScalarFieldEnum | Prisma.Journal_invitesScalarFieldEnum[]
+}
+
+/**
+ * user.journal_invites_inviter
+ */
+export type user$journal_invites_inviterArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the journal_invites
+   */
+  select?: Prisma.journal_invitesSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the journal_invites
+   */
+  omit?: Prisma.journal_invitesOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.journal_invitesInclude<ExtArgs> | null
+  where?: Prisma.journal_invitesWhereInput
+  orderBy?: Prisma.journal_invitesOrderByWithRelationInput | Prisma.journal_invitesOrderByWithRelationInput[]
+  cursor?: Prisma.journal_invitesWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.Journal_invitesScalarFieldEnum | Prisma.Journal_invitesScalarFieldEnum[]
 }
 
 /**

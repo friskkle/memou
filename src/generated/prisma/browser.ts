@@ -38,6 +38,11 @@ export type date_ideas = Prisma.date_ideasModel
  */
 export type journals = Prisma.journalsModel
 /**
+ * Model journal_invites
+ * 
+ */
+export type journal_invites = Prisma.journal_invitesModel
+/**
  * Model session
  * 
  */

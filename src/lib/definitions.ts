@@ -1,6 +1,7 @@
 type nullable<T> = T | null;
 
 export type DateIdeaStatus = 'idea' | 'planned' | 'completed';
+export type InviteStatus = 'pending' | 'accepted' | 'declined';
 
 export const DATE_IDEA_CATEGORIES = ['Cozy In', 'Foodie', 'Outdoor', 'Creative', 'Adventure', 'Errands Plus'] as const;
 export const DATE_IDEA_BUDGETS = ['Free', '$', '$$', '$$$'] as const;
@@ -13,6 +14,23 @@ export type Journal = {
     shared_with: string[];
     shared_with_names: {id: string, name: string, email: string}[];
     creator_name: string;
+}
+
+export type JournalInvite = {
+    id: number;
+    journal_id: number;
+    journals: {
+      title: nullable<string>;
+    };
+    user_id: string;
+    user_name?: string;
+    invited_by: string;
+    user: {
+      name: string;
+    }
+    created_at: Date;
+    expires_at: Date;
+    status: InviteStatus;
 }
 
 export type Entry = {

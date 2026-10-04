@@ -179,6 +179,23 @@ export type Enumdate_idea_statusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumdate_idea_statusFilter<$PrismaModel>
 }
 
+export type Enuminvite_statusFilter<$PrismaModel = never> = {
+  equals?: $Enums.invite_status | Prisma.Enuminvite_statusFieldRefInput<$PrismaModel>
+  in?: $Enums.invite_status[] | Prisma.ListEnuminvite_statusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.invite_status[] | Prisma.ListEnuminvite_statusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnuminvite_statusFilter<$PrismaModel> | $Enums.invite_status
+}
+
+export type Enuminvite_statusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.invite_status | Prisma.Enuminvite_statusFieldRefInput<$PrismaModel>
+  in?: $Enums.invite_status[] | Prisma.ListEnuminvite_statusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.invite_status[] | Prisma.ListEnuminvite_statusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnuminvite_statusWithAggregatesFilter<$PrismaModel> | $Enums.invite_status
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnuminvite_statusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnuminvite_statusFilter<$PrismaModel>
+}
+
 export type BoolFilter<$PrismaModel = never> = {
   equals?: boolean | Prisma.BooleanFieldRefInput<$PrismaModel>
   not?: Prisma.NestedBoolFilter<$PrismaModel> | boolean
@@ -368,6 +385,23 @@ export type NestedEnumdate_idea_statusWithAggregatesFilter<$PrismaModel = never>
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumdate_idea_statusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumdate_idea_statusFilter<$PrismaModel>
+}
+
+export type NestedEnuminvite_statusFilter<$PrismaModel = never> = {
+  equals?: $Enums.invite_status | Prisma.Enuminvite_statusFieldRefInput<$PrismaModel>
+  in?: $Enums.invite_status[] | Prisma.ListEnuminvite_statusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.invite_status[] | Prisma.ListEnuminvite_statusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnuminvite_statusFilter<$PrismaModel> | $Enums.invite_status
+}
+
+export type NestedEnuminvite_statusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.invite_status | Prisma.Enuminvite_statusFieldRefInput<$PrismaModel>
+  in?: $Enums.invite_status[] | Prisma.ListEnuminvite_statusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.invite_status[] | Prisma.ListEnuminvite_statusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnuminvite_statusWithAggregatesFilter<$PrismaModel> | $Enums.invite_status
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnuminvite_statusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnuminvite_statusFilter<$PrismaModel>
 }
 
 export type NestedBoolFilter<$PrismaModel = never> = {
