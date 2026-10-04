@@ -13,7 +13,9 @@ export const InvitesList = ({ invites }: { invites: JournalInvite[] }) => {
   return (
     <div className="bg-white border border-gray-200 shadow-sm rounded-lg w-full">
       <div className='flex justify-between items-center-safe p-2'>
-        <h3 className="font-semibold ml-1 text-md">Invitations</h3>
+        <h3 className="font-semibold ml-1 text-md text-gray-600">
+          Invitations {invites.length > 0 && <span className="text-gray-400">({invites.length})</span>}
+        </h3>
         <IconButton onClick={() => setExpand(!expand)}>
           {expand ? <ExpandLess /> : <ExpandMore />}
         </IconButton>

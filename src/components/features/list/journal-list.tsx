@@ -73,9 +73,6 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
               dir={sortKey === 'creator' ? sortDir : 'asc'}
             />
           </span>
-          <span className="flex-1 pr-4 border-l border-gray-200 text-gray-500 text-right">
-            Shared With
-          </span>
         </li>
         {sorted.map((journal) => (
           <li
@@ -92,13 +89,6 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
               <span className="flex-1 text-sm font-normal text-gray-500 text-right pr-2">
                 {journal.creator_name}
               </span>
-              <span className="flex-1 text-sm font-normal text-gray-500 text-right pr-2">
-                {journal.shared_with_names.length > 0 && (
-                  <CollaboratorBadge
-                    names={journal.shared_with_names.map((user) => user.name)}
-                  />
-                )}
-              </span>
             </Link>
             <div className="pr-2 shrink-0">
               <JournalActionMenu journal_id={Number(journal.id)} />
@@ -110,97 +100,97 @@ export const JournalList = ({ list }: { list: Journal[] }) => {
   );
 };
 
-function CollaboratorBadge({ names }: { names: string[] }) {
-  const displayName = names[0];
-  const remaining = names.length - 1;
+// function CollaboratorBadge({ names }: { names: string[] }) {
+//   const displayName = names[0];
+//   const remaining = names.length - 1;
 
-  return (
-    <span className="collaborator-badge">
-      <span className="collaborator-trail">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}
-        >
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-          <circle cx="9" cy="7" r="4" />
-          <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-        </svg>
-        {displayName}
-        {remaining > 0 ? ` +${remaining}` : ''}
-      </span>
-      <span className="collaborator-tooltip">
-        <span className="collaborator-tooltip-title">Shared with:</span>
-        {names.map((name, i) => (
-          <span key={i} className="collaborator-tooltip-name">
-            {name}
-          </span>
-        ))}
-      </span>
+//   return (
+//     <span className="collaborator-badge">
+//       <span className="collaborator-trail">
+//         <svg
+//           xmlns="http://www.w3.org/2000/svg"
+//           width="14"
+//           height="14"
+//           viewBox="0 0 24 24"
+//           fill="none"
+//           stroke="currentColor"
+//           strokeWidth="2"
+//           strokeLinecap="round"
+//           strokeLinejoin="round"
+//           style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }}
+//         >
+//           <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+//           <circle cx="9" cy="7" r="4" />
+//           <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+//           <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+//         </svg>
+//         {displayName}
+//         {remaining > 0 ? ` +${remaining}` : ''}
+//       </span>
+//       <span className="collaborator-tooltip">
+//         <span className="collaborator-tooltip-title">Shared with:</span>
+//         {names.map((name, i) => (
+//           <span key={i} className="collaborator-tooltip-name">
+//             {name}
+//           </span>
+//         ))}
+//       </span>
 
-      <style>{`
-        .collaborator-badge {
-          position: relative;
-          margin-left: auto;
-          flex-shrink: 0;
-        }
-        .collaborator-trail {
-          display: inline-flex;
-          align-items: center;
-          font-size: 0.75rem;
-          font-weight: 500;
-          color: #6b7280;
-          background: #f3f4f6;
-          border-radius: 9999px;
-          padding: 2px 10px;
-          white-space: nowrap;
-          cursor: default;
-        }
-        .collaborator-tooltip {
-          display: flex;
-          flex-direction: column;
-          gap: 2px;
-          position: absolute;
-          right: 0;
-          top: calc(100% + 6px);
-          background: #1f2937;
-          color: #f9fafb;
-          font-size: 0.75rem;
-          font-weight: 400;
-          padding: 8px 12px;
-          border-radius: 8px;
-          white-space: nowrap;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-          z-index: 50;
-          opacity: 0;
-          pointer-events: none;
-          transform: translateY(-4px);
-          transition: opacity 0.15s ease, transform 0.15s ease;
-          transition-delay: 0s;
-        }
-        .collaborator-badge:hover .collaborator-tooltip {
-          opacity: 1;
-          pointer-events: auto;
-          transform: translateY(0);
-          transition-delay: 0.4s;
-        }
-        .collaborator-tooltip-title {
-          font-weight: 600;
-          color: #9ca3af;
-          margin-bottom: 2px;
-        }
-        .collaborator-tooltip-name {
-          color: #f9fafb;
-        }
-      `}</style>
-    </span>
-  );
-}
+//       <style>{`
+//         .collaborator-badge {
+//           position: relative;
+//           margin-left: auto;
+//           flex-shrink: 0;
+//         }
+//         .collaborator-trail {
+//           display: inline-flex;
+//           align-items: center;
+//           font-size: 0.75rem;
+//           font-weight: 500;
+//           color: #6b7280;
+//           background: #f3f4f6;
+//           border-radius: 9999px;
+//           padding: 2px 10px;
+//           white-space: nowrap;
+//           cursor: default;
+//         }
+//         .collaborator-tooltip {
+//           display: flex;
+//           flex-direction: column;
+//           gap: 2px;
+//           position: absolute;
+//           right: 0;
+//           top: calc(100% + 6px);
+//           background: #1f2937;
+//           color: #f9fafb;
+//           font-size: 0.75rem;
+//           font-weight: 400;
+//           padding: 8px 12px;
+//           border-radius: 8px;
+//           white-space: nowrap;
+//           box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+//           z-index: 50;
+//           opacity: 0;
+//           pointer-events: none;
+//           transform: translateY(-4px);
+//           transition: opacity 0.15s ease, transform 0.15s ease;
+//           transition-delay: 0s;
+//         }
+//         .collaborator-badge:hover .collaborator-tooltip {
+//           opacity: 1;
+//           pointer-events: auto;
+//           transform: translateY(0);
+//           transition-delay: 0.4s;
+//         }
+//         .collaborator-tooltip-title {
+//           font-weight: 600;
+//           color: #9ca3af;
+//           margin-bottom: 2px;
+//         }
+//         .collaborator-tooltip-name {
+//           color: #f9fafb;
+//         }
+//       `}</style>
+//     </span>
+//   );
+// }
