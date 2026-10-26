@@ -1,173 +1,151 @@
-import type * as Party from 'partykit/server';
-import { onConnect } from 'y-partykit';
+import { routePartykitRequest } from 'partyserver';
+import type { Connection, ConnectionContext } from 'partyserver';
+import { YServer } from 'y-partyserver';
+import * as Y from 'yjs';
 import { jwtVerify } from 'jose';
 import { prosemirrorJSONToYDoc, yDocToProsemirrorJSON } from 'y-prosemirror';
 import { getSchema } from '@tiptap/core';
 import StarterKit from '@tiptap/starter-kit';
 
-export default class JournalServer implements Party.Server {
-  appUrl: any;
-  connectionCount: number = 0;
-  constructor(public party: Party.Room) {
-    this.appUrl = this.party.env.APP_API_BASE_URL;
+type Env = {
+  Main: DurableObjectNamespace<JournalServer>;
+  APP_API_BASE_URL: string;
+  INTERNAL_API_SECRET: string;
+  BETTER_AUTH_SECRET: string;
+};
+
+export class JournalServer extends YServer<Env> {
+  static options = { hibernate: true };
+
+  static callbackOptions = {
+    debounceWait: 2000,
+    debounceMaxWait: 10000,
+  };
+
+  async onLoad(): Promise<Y.Doc | void> {
+    const docId = this.name;
+    const userId = await this.ctx.storage.get<string>('userId');
+    console.log(`Loading document for room: ${docId} for user: ${userId}`);
+
+    const query = userId
+      ? `entry=${docId}&userId=${userId}`
+      : `entry=${docId}`;
+    const entry = await fetch(
+      `${this.env.APP_API_BASE_URL}/entries/fetch?${query}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + this.env.INTERNAL_API_SECRET,
+        },
+      },
+    );
+    if (!entry.ok) {
+      return;
+    }
+    const data = (await entry.json()) as {
+      content?: string;
+      title?: string;
+    };
+    if (!data?.content) {
+      return;
+    }
+
+    const schema = getSchema([StarterKit]);
+    const json = JSON.parse(data.content);
+    const ydoc = prosemirrorJSONToYDoc(schema, json, 'default');
+
+    if (data.title) {
+      ydoc.getText('title').insert(0, data.title);
+    }
+
+    return ydoc;
   }
 
-  static async onBeforeConnect(req: Party.Request, lobby: Party.Lobby) {
-    try {
-      const url = new URL(req.url);
-      const token = url.searchParams.get('token');
+  async onSave(): Promise<void> {
+    const docId = this.name;
+    const userId = await this.ctx.storage.get<string>('userId');
 
-      if (!token) {
-        return new Response('Unauthorized: Missing token', { status: 401 });
-      }
+    const json = yDocToProsemirrorJSON(this.document, 'default');
+    const title = this.document.getText('title').toString();
 
-      if (!process.env.BETTER_AUTH_SECRET) {
-        throw new Error('BETTER_AUTH_SECRET is not defined');
-      }
+    console.log(
+      'Updated content (JSON summary):',
+      JSON.stringify(json).substring(0, 100) + '...',
+    );
+    console.log('Updated title:', title);
 
-      const secret = new TextEncoder().encode(process.env.BETTER_AUTH_SECRET);
-      const { payload } = await jwtVerify(token, secret);
-
-      // Successfully authenticated
-      // forward user info in headers or store in lobby if needed for onConnect
-      req.headers.set('x-user-id', payload.userId as string);
-      console.log('Authenticated user:', payload.userId);
-      console.log(process.env.BETTER_AUTH_SECRET);
-      console.log(process.env.INTERNAL_API_SECRET);
-      console.log(process.env.APP_API_BASE_URL);
-      return req;
-    } catch (e) {
-      console.error('Authentication failed', e);
-      return new Response('Unauthorized: Invalid token', { status: 401 });
+    const entry = await fetch(this.env.APP_API_BASE_URL + '/entries/update', {
+      method: 'POST',
+      headers: {
+        Authorization: 'Bearer ' + this.env.INTERNAL_API_SECRET,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        entry_id: parseInt(docId),
+        title: title,
+        content: JSON.stringify(json),
+        userId: userId ?? '',
+      }),
+    });
+    if (!entry.ok) {
+      console.error('Failed to update entry');
     }
   }
 
-  async onConnect(conn: Party.Connection, ctx: Party.ConnectionContext) {
-    // A websocket just connected!
+  async onConnect(
+    connection: Connection,
+    ctx: ConnectionContext,
+  ): Promise<void> {
     console.log(
       `Connected:
-      id: ${conn.id}
-      room: ${this.party.id}
+      id: ${connection.id}
+      room: ${this.name}
       url: ${new URL(ctx.request.url).pathname}`,
     );
 
-    // Cancel any scheduled cleanup alarms since a client has connected
-    await this.party.storage.deleteAlarm();
-
-    // Save user and document info for room
     const userId = ctx.request.headers.get('x-user-id');
-    const docId = this.party.id;
+    if (userId) {
+      const existing = await this.ctx.storage.get<string>('userId');
+      if (!existing) {
+        await this.ctx.storage.put('userId', userId);
+      }
+    }
     console.log(`User ID: ${userId}`);
 
-    return onConnect(conn, this.party, {
-      async load() {
-        console.log(`Loading document for room: ${docId} for user: ${userId}`);
-        console.log(`fetching in: ${process.env.APP_API_BASE_URL}/entries/fetch?entry=${docId}&userId=${userId}`);
-        const entry = await fetch(`${process.env.APP_API_BASE_URL}/entries/fetch?entry=${docId}&userId=${userId}`, {
-            headers: {
-              Authorization: 'Bearer ' + process.env.INTERNAL_API_SECRET,
-            },
-          },
-        );
-        if (!entry.ok) {
-          return null;
-        }
-        const data = await entry.json();
-        if (!data?.content) {
-          return null;
-        }
-
-        // Set up document from database
-        const schema = getSchema([StarterKit]);
-        const json = JSON.parse(data.content);
-        const ydoc = prosemirrorJSONToYDoc(schema, json, 'default');
-
-        // Initialize the title shared type
-        if (data.title) {
-          ydoc.getText('title').insert(0, data.title);
-        }
-
-        return ydoc;
-      },
-      callback: {
-        // Handle changes to the document made by users
-        handler: async (ydoc) => {
-          console.log(`Document updated in room: ${this.party.id}`);
-
-          // Convert Y.Doc back to ProseMirror JSON
-          const json = yDocToProsemirrorJSON(ydoc, 'default');
-          // Get the title from the shared type
-          const title = ydoc.getText('title').toString();
-
-          console.log(
-            'Updated content (JSON summary):',
-            JSON.stringify(json).substring(0, 100) + '...',
-          );
-          console.log('Updated title:', title);
-
-          // Push changes to database
-          const entry = await fetch(
-            process.env.APP_API_BASE_URL + '/entries/update',
-            {
-              method: 'POST',
-              headers: {
-                Authorization: 'Bearer ' + process.env.INTERNAL_API_SECRET,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                entry_id: parseInt(docId),
-                title: title,
-                content: JSON.stringify(json),
-                userId: userId,
-              }),
-            },
-          );
-          if (!entry.ok) {
-            console.error('Failed to update entry');
-          }
-        },
-        // Wait for 2 seconds of inactivity before pushing
-        debounceWait: 2000,
-        // Wait 10 seconds at most, then push anyway
-        debounceMaxWait: 10000,
-      },
-    });
+    return super.onConnect(connection, ctx);
   }
-
-  async onClose(connection: Party.Connection): Promise<void> {
-    const connections = [...this.party.getConnections()];
-    console.log(`Connection closed: ${connection.id}`);
-    console.log(`Connections left: ${connections.length}`);
-
-    if (connections.length === 0) {
-      console.log(`No connections left. Scheduling storage cleanup alarm for room: ${this.party.id} in 5 minutes`);
-      // Schedule alarm to fire in 5 minutes (300,000 milliseconds)
-      await this.party.storage.setAlarm(Date.now() + 5 * 60 * 1000);
-    }
-  }
-
-  async onAlarm(): Promise<void> {
-    const connections = [...this.party.getConnections()];
-    console.log(`Alarm fired. Connections left: ${connections.length}`);
-
-    if (connections.length === 0) {
-      console.log(`No connections left after grace period. Deleting room storage for room: ${this.party.id}`);
-      await this.party.storage.delete('doc');
-    } else {
-      console.log(`Active connections found during alarm, retaining room storage: ${this.party.id}`);
-    }
-  }
-
-  /*   onMessage(message: string, sender: Party.Connection) {
-    // let's log the message
-    console.log(`connection ${sender.id} sent message: ${message}`);
-    // as well as broadcast it to all the other connections in the room...
-    this.party.broadcast(
-      `${sender.id}: ${message}`,
-      // ...except for the connection it came from
-      [sender.id]
-    );
-  } */
 }
 
-JournalServer satisfies Party.Worker;
+export default {
+  async fetch(request: Request, env: Env): Promise<Response> {
+    return (
+      (await routePartykitRequest(request, env, {
+        onBeforeConnect: async (req) => {
+          try {
+            const url = new URL(req.url);
+            const token = url.searchParams.get('token');
+
+            if (!token) {
+              return new Response('Unauthorized: Missing token', {
+                status: 401,
+              });
+            }
+
+            if (!env.BETTER_AUTH_SECRET) {
+              throw new Error('BETTER_AUTH_SECRET is not defined');
+            }
+
+            const secret = new TextEncoder().encode(env.BETTER_AUTH_SECRET);
+            const { payload } = await jwtVerify(token, secret);
+
+            req.headers.set('x-user-id', payload.userId as string);
+            console.log('Authenticated user:', payload.userId);
+            return req;
+          } catch (e) {
+            console.error('Authentication failed', e);
+            return new Response('Unauthorized: Invalid token', { status: 401 });
+          }
+        },
+      })) || new Response('Not Found', { status: 404 })
+    );
+  },
+} satisfies ExportedHandler<Env>;

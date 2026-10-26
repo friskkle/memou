@@ -1,20 +1,20 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import YPartyKitProvider from "y-partykit/provider";
+import YProvider from "y-partyserver/provider";
 import * as Y from "yjs";
 
-const url = process.env.NEXT_PUBLIC_PARTYKIT_URL || "localhost:1999";
+const url = process.env.NEXT_PUBLIC_PARTYSERVER_URL || "localhost:8787";
 
 export function usePartyKitProvider(roomId: string) {
-    const [provider, setProvider] = useState<YPartyKitProvider | null>(null);
+    const [provider, setProvider] = useState<YProvider | null>(null);
     const [status, setStatus] = useState<'loading' | 'connected' | 'error' | 'disconnected'>('loading');
     const hasConnected = useRef(false);
     const ydocRef = useRef<Y.Doc>(new Y.Doc());
     const [ydoc] = useState<Y.Doc>(() => ydocRef.current);
     useEffect(() => {
         let mounted = true;
-        let providerInstance: YPartyKitProvider | null = null;
+        let providerInstance: YProvider | null = null;
         setStatus('loading');
 
         const connect = async () => {
@@ -30,7 +30,7 @@ export function usePartyKitProvider(roomId: string) {
 
                 if (!mounted) return;
 
-                providerInstance = new YPartyKitProvider(
+                providerInstance = new YProvider(
                     url,
                     roomId,
                     ydocRef.current,

@@ -1,45 +1,21 @@
 "use client"
 
-import StarterKit from "@tiptap/starter-kit"
-import { SlashCommandsExtension } from './commands-list'
+import { useState, useEffect, useCallback } from 'react'
 import { Extensions, useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from "@tiptap/starter-kit"
 import TaskList from '@tiptap/extension-task-list'
 import TaskItem from '@tiptap/extension-task-item'
-import { useState, useEffect, useCallback } from 'react'
+import Collaboration from '@tiptap/extension-collaboration'
+import CollaborationCaret from '@tiptap/extension-collaboration-caret'
+import { SlashCommandsExtension } from './commands-list'
 import SlashMenu from '@/src/components/features/editor/commands-menu'
 import { MenuPosition, CommandRange } from '@/src/components/features/editor/types'
 import { MenuBar } from './menu-bar'
 import styles from './EditorStyles.module.css'
-import Collaboration from '@tiptap/extension-collaboration'
-import CollaborationCaret from '@tiptap/extension-collaboration-caret'
 import { usePartyKitProvider } from '@/src/hooks/usePartyKitProvider'
 import * as Y from 'yjs'
-import YPartyKitProvider from 'y-partykit/provider'
+import YProvider from 'y-partyserver/provider'
 import { EditorSkeleton } from "../../elements/skeletons"
-
-export const editorExtensions: Extensions = [
-  StarterKit.configure({
-    bulletList: {
-      HTMLAttributes: {
-        class: 'list-disc'
-      }
-    },
-    orderedList: {
-      HTMLAttributes: {
-        class: 'list-decimal'
-      }
-    }
-  }),
-  TaskList.configure({
-    HTMLAttributes: {
-      class: 'task-list',
-    },
-  }),
-  TaskItem.configure({
-    nested: true,
-  }),
-  SlashCommandsExtension
-]
 
 export const editorProps = {
   attributes: {
@@ -85,7 +61,7 @@ const CollaborativeTitle = ({ ydoc }: { ydoc: Y.Doc }) => {
 
 // --- Collaborative TipTap Editor (synced via Yjs + PartyKit) ---
 const CollaborativeTiptapEditor = ({ provider, ydoc, userName, userColor }: {
-  provider: YPartyKitProvider
+  provider: YProvider
   ydoc: Y.Doc
   userName: string
   userColor: string

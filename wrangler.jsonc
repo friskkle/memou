@@ -1,0 +1,13 @@
+{
+  "name": "memou-party",
+  "main": "party/index.ts",
+  "compatibility_date": "2026-01-10",
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": {
+    "bindings": [{ "name": "Main", "class_name": "JournalServer" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["JournalServer"] }],
+  "vars": {
+    "APP_API_BASE_URL": "https://memou.me/api"
+  }
+}

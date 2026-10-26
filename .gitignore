@@ -43,3 +43,7 @@ next-env.d.ts
 /src/generated/prisma
 /better-auth_migrations/
 /AGENTS.md
+.partykit
+.wrangler
+.dev.vars
+/party/dist
